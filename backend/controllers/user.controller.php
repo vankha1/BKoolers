@@ -9,10 +9,12 @@ class UserController
     public static function getAllUsers()
     {
         $temp = new User();
-
-        $users = json_encode($temp->getAllUser());
-
-        return $users;
+        $users = $temp->getAllUsers();
+        if (count($users) > 0) {
+            $users = json_encode($users);
+            return $users;
+        }   
+        throw new FileNotFoundError("No user found!!!");
     }
 
     public static function login($info)
@@ -26,7 +28,7 @@ class UserController
 
                 $getDate = new DateTimeImmutable();
                 $user['created_time'] = $getDate->modify('+1 hour')->getTimestamp();
-                $jwt = JWT::encode($user, $key, 'HS256');
+                $jwt = JWT::encode($user, $key, 'HS256'); // This matches the decode in middleware/auth.php
                 return json_encode(["data" => [
                     'type' => 'user',
                     'id' => $user[0]['id'],

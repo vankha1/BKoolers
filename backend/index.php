@@ -14,9 +14,9 @@ if ($method == "OPTIONS") {
 
 include_once './vendor/autoload.php';
 // ini_set('include_path', '.;C:\xampp\php\PEAR');
+use Dotenv\Dotenv;
 
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 include_once './config/db.php';
@@ -27,6 +27,9 @@ if (isset($_SERVER['REDIRECT_URL'])) {
     if (array_key_exists('3', $url)) {
         if ($url['3'] == 'users'){
             include './routes/user.route.php';
+        }
+        else if ($url['3'] == 'products'){
+            include './routes/product.route.php';
         }
     }
 } else {

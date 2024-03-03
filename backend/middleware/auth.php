@@ -17,6 +17,17 @@ class Auth
             } catch (Exception $e){
                 throw new UnauthenticatedError('Invalid token');
             }
+
+            if(in_array($decoded['role'], $roles)){
+                $_SESSION['user_id'] = $decoded['id'];
+                $_SESSION['username'] = $decoded['username'];
+                $_SESSION['role'] = $decoded['role'];
+                return;
+            }
+            throw new UnauthenticatedError('Unauthorized');
+        }
+        else {
+            throw new UnauthenticatedError('Not Login!!!');
         }
     }
 }
