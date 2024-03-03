@@ -38,7 +38,7 @@ class UserController
                     'token' => $jwt
                 ]]);
             }
-            // throw new FileNotFoundError("Incorrect password!!!");
+            throw new FileNotFoundError("Incorrect password!!!");
         }
         $user = $temp->getUserAdmin($info['username']);
         if (count($user) == 1) {
@@ -58,9 +58,9 @@ class UserController
                     'token' => $jwt
                 ]]);
             }
-            // throw new FileNotFoundError("Incorrect password!!!");
+            throw new FileNotFoundError("Incorrect password!!!");
         }
-        // throw new BadRequestError('Invalid username or password');
+        throw new BadRequestError('Invalid username or password');
     }
 
     public static function signup($info)
@@ -76,10 +76,10 @@ class UserController
             } else {
                 return json_encode(["msg" => "failure"]);
             }
-            // throw new FileNotFoundError("User not created!!!");
+            throw new FileNotFoundError("User not created!!!");
         } else {
             return json_encode(["msg" => "failure"]);
         }
-        // throw new FileNotFoundError("Username exist!!!");
+        throw new FileNotFoundError("Username exist!!!");
     }
 }
