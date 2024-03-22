@@ -20,7 +20,7 @@ class Order
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -32,7 +32,7 @@ class Order
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -48,7 +48,7 @@ class Order
             WHERE CODE = ProductID AND P.COLOR=I.COLOR AND P.SIZE = I.SIZE AND OrderID='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -79,7 +79,7 @@ class Order
             // $query = "DELETE FROM add_to_cart WHERE CustomerID='$CUSTOMER'";
             // $stmt = $this->conn->prepare($query);
             // $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -91,7 +91,7 @@ class Order
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }

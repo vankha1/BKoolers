@@ -13,7 +13,7 @@ class UserController
         if (count($users) > 0) {
             $users = json_encode($users);
             return $users;
-        }   
+        }
         throw new FileNotFoundError("No user found!!!");
     }
 

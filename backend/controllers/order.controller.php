@@ -1,7 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . '/../models/order.model.php');
 include_once(dirname(__FILE__) . '/../middleware/error.php');
-include_once(dirname(__FILE__) . '/../middleware/utils.php');
 
 
 class OrderController
