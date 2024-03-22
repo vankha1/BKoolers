@@ -24,6 +24,16 @@ class ProductController {
         throw new FileNotFoundError("No product found!!!");
     }
 
+    public static function addProduct($data){
+        $temp = new Product();
+        $temp->addProduct($data);
+    }
+
+    public static function updateProduct($data){
+        $temp = new Product();
+        $temp->updateProduct($data);
+    }
+
     public static function deleteProduct($id)
     {
         $temp = new Product();
