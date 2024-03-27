@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.title {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  .btn-primary {
+    color: #ffffff;
+    background-color: #1a1a1a;
+    height: 40px;
+  }
+  
+  .btn-secondary {
+    color: black;
+    background-color: lightgray;
+    height: 40px;
+  }
+  
+  .btn-primary:hover, .btn-secondary:hover, .product_item:hover {
+    transform: scale(1.01);
+  }

@@ -25,12 +25,21 @@ if (isset($_SERVER['REDIRECT_URL'])) {
     // echo json_encode($url); // "1": "web-assignment", "2": "backend", "3": "users", "4": "all"
 
     if (array_key_exists('3', $url)) {
-        if ($url['3'] == 'users'){
+        if ($url['3'] == 'users') {
             include './routes/user.route.php';
-        }
-        else if ($url['3'] == 'products'){
+        } else if ($url['3'] == 'products') {
             include './routes/product.route.php';
+        } elseif ($url['3'] == 'cart') {
+            include './routes/cart.route.php';
+        } elseif ($url['3'] == 'orders') {
+            include './routes/order.route.php';
+        } else {
+            http_response_code(404);
+            echo json_encode(["message" => 'Not found API !']);
         }
+    } else {
+        http_response_code(404);
+        echo json_encode(["message" => 'Not found API !']);
     }
 } else {
     http_response_code(404);

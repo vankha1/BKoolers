@@ -2,8 +2,8 @@
 
 include_once(dirname(__FILE__) . '/../controllers/product.controller.php');
 
-$url_components = parse_url($_SERVER['REQUEST_URI']); 
-$url = array_filter(explode('/', $url_components['path'])); 
+$url_components = parse_url($_SERVER['REQUEST_URI']);
+$url = array_filter(explode('/', $url_components['path']));
 $params = '';
 if (count($url_components) > 1)
     parse_str($url_components['query'], $params);
@@ -23,21 +23,31 @@ if (array_key_exists('4', $url)) {
         echo ProductController::getAllProducts();
         // echo json_encode($params);
         http_response_code(200);
-    } 
-    // // PUT: web-assignment/backend/products/add
-    // else if ($url['4'] == 'add' and $method == 'PUT') {
-    //     $data = (array) json_decode(file_get_contents('php://input'));
-    //     echo ProductController::addProduct($data);
-    //     http_response_code(200);
-    // }
-    // // PUT: web-assignment/backend/products/update
-    // else if ($url['4'] == 'update' and $method == 'PUT') {
-    //     $data = (array) json_decode(file_get_contents('php://input'));
-    //     echo ProductController::updateProduct($data);
-    //     http_response_code(200);
-    // }
+    }
+    // GET: web-assignment/backend/products/detail?id=
+    elseif ($url['4'] == 'detail' and $method == 'GET') {
+        try {
+            echo ProductController::getProduct($params['id']);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
+    // PUT: web-assignment/backend/products/add
+    elseif ($url['4'] == 'add' and $method == 'PUT') {
+        $data = (array) json_decode(file_get_contents('php://input'));
+        echo ProductController::addProduct($data);
+        http_response_code(200);
+    }
+    // PUT: web-assignment/backend/products/update
+    elseif ($url['4'] == 'update' and $method == 'PUT') {
+        $data = (array) json_decode(file_get_contents('php://input'));
+        echo ProductController::updateProduct($data);
+        http_response_code(200);
+    }
     // DELETE: web-assignment/backend/products/delete
-    else if ($url['4'] == 'delete' and $method == 'DELETE') {
+    elseif ($url['4'] == 'delete' and $method == 'DELETE') {
         $data = (array) json_decode(file_get_contents('php://input'));
         echo ProductController::deleteProduct($data);
         http_response_code(200);

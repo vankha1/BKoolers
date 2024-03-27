@@ -1,15 +1,14 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home'
-import Aboutus from './pages/Aboutus'
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
-function App() {
-return (
- <div className="app">
-  <Routes>
-    <Route path='/' element={<Home />} />
-    <Route path='/about' element={<Aboutus />} />
-    <Route path='/all-product' element={<Aboutus />} />
-  </Routes>
- </div>
-)} 
+const App = () => {
+  return (
+    <>
+      <Navbar></Navbar>
+      <Outlet></Outlet>
+      <div>Footer</div>
+    </>
+  );
+}
+
 export default App;
