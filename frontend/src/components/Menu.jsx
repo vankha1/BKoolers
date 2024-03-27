@@ -16,7 +16,7 @@ const Menu = (props) => {
     ]);
 
     return (
-        <div className={`flex flex-col h-[100%] flex-1 ${menuState ? "opacity-100 w-full" : "opacity-0 w-0"}`}>
+        <div className={`flex flex-col h-[100%] flex-1 ${menuState ? "block" : "hidden"}`}>
             <div className="px-5 h-[8%] flex items-center">
                 <RiArrowLeftDoubleLine size={33} onClick={() => { handleMenu() }} />
             </div>

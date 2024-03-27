@@ -20,7 +20,7 @@ const Navbar = () => {
                         <div className={`h-fit ${isMenuOpen ? "hidden" : "block"}`}>
                             <FaBars size={25} onClick={() => { handleMenu() }} />
                         </div>
-                        <div className={`absolute inset-0 z-[99] h-screen bg-black/20 ${isMenuOpen ? "w-screen" : "w-0"} duration-[0.2s]`}>
+                        <div className={`absolute inset-0 z-[99] w-screen bg-black/20 ${isMenuOpen ? "h-screen" : "h-0"}`}>
                             <div className={`flex h-full bg-white ${isMenuOpen ? 'w-1/2 lg:w-[25%]' : 'w-[0%]'} duration-[0.25s] transition-width ease-in-out`}>
                                 <Menu handleMenu={handleMenu} menuState={isMenuOpen} />
                             </div>
