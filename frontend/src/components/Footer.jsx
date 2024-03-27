@@ -7,7 +7,7 @@ import { FaTiktok } from "react-icons/fa";
 
 function Footer() {
   return (
-    <div className='flex h-2/5 mt-10'>
+    <div className='flex h-2/5 mt-10 px-5'>
         <div className='w-1/2'>
           <div className='w-40 h-10 flex justify-center items-center font-bold bg-black text-white mb-3'>BKlothes</div>
           <button className='btn-secondary px-5'>
