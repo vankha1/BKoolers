@@ -12,7 +12,7 @@ class User
     public function getAllUsers()
     {
         try {
-            $query = "SELECT * FROM person";
+            $query = "SELECT * FROM Customer";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -24,7 +24,7 @@ class User
     public function getUser($username)
     {
         try {
-            $query = "SELECT `id`,`firstname`,`lastname`,`password`,`address`,`email`,`phone` FROM person WHERE username = '$username'";
+            $query = "SELECT `id`, `FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar` FROM Customer WHERE username = '$username'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC to get only the associative array 
@@ -37,7 +37,7 @@ class User
     public function getUserAdmin($username)
     {
         try {
-            $query = "SELECT id,firstname,lastname FROM person WHERE username = '$username'";
+            $query = "SELECT `id`, `FName`, `LName` FROM `Admin` WHERE username = '$username'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,10 +47,10 @@ class User
         }
     }
 
-    public function createUser($firstname, $lastname, $phone, $email, $birthday, $username, $password, $address)
+    public function createUser($FName, $LName, $phone, $email, $birthday, $username, $password, $address, $avatar)
     {
         try {
-            $query = "INSERT INTO person (firstname, lastname, phone, email, birthday, username, password, address) VALUES ('$firstname', '$lastname', '$phone', '$email', '$birthday', '$username', '$password', '$address')";
+            $query = "INSERT INTO Customer (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('$FName', '$LName', '$phone', '$email', '$birthday', '$username', '$password', '$address', '$avatar')";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute();
         } catch (PDOException $e) {

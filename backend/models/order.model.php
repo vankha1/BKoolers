@@ -16,7 +16,7 @@ class Order
     public function getAllOrder($id)
     { // id of customer
         try {
-            $query = "SELECT * FROM orders WHERE CustomerID='$id';";
+            $query = "SELECT * FROM Order WHERE customer_id ='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,7 +28,9 @@ class Order
     public function getOrder($id)
     { // id of 1 order
         try {
-            $query = "";
+            $query = "SELECT O.id, O.customer, P.name , O.total_product, O.total_cost, O.phone, O.address, O.date_created, P.id, D.quantity
+            FROM O as O NATURAL JOIN OrderDetail  AS D JOIN Product AS P ON D.product_id = P.id
+            WHERE Order.id='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,12 +42,12 @@ class Order
     public function confirm($id)
     {
         try {
-            $query = "UPDATE orders SET status = 1  WHERE OrderID='$id'";
+            $query = "UPDATE Order SET status = 1  WHERE order_id ='$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            $query = "UPDATE product AS P, include AS I SET QUANITY = QUANITY - NUMBER 
-            WHERE CODE = ProductID AND P.COLOR=I.COLOR AND P.SIZE = I.SIZE AND OrderID='$id';";
+            $query = "UPDATE Product AS P, OrderItem AS D SET P.QUANITY = P.QUANITY - D.quantity
+            WHERE id = product_id AND P.size = D.size AND order_id = '$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
         } catch (PDOException $e) {
@@ -53,45 +55,53 @@ class Order
         }
     }
 
-    public function makeOrder($info)
+    public function makeOrder($data)
     {
         try {
-            // need to fix
+            $CUSTOMER = $data['customer_id'];
+            $NAME = $data['name'];
+            $TOTAL_PRODUCT = $data['total_quantity'];
+            $COST = $data['total_price'];
+            $PAY = $data['payment_method'];
+            $PHONE = $data['phone'];
+            $ADD = $data['address'];
 
-            // $CUSTOMER = $info['CUSTOMER'];
-            // $NAME = $info['NAME'];
-            // $PAY = $info['PAY'];
-            // $NOTE = $info['NOTE'];
-            // $PHONE = $info['PHONE'];
-            // $ADD = $info['ADD'];
-            // $COST = $info['COST'];
-            // $TOTAL_PRODUCT = $info['NUM'];
+            $query = "INSERT INTO Order (customer_id, name, total_quantity, total_cost, payment_method, phone, address) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$PHONE','$ADD');";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
 
-            // $query = "INSERT INTO orders (CUSTOMERID,NAME,TOTAL_PRODUCT,TOTAL_COST,PAY_METHOD,NOTE,RECEIVE_PHONE,RECEIVE_ADDRESS) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$NOTE','$PHONE','$ADD');";
-            // $stmt = $this->conn->prepare($query);
-            // $stmt->execute();
-
-            // $query = "INSERT INTO include (ProductID,COLOR,SIZE,NUMBER,OrderID) SELECT ProductID, COLOR, SIZE, NUMBER, OrderID FROM add_to_cart JOIN (SELECT max(OrderID) AS OrderID FROM orders) AS TEMP WHERE CustomerID='$CUSTOMER';";
-            // $stmt = $this->conn->prepare($query);
-            // $stmt->execute();
+            $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
 
 
-            // $query = "DELETE FROM add_to_cart WHERE CustomerID='$CUSTOMER'";
-            // $stmt = $this->conn->prepare($query);
-            // $stmt->execute();
+            $query = "DELETE FROM Cart WHERE customer_id = '$CUSTOMER'";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
         } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
 
+    public function chart()
+    { // id of customer
+        try {
+            $query = "SELECT month(created_at) AS MONTH, sum(total_price) AS TOTAL_COST from Order group by month(created_at);";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->get_result();
+        } catch (mysqli_sql_exception $e) {
+            throw new InternalServerError('Server Error !');
+        }
+    }
     public function getAll_Admin()
     { // id of 1 order
         try {
-            $query = "SELECT * FROM orders";
+            $query = "SELECT * FROM Order";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
+            return $stmt->get_result();
+        } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
