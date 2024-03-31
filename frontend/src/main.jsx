@@ -19,9 +19,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="pants" element={<ProductDisplay title='Pants'/>}/>
             <Route path="footwears" element={<ProductDisplay title='Footwears'/>}/>
             <Route path="outerwears" element={<ProductDisplay title='Outerwears'/>}/>
-            <Route index element={<div>products</div>}/>
+            <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
           <Route path="about" element={<div>Hi !</div>}/>
+          <Route path="user" element={<div>User</div>} />
+          <Route path="cart"/>
           <Route index element={<Home />}/>  
         </Route>
       </Routes>
