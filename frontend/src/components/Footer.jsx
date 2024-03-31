@@ -6,34 +6,59 @@ import { FaYoutube } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa";
 
 function Footer() {
+  const contacts = [
+    {
+      title: 'Hotline',
+      content: '1900 1945'
+    },
+    {
+      title: 'Email for customer',
+      content: 'bkoolercustomercare@gmail.com'
+    },
+    {
+      title: 'Email for business',
+      content: 'bkoolerbusiness@gmail.com'
+    },
+    {
+      title: 'Email for recruitment',
+      content: 'bkoolerhr@gmail.com'
+    }
+  ]
+
   return (
-    <div className='flex h-2/5 mt-10 px-5'>
-        <div className='w-1/2'>
-          <div className='w-40 h-10 flex justify-center items-center font-bold bg-black text-white mb-3'>BKlothes</div>
-          <button className='btn-secondary px-5'>
-            <Link className='hover:text-black'>Xem ngay</Link>
+    <div className='lg:flex mt-10 px-5 pb-5'>
+        <div className='lg:w-1/2 mb-5 lg:mb-0'>
+          <div className='m-auto mb-3 lg:m-0 lg:mb-3 w-40 h-10 flex justify-center items-center font-bold bg-black text-white'>BKooler</div>
+          <button className='w-full lg:w-32 btn-secondary px-5'>
+            <Link to='/about'>Xem ngay</Link>
           </button>
         </div>
-        <div className='w-1/2 flex'>
-          <div className='w-2/5'>
+        <div className='lg:w-1/2 lg:flex'>
+          <div className='lg:w-1/2 pb-4'>
             <div className='text-lg mb-2 font-semibold'>Liên hệ</div>
-            <div className='text-sm font-semibold'>Hotline</div>
-            <div className='text-sm mb-2'>1900 1664</div>
-            <div className='text-sm font-semibold'>Email for customer</div>
-            <div className='text-sm mb-2'>bklothescustomercare@gmail.com</div>
-            <div className='text-sm font-semibold'>Email for business</div>
-            <div className='text-sm mb-2'>bklothesbusinesscare@gmail.com</div>
-            <div className='text-sm font-semibold'>Email for recruitment</div>
-            <div className='text-sm mb-3'>bklotheshr@gmail.com</div>
-            <div className='flex items-center justify-between w-3/5'>
-              <BiLogoFacebookSquare className='hover:cursor-pointer hover:scale-105' size={30}/> 
-              <FaInstagram className='hover:cursor-pointer hover:scale-105' size={25} />
-              <FaYoutube className='hover:cursor-pointer hover:scale-105' size={25} />
-              <FaTiktok className='hover:cursor-pointer hover:scale-105' size={20}/>
+            {contacts.map((contact, index) => {
+              return (<React.Fragment key={index}>
+                <div className='text-sm font-semibold'>{contact.title}</div>
+                <div className='text-sm mb-2'>{contact.content}</div>
+              </React.Fragment>)
+            })}
+            <div className='flex items-center justify-between w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/2'>
+              <a href="https://facebook.com/">
+                <BiLogoFacebookSquare className='hover:cursor-pointer hover:scale-105' size={25}/> 
+              </a>
+              <a href="https://instagram.com/">
+                <FaInstagram className='hover:cursor-pointer hover:scale-105' size={22} />
+              </a>
+              <a href="https://youtube.com/">
+                <FaYoutube className='hover:cursor-pointer hover:scale-105' size={23} />
+              </a>
+              <a href="https://tiktok.com/">
+                <FaTiktok className='hover:cursor-pointer hover:scale-105' size={18}/>
+              </a>
             </div>
           </div>
 
-          <div className=''>
+          <div className='lg:w-1/2 pt-3 lg:p-0 lg:border-none border-t border-t-gray-150'>
             <div className='text-lg mb-2 font-semibold'>Cửa hàng</div>
             <div className='text-sm font-semibold'>Chi nhánh 1</div>
             <div className='text-sm mb-2'>268 Lý Thường Kiệt, Phường 14, Quận 10, Thành phố Hồ Chí Minh</div>

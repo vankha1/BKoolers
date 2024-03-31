@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import Home from './pages/Home.jsx';
+import ProductDisplay from './pages/ProductDisplay.jsx';
 import './styles/index.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 
@@ -11,16 +13,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/signin" element={<div>Sign in</div>}/> 
         <Route path="/" element={<App/>}>
           <Route path="products/">
-            <Route path="newarrivals" element={<div>new arrivals</div>}/>
-            <Route path="bestsellers" element={<div>best sellers</div>}/>
-            <Route path="shirts" element={<div>shirts</div>}/>
-            <Route path="pants" element={<div>pants</div>}/>
-            <Route path="footwears" element={<div>footwears</div>}/>
-            <Route path="outerwears" element={<div>outerwears</div>}/>
+            <Route path="newarrivals" element={<ProductDisplay title='New Arrival'/>}/>
+            <Route path="bestsellers" element={<ProductDisplay title='Best Seller'/>}/>
+            <Route path="shirts" element={<ProductDisplay title='Shirts'/>}/>
+            <Route path="pants" element={<ProductDisplay title='Pants'/>}/>
+            <Route path="footwears" element={<ProductDisplay title='Footwears'/>}/>
+            <Route path="outerwears" element={<ProductDisplay title='Outerwears'/>}/>
             <Route index element={<div>products</div>}/>
           </Route>
           <Route path="about" element={<div>Hi !</div>}/>
-          <Route index element={<div>Home</div>}/>  
+          <Route index element={<Home />}/>  
         </Route>
       </Routes>
     </BrowserRouter>
