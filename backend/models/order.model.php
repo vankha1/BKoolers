@@ -89,8 +89,8 @@ class Order
             $query = "SELECT month(created_at) AS MONTH, sum(total_price) AS TOTAL_COST from Order group by month(created_at);";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
-        } catch (mysqli_sql_exception $e) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -100,8 +100,8 @@ class Order
             $query = "SELECT * FROM Order";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
-        } catch (mysqli_sql_exception $e) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
