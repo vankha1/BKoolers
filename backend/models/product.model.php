@@ -49,12 +49,12 @@ class Product {
 
     public function addProduct($data){
         try {
-            $ID = $data['id']
+            $ID = $data['id'];
             $CAT = $data['cat'];
             $NAME = $data['name'];
             $sizes = (array) $data['size'];
             $DESCRIPTION = $data['description'];
-            $QUANTITY = $data['quantity']
+            $QUANTITY = $data['quantity'];
             $PRICE = $data['price'];
             $DISCOUNT = $data['discount'];
             $IMAGE = $data['image'];
@@ -69,61 +69,61 @@ class Product {
         }
     }
 
-    public function get_info($id)
+    public function getInfo($id)
     {
         try {
             $query = "SELECT id, GROUP_CONCAT(distinct(SIZE)) AS SIZE FROM Product WHERE id = '$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
-    public function get_detail($id)
+    public function getDetail($id)
     {
         try {
             $query = "SELECT DISTINCT(id), product.NAME, description, discount, price, image, category.NAME AS CATEGORY
             FROM Product JOIN Category ON cat_id = category.cat_id WHERE id = '$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
-    public function get_quanity($idm $size)
+    public function getQuantityBySizeAndId($size, $id)
     {
         try {
             $query = "SELECT quantity FROM Product WHERE id = '$id' AND SIZE='$size'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
 
-    public function filter_categories($cat)
+    public function filterCategories($cat)
     {
         try {
             $query = "SELECT distinct(id), name, price, discount, image FROM Product
             WHERE cat_id = '$cat';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
 
-    public function filter_size($size)
+    public function fiterSize($size)
     {
         try {
             $query = "SELECT distinct(id), name, price, discount, image FROM Product WHERE size = '$size';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
@@ -135,18 +135,18 @@ class Product {
             $query = "SELECT cat_id, name from Category ";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }
     }
-    public function get_quanity($id)
+    public function getQuantityById($id)
     {
         try {
             $query = "SELECT quantity FROM Product WHERE id = '$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (mysqli_sql_exception $e) {
             throw new InternalServerError('Server Error !');
         }

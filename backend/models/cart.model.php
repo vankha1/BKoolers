@@ -22,8 +22,8 @@ class Cart
             $query = "SELECT * FROM Cart WHERE customer_id = '$CUS' AND product_id ='$PRODUCT' AND size ='$SIZE'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (count($result) > 0) {
                 $query = "UPDATE Cart SET quantity = quantity +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE'";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
@@ -44,8 +44,8 @@ class Cart
             GROUP BY customer_id;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
-        } catch (mysqli_sql_exception $e) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error!');
         }
     }
@@ -56,8 +56,8 @@ class Cart
             $query = "SELECT * FROM Cart AS C JOIN Product AS P ON C.product_id = P.id AND C.size = P.size WHERE customer_id = '$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            return $stmt->get_result();
-        } catch (mysqli_sql_exception $e) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -70,7 +70,7 @@ class Cart
             $query = "DELETE FROM Cart WHERE SIZE='$SIZE' AND product_id = '$ID' AND customer_id = '$CUS';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -84,7 +84,7 @@ class Cart
             $query = "UPDATE Cart SET quantity = '$QUANTITY' WHERE SIZE='$SIZE' AND product_id ='$PRODUCT' AND customer_id='$CUS';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }

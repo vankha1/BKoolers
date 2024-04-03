@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
 import './styles/index.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import CartMobile from './pages/CartMobile.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </Route>
           <Route path="about" element={<div>Hi !</div>}/>
           <Route path="user" element={<div>User</div>} />
-          <Route path="cart"/>
+          <Route path="cart" element={<CartMobile />}/>
           <Route index element={<Home />}/>  
         </Route>
       </Routes>
