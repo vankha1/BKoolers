@@ -1,6 +1,5 @@
 import React from 'react'
 import Product_item from '../components/Product_item'
-import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
 
 const products = [
@@ -30,29 +29,28 @@ const products = [
   }
 ]
 
-function Home() {
+const Home = () => {
   return (
-    <div className='h-screen px-5'>
+    <div className='px-5'>
       <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
         <h1 className="title leading-10">NEW ARRIVAL</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white">Xem tất cả</Link>
+        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
       </div>
       <div className='flex'>
         {products.map((product, index) => {
-          return <Product_item key={index} props={product}/>
+          return <Product_item key={index} product={product}/>
         })}
       </div>
 
       <div className="best-seller w-full h-20 flex justify-between items-center px-1">
         <h1 className="title leading-10">BEST SELLER</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white">Xem tất cả</Link>
+        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/bestsellers">Xem tất cả</Link>
       </div>
       <div className='flex'>
         {products.map((product, index) => {
-          return <Product_item key={index} props={product}/>
+          return <Product_item key={index} product={product}/>
         })}
       </div>
-      <Footer/>
     </div>
   )
 }
