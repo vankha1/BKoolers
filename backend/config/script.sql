@@ -2,6 +2,10 @@ DROP DATABASE IF EXISTS BK_CLOTHES;
 CREATE DATABASE BK_CLOTHES;
 USE BK_CLOTHES;
 
+CREATE TABLE Category(
+	cat_id INT auto_increment primary KEY,
+    name VARCHAR(64)
+);
 
 CREATE TABLE PRODUCT(
 	id VARCHAR(15),
@@ -12,9 +16,9 @@ CREATE TABLE PRODUCT(
     quantity INT,
     price INT,
     discount FLOAT,
-    image varchar(1024)
+    image varchar(1024),
 	PRIMARY KEY (id, size),
-    FOREIGN KEY (cat_id) REFERENCES Category(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (cat_id) REFERENCES Category(cat_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (quantity >= 0),
     CHECK (price >= 0)
 );
@@ -25,11 +29,6 @@ CREATE TABLE COLLECTION(
     DESCRIPTION TEXT
 );
 */
-
-CREATE TABLE Category(
-	cat_id INT auto_increment primary KEY,
-    name VARCHAR(64)
-);
 /*
 CREATE TABLE RESOURCE(
 	ID VARCHAR(30) primary key,
@@ -47,8 +46,7 @@ CREATE TABLE CUSTOMER(
     `username` varchar(255),
     `password` varchar(255),
     `address` varchar(255),
-    `avatar` varchar(1024),
-    PRIMARY KEY (id)
+    `avatar` varchar(1024)
 );
 
 CREATE TABLE Admin (
@@ -62,7 +60,7 @@ CREATE TABLE Admin (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Order (
+CREATE TABLE `Order` (
 	order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
     name VARCHAR(20),
@@ -93,8 +91,8 @@ CREATE TABLE OrderItem (
     size VARCHAR(10),
     quantity INT,
     primary key (product_id,SIZE,order_id),
-	FOREIGN KEY (product_id,SIZE) REFERENCES PRODUCT(CODE,SIZE) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (order_id) REFERENCES ORDER(order_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (product_id,SIZE) REFERENCES PRODUCT(id,SIZE) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (order_id) REFERENCES `ORDER`(order_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Cart(
@@ -129,16 +127,16 @@ INSERT INTO `BK_CLOTHES`.`Category` (`NAME`) VALUES ('Áo sơ mi nam');
 INSERT INTO `BK_CLOTHES`.`Category` (`NAME`) VALUES ('Quần tây nam');
 
 -- customer
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (1, 'Harry', 'Maguire', '0919281930', 'hmaguire@gmail.com', '1970-12-11', 'harrymachai', 'harryhahaha', '242 Manchester United Rd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fwoman-avatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAJ');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (2, 'Graham', 'Sterling', '0916392019', 'gsterling@gmail.com', '1998-03-07', 'grahamstienlinh', 'sterlingardinho', '123 Chelsea Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Davatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAc');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (3, 'Harry', 'Kane', '0294909391', 'hkane@gmail.com', '1987-10-13', 'harraykane', 'heineken', '153 Barcelona St.', 'https://www.freepik.com/free-psd/3d-illustration-person-with-sunglasses_27470334.htm#query=avatar&position=0&from_view=keyword&track=sph&uuid=a3b6ba5f-5b0c-489e-84ff-3ba476c47307');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (4, 'Andre', 'Onana', '3891039103', 'aonana@gmail.com', '1980-01-18', 'andreonana', 'ohahahaha', '333 Manchester City Rd.', 'https://www.freepik.com/free-psd/3d-rendering-avatar_70823121.htm#query=avatar&position=12&from_view=keyword&track=sph&uuid=a3b6ba5f-5b0c-489e-84ff-3ba476c47307');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (5, 'Antony', 'Taylor', '9201959100', 'ataylor@gmail.com', '1997-10-19', 'antonytaylor', 'nothinghere', '11 Referee St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Dwoman%2BAvatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAu');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (6, 'Erling', 'Haaland', '9198501022', 'ehaaland@gmail.com', '1998-03-02', 'erlinghaaland', 'haalanderling', '134 Penchester City Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Favatar-clipart&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABA4');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (7, 'Toni', 'Kross', '3295019015', 'tonikross@gmail.com', '1997-02-01', 'tonikross', 'afmnjksfnasj', '234 Germany St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fvn.lovepik.com%2Fimage-401704859%2Fboy-avatar.html&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBD');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (8, 'Joe', 'Hart', '9301591050', 'joehart@gmail.com', '1989-08-09', 'joehart', 'joeFART', '2418 Bolobala St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fman-avatar_5556468&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBO');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (9, 'Jude', 'Bellingham', '1930598501', 'judebellingham@gmail.com', '1997-05-04', 'juicyham', 'jgiowgwng', '24 Southgate Gareth Rd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fsearch%3Fq%3Davatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBZ');
-INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES (10, 'Christiano', 'Ronaldo', '3920550901', 'cr7@messi.com', '1989-04-03', 'christianoronaldo', 'vapcohoipen', '89 Penalty Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cssscript.com%2Fsvg-avatar-generator%2F&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBu');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Harry', 'Maguire', '0919281930', 'hmaguire@gmail.com', '1970-12-11', 'harrymachai', 'harryhahaha', '242 Manchester United Rd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fwoman-avatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAJ');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Graham', 'Sterling', '0916392019', 'gsterling@gmail.com', '1998-03-07', 'grahamstienlinh', 'sterlingardinho', '123 Chelsea Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Davatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAc');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Harry', 'Kane', '0294909391', 'hkane@gmail.com', '1987-10-13', 'harraykane', 'heineken', '153 Barcelona St.', 'https://www.freepik.com/free-psd/3d-illustration-person-with-sunglasses_27470334.htm#query=avatar&position=0&from_view=keyword&track=sph&uuid=a3b6ba5f-5b0c-489e-84ff-3ba476c47307');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Andre', 'Onana', '3891039103', 'aonana@gmail.com', '1980-01-18', 'andreonana', 'ohahahaha', '333 Manchester City Rd.', 'https://www.freepik.com/free-psd/3d-rendering-avatar_70823121.htm#query=avatar&position=12&from_view=keyword&track=sph&uuid=a3b6ba5f-5b0c-489e-84ff-3ba476c47307');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Antony', 'Taylor', '9201959100', 'ataylor@gmail.com', '1997-10-19', 'antonytaylor', 'nothinghere', '11 Referee St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Dwoman%2BAvatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABAu');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Erling', 'Haaland', '9198501022', 'ehaaland@gmail.com', '1998-03-02', 'erlinghaaland', 'haalanderling', '134 Penchester City Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Favatar-clipart&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABA4');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Toni', 'Kross', '3295019015', 'tonikross@gmail.com', '1997-02-01', 'tonikross', 'afmnjksfnasj', '234 Germany St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fvn.lovepik.com%2Fimage-401704859%2Fboy-avatar.html&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBD');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Joe', 'Hart', '9301591050', 'joehart@gmail.com', '1989-08-09', 'joehart', 'joeFART', '2418 Bolobala St.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fman-avatar_5556468&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBO');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Jude', 'Bellingham', '1930598501', 'judebellingham@gmail.com', '1997-05-04', 'juicyham', 'jgiowgwng', '24 Southgate Gareth Rd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fsearch%3Fq%3Davatar&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBZ');
+INSERT INTO `CUSTOMER` (`FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar`) VALUES ('Christiano', 'Ronaldo', '3920550901', 'cr7@messi.com', '1989-04-03', 'christianoronaldo', 'vapcohoipen', '89 Penalty Blvd.', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cssscript.com%2Fsvg-avatar-generator%2F&psig=AOvVaw0qPhlG90TyuLA_UwngIsbA&ust=1711937154051000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjF94G1nYUDFQAAAAAdAAAAABBu');
 
 -- admin
 INSERT INTO `Admin` (`id`, `FName`, `LName`, `phone`, `email`, `username`, `password`) VALUES (1, 'Teddy', 'Bear', '9019501950', 'teddybear@gmail.com', 'teddy', 'bear');
@@ -174,11 +172,11 @@ INSERT INTO `BK_CLOTHES`.`in_collection` (`ProductCode`, `CollectID`) VALUES ('D
 */
 
 -- Order
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_cost`, `payment_method`, `phone`, `address`) VALUES ('1', '2', 'La Nguyen Gia Hy', '2', '460000', 'cash', '0389205202', '27 Lý Chính Thắng, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_cost`, `payment_method`, `phone`, `address`) VALUES ('2', '4', 'Vo Van Kha', '1', '230000', 'momo', '0930269202', '32 Bà Huyện Thanh Quan, quận 8, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_cost`, `payment_method`, `phone`, `address`) VALUES ('3', '5', 'Nguyen Chau Long', '1', '240000', 'cash', '0293602060', '102 Hàm Nghi, phường 5, quận Gò Vấp, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_cost`, `payment_method`, `phone`, `address`) VALUES ('4', '6', 'Le Hong Phuc', '1', '200000', 'cash', '0290629603', '123 Huỳnh Thiện Lộc, Phú Nhuận, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_cost`, `payment_method`, `phone`, `address`) VALUES ('5', '7', 'Cristiano Messi', '2', '500000', 'bank', '0122204268', '42A Lê Trọng Tấn, Bình Thạnh, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('1', '2', 'La Nguyen Gia Hy', '2', '460000', 'cash', '0389205202', '27 Lý Chính Thắng, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('2', '4', 'Vo Van Kha', '1', '230000', 'momo', '0930269202', '32 Bà Huyện Thanh Quan, quận 8, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('3', '5', 'Nguyen Chau Long', '1', '240000', 'cash', '0293602060', '102 Hàm Nghi, phường 5, quận Gò Vấp, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('4', '6', 'Le Hong Phuc', '1', '200000', 'cash', '0290629603', '123 Huỳnh Thiện Lộc, Phú Nhuận, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('5', '7', 'Cristiano Messi', '2', '500000', 'bank', '0122204268', '42A Lê Trọng Tấn, Bình Thạnh, TP.HCM');
 
 -- OrderItem
 INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('1','JM190','S','2');
@@ -197,7 +195,7 @@ INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `
 INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('JM190','S' ,'4','1');
 INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('JM091','M' ,'1','1');
 INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TM290','XS' ,'2','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TM290','XL' ,'2','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TM291','XL' ,'2','2');
 INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TRM023','L' ,'3','2');
 INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TRM023','M' ,'5','1');
 
