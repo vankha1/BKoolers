@@ -36,20 +36,35 @@ if (array_key_exists('4', $url)) {
     }
     // PUT: web-assignment/backend/products/add
     elseif ($url['4'] == 'add' and $method == 'PUT') {
-        $data = (array) json_decode(file_get_contents('php://input'));
-        echo ProductController::addProduct($data);
-        http_response_code(200);
+        try {
+            $data = (array) json_decode(file_get_contents('php://input'));
+            echo ProductController::addProduct($data);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
     }
     // PUT: web-assignment/backend/products/update
     elseif ($url['4'] == 'update' and $method == 'PUT') {
-        $data = (array) json_decode(file_get_contents('php://input'));
-        echo ProductController::updateProduct($data);
-        http_response_code(200);
+        try {
+            $data = (array) json_decode(file_get_contents('php://input'));
+            echo ProductController::updateProduct($data);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
     }
     // DELETE: web-assignment/backend/products/delete
     elseif ($url['4'] == 'delete' and $method == 'DELETE') {
-        $data = (array) json_decode(file_get_contents('php://input'));
-        echo ProductController::deleteProduct($data);
-        http_response_code(200);
+        try {
+            $data = (array) json_decode(file_get_contents('php://input'));
+            echo ProductController::deleteProduct($data);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
     }
 }

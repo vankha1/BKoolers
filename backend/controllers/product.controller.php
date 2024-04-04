@@ -31,12 +31,30 @@ class ProductController {
 
     public static function updateProduct($data){
         $temp = new Product();
-        $temp->updateProduct($data);
+        $newProduct = $temp->edit($data);
+        if ($newProduct) {
+            return json_encode(["msg" => "Update success"]);
+        }
+        else{
+            return json_encode(["msg" => "Update failed"]);
+        }
     }
 
     public static function deleteProduct($id)
     {
         $temp = new Product();
-        $temp->deleteProduct($id);
+        $res = $temp->deleteProduct($id);
+        if ($res){
+            return json_encode(["msg" => "Delete success"]);
+        }
+        else{
+            return json_encode(["msg" => "Delete failed"]);
+        }
+    }
+
+    public static function restock($data)
+    {
+        $temp = new Product();
+        $temp->restock($data);
     }
 }

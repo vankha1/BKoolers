@@ -25,7 +25,7 @@ class Product {
 
     public function getProduct($id){
         try {
-            $query = "SELECT id, NAME, DESCRIPTION, PRICE, discount , image, GROUP_CONCAT(distinct(SIZE)) AS SIZE
+            $query = "SELECT id, NAME, DESCRIPTION, PRICE, discount , image, GROUP_CONCAT(distinct(SIZE)) AS SIZE FROM
             Product  WHERE id = '$id' GROUP BY id, NAME, DESCRIPTION, price, discount, image;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
@@ -38,9 +38,10 @@ class Product {
 
     public function deleteProduct($id){
         try {
-            $query = "DELETE FROM PRODUCT WHERE id = '$id';";
+            $id = $id['id'];
+            $query = "DELETE FROM Product WHERE id = '$id';";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            return $stmt->execute();
         } catch (PDOException $e) {
             echo $e->getMessage();
             throw new InternalServerError('Server Error !');
@@ -76,7 +77,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -88,7 +89,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -99,7 +100,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -112,7 +113,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -124,7 +125,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -136,7 +137,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -147,7 +148,7 @@ class Product {
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -160,7 +161,7 @@ class Product {
             $query = "UPDATE Product SET quantity = '$QUANITY' WHERE id = '$ID' and size = '$SIZE'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
@@ -176,11 +177,10 @@ class Product {
             $PRICE = $data['price'];
             $DISCOUNT = $data['discount'];
             $IMAGE = $data['image'];
-            $query = "UPDATE Product SET cat_id = '$CAT', name = '$NAME', size = '$SIZE', description = '$DESCRIPTION', quantity = '$QUANTITY', price ='$PRICE',
-            , discount = '$DISCOUNT', image = '$IMAGE' WHERE id = '$ID'";
+            $query = "UPDATE Product SET cat_id = '$CAT', name = '$NAME', size = '$SIZE', description = '$DESCRIPTION', quantity = '$QUANTITY', price ='$PRICE', discount = '$DISCOUNT', image = '$IMAGE' WHERE id = '$ID'";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+            return $stmt->execute();
+        } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
     }
