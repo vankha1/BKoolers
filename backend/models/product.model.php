@@ -160,7 +160,7 @@ class Product {
             $SIZE = $data['size'];
             $query = "UPDATE Product SET quantity = '$QUANITY' WHERE id = '$ID' and size = '$SIZE'";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            return $stmt->execute();
         } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }

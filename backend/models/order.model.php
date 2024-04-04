@@ -16,7 +16,7 @@ class Order
     public function getAllOrder($id)
     { // id of customer
         try {
-            $query = "SELECT * FROM Order WHERE customer_id ='$id';";
+            $query = "SELECT * FROM bk_clothes.order WHERE customer_id ='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -29,8 +29,8 @@ class Order
     { // id of 1 order
         try {
             $query = "SELECT O.id, O.customer, P.name , O.total_product, O.total_cost, O.phone, O.address, O.date_created, P.id, D.quantity
-            FROM O as O NATURAL JOIN OrderDetail  AS D JOIN Product AS P ON D.product_id = P.id
-            WHERE Order.id='$id';";
+            FROM bk_clothes.order as O NATURAL JOIN OrderDetail  AS D JOIN Product AS P ON D.product_id = P.id
+            WHERE bk_clothes.order.id ='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -86,7 +86,7 @@ class Order
     public function chart()
     { // id of customer
         try {
-            $query = "SELECT month(created_at) AS MONTH, sum(total_price) AS TOTAL_COST from Order group by month(created_at);";
+            $query = "SELECT month(created_at) AS MONTH, sum(total_price) AS TOTAL_COST from bk_clothes.order group by month(created_at);";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -97,7 +97,7 @@ class Order
     public function getAll_Admin()
     { // id of 1 order
         try {
-            $query = "SELECT * FROM Order";
+            $query = "SELECT * FROM bk_clothes.order;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
