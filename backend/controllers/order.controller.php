@@ -33,7 +33,13 @@ class OrderController
     public static function confirm($id)
     {
         $temp = new Order();
-        $temp->confirm($id);
+        $res = $temp->confirm($id);
+        if ($res){
+            return json_encode(['msg' => 'Success']);
+        }
+        else {
+            return json_encode(['msg' => 'Failure']);
+        }
     }
 
     public static function getAllAdmin()

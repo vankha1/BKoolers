@@ -27,13 +27,13 @@ if (array_key_exists('4', $url)) {
     }
     // GET: web-assignment/backend/orders/all
     elseif ($url['4'] == 'all' and $method == 'GET') {
-        // try {
+        try {
             echo OrderController::getAllAdmin();
             http_response_code(200);
-        // } catch (CustomError $e) {
-        //     echo json_encode(['msg' => $e->getMessage()]);
-        //     http_response_code($e->getStatusCode());
-        // }
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
     }
     // GET: web-assignment/backend/orders/detail?idOrder= // code of 1 order
     elseif ($url['4'] == 'detail' and $method == 'GET') {

@@ -28,9 +28,9 @@ class Order
     public function getOrder($id)
     { // id of 1 order
         try {
-            $query = "SELECT O.id, O.customer, P.name , O.total_product, O.total_cost, O.phone, O.address, O.date_created, P.id, D.quantity
-            FROM bk_clothes.order as O NATURAL JOIN OrderDetail  AS D JOIN Product AS P ON D.product_id = P.id
-            WHERE bk_clothes.order.id ='$id';";
+            $query = "SELECT O.order_id, O.customer_id, P.name , O.total_quantity, O.total_price, O.phone, O.address, O.created_at, P.id, I.quantity
+            FROM bk_clothes.order as O NATURAL JOIN bk_clothes.orderitem  AS I JOIN Product AS P ON I.product_id = P.id
+            WHERE O.order_id ='$id';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,14 +42,14 @@ class Order
     public function confirm($id)
     {
         try {
-            $query = "UPDATE Order SET status = 1  WHERE order_id ='$id'";
+            $query = "UPDATE bk_clothes.order SET status = 1  WHERE order_id ='$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            $query = "UPDATE Product AS P, OrderItem AS D SET P.QUANITY = P.QUANITY - D.quantity
+            $query = "UPDATE Product AS P, OrderItem AS D SET P.quantity = P.quantity - D.quantity
             WHERE id = product_id AND P.size = D.size AND order_id = '$id';";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            return $stmt->execute();
         } catch (PDOException $e) {
             throw new InternalServerError('Server Error !');
         }
