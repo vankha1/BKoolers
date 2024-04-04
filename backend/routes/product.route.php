@@ -67,4 +67,15 @@ if (array_key_exists('4', $url)) {
             http_response_code($e->getStatusCode());
         }
     }
+    // POST: web-assignment/backend/products/restock
+    elseif ($url['4'] == 'restock' and $method == 'POST') { #get quanity
+        try {
+            $data = (array) json_decode(file_get_contents('php://input'));
+            echo ProductController::restock($data);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
 }

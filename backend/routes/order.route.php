@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . '/../controllers/order.controller.php');
+include_once(dirname(__FILE__) . '/../middleware/error.php');
 
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $url = array_filter(explode('/', $url_components['path']));
@@ -26,13 +27,13 @@ if (array_key_exists('4', $url)) {
     }
     // GET: web-assignment/backend/orders/all
     elseif ($url['4'] == 'all' and $method == 'GET') {
-        try {
+        // try {
             echo OrderController::getAllAdmin();
             http_response_code(200);
-        } catch (CustomError $e) {
-            echo json_encode(['msg' => $e->getMessage()]);
-            http_response_code($e->getStatusCode());
-        }
+        // } catch (CustomError $e) {
+        //     echo json_encode(['msg' => $e->getMessage()]);
+        //     http_response_code($e->getStatusCode());
+        // }
     }
     // GET: web-assignment/backend/orders/detail?idOrder= // code of 1 order
     elseif ($url['4'] == 'detail' and $method == 'GET') {

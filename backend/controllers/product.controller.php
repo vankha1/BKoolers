@@ -51,10 +51,16 @@ class ProductController {
             return json_encode(["msg" => "Delete failed"]);
         }
     }
-
+    
     public static function restock($data)
     {
         $temp = new Product();
-        $temp->restock($data);
+        $res = $temp->restock($data);
+        if ($res){
+            return json_encode(["msg" => "Restock success"]);
+        }
+        else{
+            return json_encode(["msg" => "Restock failed"]);
+        }
     }
 }
