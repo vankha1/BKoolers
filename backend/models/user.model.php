@@ -24,7 +24,7 @@ class User
     public function getUser($username)
     {
         try {
-            $query = "SELECT `id`, `FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar` FROM Customer WHERE username = '$username'";
+            $query = "SELECT `customer_id`, `FName`, `LName`, `phone`, `email`, `birthday`, `username`, `password`, `address`, `avatar` FROM Customer WHERE username = '$username'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC to get only the associative array 

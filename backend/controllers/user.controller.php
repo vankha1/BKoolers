@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . '/../models/user.model.php');
+include_once(dirname(__FILE__) . '/../middleware/error.php');
 
 use Firebase\JWT\JWT;
 
@@ -31,9 +32,9 @@ class UserController
                 $jwt = JWT::encode($user, $key, 'HS256'); // This matches the decode in middleware/auth.php
                 return json_encode(["data" => [
                     'type' => 'user',
-                    'id' => $user[0]['id'],
-                    'firstname' => $user[0]['firstname'],
-                    'lastname' => $user[0]['lastname'],
+                    'id' => $user[0]['customer_id'],
+                    'firstname' => $user[0]['FName'],
+                    'lastname' => $user[0]['LName'],
                     'address' => $user[0]['address'],
                     'email' => $user[0]['email'],
                     'phone' => $user[0]['phone'],
@@ -42,6 +43,7 @@ class UserController
             }
             throw new FileNotFoundError("Incorrect password!!!");
         }
+
         $user = $temp->getUserAdmin($info['username']);
         if (count($user) == 1) {
             if ($user[0]['password'] == $info['password']) {
@@ -54,9 +56,9 @@ class UserController
 
                 return json_encode(["data" => [
                     'type' => 'admin',
-                    'id' => $user[0]['id'],
-                    'firstname' => $user[0]['firstname'],
-                    'lastname' => $user[0]['lastname'],
+                    'id' => $user[0]['customer_id'],
+                    'firstname' => $user[0]['FName'],
+                    'lastname' => $user[0]['LName'],
                     'token' => $jwt
                 ]]);
             }
@@ -71,7 +73,7 @@ class UserController
         $user = $temp->getUser($info['username']);
 
         if (count($user) == 0) {
-            $newUser = $temp->createUser($info['firstname'], $info['lastname'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address']);
+            $newUser = $temp->createUser($info['FName'], $info['LName'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address'], $info['avatar']);
             if ($newUser) {
                 http_response_code(200);
                 return json_encode(["msg" => "success"]);

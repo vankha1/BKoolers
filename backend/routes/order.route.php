@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . '/../controllers/order.controller.php');
+include_once(dirname(__FILE__) . '/../middleware/error.php');
 
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $url = array_filter(explode('/', $url_components['path']));
