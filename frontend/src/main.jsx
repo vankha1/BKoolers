@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
+import Product from './pages/Product.jsx';
 import './styles/index.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import CartMobile from './pages/CartMobile.jsx';
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="outerwears" element={<ProductDisplay title='Outerwears'/>}/>
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
+          <Route path="sanpham" element={<Product />}/>
           <Route path="about" element={<div>Hi !</div>}/>
           <Route path="user" element={<div>User</div>} />
           <Route path="cart" element={<CartMobile />}/>

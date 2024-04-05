@@ -8,7 +8,7 @@ function Product_item(props) {
         <div className="pl-5">
             <div className="flex my-2">
                 {props.product.colors.map((color) => {
-                    return <div key={color} className="h-8 w-8 mr-2" style={{background: color}}></div>
+                    return <div key={color} className="h-8 w-8 mr-2 border border-gray-100" style={{background: color}}></div>
                 })}
             </div>
             <div>{props.product.name}</div>

@@ -22,9 +22,9 @@ const Menu = (props) => {
             </div>
             <div className="flex flex-col flex-1">
                 {
-                    categories.map((category) => {
+                    categories.map((category, index) => {
                         return (
-                            <div className="h-[10%] flex items-center justify-center border-b-2 border-gray-300 hover:border-gray-700 hover:font-medium">
+                            <div key={index} className="h-[10%] flex items-center justify-center border-b-2 border-gray-300 hover:border-gray-700 hover:font-medium">
                                 <Link className="w-full text-center" to={category.link} onClick={() => { handleMenu() }}>{category.name}</Link>
                             </div>
                         )

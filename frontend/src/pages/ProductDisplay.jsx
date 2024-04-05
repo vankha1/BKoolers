@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar';
 import Product_item from '../components/Product_item';
+import axios from 'axios';
 
 const products = []
 for (var i = 0; i < 50; i++) {
@@ -14,6 +15,12 @@ for (var i = 0; i < 50; i++) {
 }
 
 function ProductDisplay({title}) {
+  useEffect(() => {
+    if (title == 'All Products') {
+      axios.get('')
+    }
+  },[])
+
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(() => {
     let result = []

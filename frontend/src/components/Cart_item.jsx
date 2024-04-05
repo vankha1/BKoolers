@@ -8,7 +8,7 @@ const Cart_Item = (props) => {
                     <img className="object-fill max-h-full" src='https://vn-test-11.slatic.net/p/241db312b371ef971cd74329edaa6bac.jpg' alt="" /> 
                 </div>
                 <div className="h-full w-full my-auto">
-                    <div class="h-1/4 py-2 my-1 mx-2 lg:mx-0">Ao polo </div>
+                    <div className="h-1/4 py-2 my-1 mx-2 lg:mx-0">Ao polo </div>
                     <div className="h-1/5 my-1 mx-2 lg:mx-0 flex items-center">
                         <div className="h-full mr-3 flex items-center">XL</div>
                         <div className="h-4 w-4" style={{background: "red"}}></div>
