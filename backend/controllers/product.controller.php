@@ -63,4 +63,45 @@ class ProductController {
             return json_encode(["msg" => "Restock failed"]);
         }
     }
+    public static function restockProduct($data)
+    {
+        $temp = new Product();
+        $temp->restock($data);
+    }
+    public static function getQuantity($id){
+        $temp = new Product();
+        $quantity = $temp->getQuantityById($id);
+        if (count($quantity) > 0) {
+            $quantity = json_encode($quantity);
+            return $quantity;
+        }
+        throw new FileNotFoundError("No product found!!!");
+    }
+    public static function getAllCategories(){
+        $temp = new Product();
+        $catlist = $temp->getAllCategories();
+        if (count($catlist) > 0) {
+            $catlist = json_encode($catlist);
+            return $catlist;
+        }
+        throw new FileNotFoundError("No product found!!!");
+    }
+    public static function filterCategories($id){
+        $temp = new Product();
+        $products = $temp->filterCategories($id);
+        if (count($products) > 0) {
+            $products = json_encode($products);
+            return $products;
+        }
+        throw new FileNotFoundError("No product found!!!");
+    }
+    public static function filterSize($value){
+        $temp = new Product();
+        $products = $temp->filterSize($value);
+        if (count($products) > 0) {
+            $products = json_encode($products);
+            return $products;
+        }
+        throw new FileNotFoundError("No product found!!!");
+    }
 }

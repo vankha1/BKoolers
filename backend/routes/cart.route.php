@@ -14,7 +14,7 @@ session_start();
 if ($url['4'] == 'add' and $method == 'POST') {
     try {
         $data = (array) json_decode(file_get_contents('php://input'));
-        echo CartController::addCart($data);
+        echo CartController::addToCart($data);
         http_response_code(200);
     } catch (CustomError $e) {
         echo json_encode(['msg' => $e->getMessage()]);
@@ -45,7 +45,7 @@ elseif ($url['4'] == 'detailCart' and $method == 'GET') {
 elseif ($url['4'] == 'deleteCart' and $method == 'POST') {
     try {
         $data = (array) json_decode(file_get_contents('php://input'));
-        echo CartController::deleteCart($data);
+        echo CartController::deleteItemFromCart($data);
         http_response_code(200);
     } catch (CustomError $e) {
         echo json_encode(['msg' => $e->getMessage()]);
