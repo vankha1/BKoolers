@@ -57,11 +57,13 @@ if (array_key_exists('4', $url)) {
             http_response_code($e->getStatusCode());
         }
     }
-    // PUT: web-assignment/backend/orders/confirm
+    // PUT: web-assignment/backend/orders/confirm?id=
     elseif ($url['4'] == 'confirm' and $method == 'PUT') {
         try {
-            $data = (array) json_decode(file_get_contents('php://input'));
-            echo OrderController::confirm($data['OrderID']);
+            // $data = (array) json_decode(file_get_contents('php://input'));
+            // echo OrderController::confirm($data['id']);
+            // http_response_code(200);
+            echo OrderController::confirm($params['id']);
             http_response_code(200);
         } catch (CustomError $e) {
             echo json_encode(['msg' => $e->getMessage()]);

@@ -33,8 +33,8 @@ class UserController
                 return json_encode(["data" => [
                     'type' => 'user',
                     'id' => $user[0]['customer_id'],
-                    'firstname' => $user[0]['FName'],
-                    'lastname' => $user[0]['LName'],
+                    'FName' => $user[0]['FName'],
+                    'LName' => $user[0]['LName'],
                     'address' => $user[0]['address'],
                     'email' => $user[0]['email'],
                     'phone' => $user[0]['phone'],
@@ -56,9 +56,9 @@ class UserController
 
                 return json_encode(["data" => [
                     'type' => 'admin',
-                    'id' => $user[0]['customer_id'],
-                    'firstname' => $user[0]['FName'],
-                    'lastname' => $user[0]['LName'],
+                    'id' => $user[0]['id'],
+                    'FName' => $user[0]['FName'],
+                    'LName' => $user[0]['LName'],
                     'token' => $jwt
                 ]]);
             }
@@ -73,7 +73,7 @@ class UserController
         $user = $temp->getUser($info['username']);
 
         if (count($user) == 0) {
-            $newUser = $temp->createUser($info['FName'], $info['LName'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address'], $info['avatar']);
+            $newUser = $temp->createUser($info['FName'], $info['LName'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address'], $info['address']);
             if ($newUser) {
                 http_response_code(200);
                 return json_encode(["msg" => "success"]);

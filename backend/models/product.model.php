@@ -25,8 +25,8 @@ class Product {
 
     public function getProduct($id){
         try {
-            $query = "SELECT id, NAME, DESCRIPTION, PRICE, discount , image, GROUP_CONCAT(distinct(SIZE)) AS SIZE FROM
-            Product  WHERE id = '$id' GROUP BY id, NAME, DESCRIPTION, price, discount, image;";
+            $query = "SELECT id, NAME, DESCRIPTION, PRICE, discount , image, GROUP_CONCAT(distinct(SIZE)) AS SIZE, GROUP_CONCAT(distinct(COLOR) SEPARATOR '/') AS COLOR
+            From Product WHERE id = '$id' GROUP BY id, NAME, DESCRIPTION, price, discount, image;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,10 +36,10 @@ class Product {
         }
     }
 
-    public function deleteProduct($id){
+    public function deleteProduct($data){
         try {
-            $id = $id['id'];
-            $query = "DELETE FROM Product WHERE id = '$id';";
+            $ID = $data['id'];
+            $query = "DELETE FROM PRODUCT WHERE id = '$ID';";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -53,17 +53,25 @@ class Product {
             $ID = $data['id'];
             $CAT = $data['cat'];
             $NAME = $data['name'];
-            $sizes = (array) $data['size'];
+            // $sizes = (array) $data['size'];
+            $size = $data['size'];
             $DESCRIPTION = $data['description'];
             $QUANTITY = $data['quantity'];
             $PRICE = $data['price'];
             $DISCOUNT = $data['discount'];
             $IMAGE = $data['image'];
-            foreach ($sizes as $size) {
-                $query = "INSERT INTO Product VALUES ('$ID', '$CAT', '$NAME','$size','$DESCRIPTION','$QUANTITY','$PRICE','$DISCOUNT','$IMAGE')";
-                $stmt = $this->conn->prepare($query);
-                $stmt->execute();
-            }
+            // $colors = (array) $data['color'];
+            $color = $data['color'];
+            // if (($key = array_search("", $colors)) !== false) {
+            //     unset($colors[$key]);
+            // }
+            // foreach ($sizes as $size) {
+            //     foreach ($colors as $x => $val) {
+                    $query = "INSERT INTO Product VALUES ('$ID','$CAT','$NAME','$size','$color','$DESCRIPTION', '$QUANTITY' , '$PRICE', '$DISCOUNT','$IMAGE')";
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->execute();
+            //     }
+            // }
         } catch (PDOException $e) {
             echo $e->getMessage();
             throw new InternalServerError('Server Error !');
@@ -118,10 +126,10 @@ class Product {
         }
     }
 
-    public function fiterSize($size)
+    public function filterSize($value)
     {
         try {
-            $query = "SELECT distinct(id), name, price, discount, image FROM Product WHERE size = '$size';";
+            $query = "SELECT distinct(id), name, price, discount, image FROM Product WHERE `size` = '$value';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -133,7 +141,7 @@ class Product {
     public function getAllCategories()
     {
         try {
-            $query = "SELECT cat_id, name from Category ";
+            $query = "SELECT cat_id, name from Category";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -165,19 +173,21 @@ class Product {
             throw new InternalServerError('Server Error !');
         }
     }
-    public function edit($data)
+    public function updateProduct($data)
     {
         try {
             $ID = $data['id'];
             $CAT = $data['cat'];
             $NAME = $data['name'];
             $SIZE = $data['size'];
+            $COLOR = $data['color'];
             $DESCRIPTION = $data['description'];
             $QUANTITY = $data['quantity'];
             $PRICE = $data['price'];
             $DISCOUNT = $data['discount'];
             $IMAGE = $data['image'];
-            $query = "UPDATE Product SET cat_id = '$CAT', name = '$NAME', size = '$SIZE', description = '$DESCRIPTION', quantity = '$QUANTITY', price ='$PRICE', discount = '$DISCOUNT', image = '$IMAGE' WHERE id = '$ID'";
+            $query = "UPDATE Product SET cat_id = '$CAT', name = '$NAME', size = '$SIZE', color = '$COLOR', description = '$DESCRIPTION', quantity = '$QUANTITY', discount = '$DISCOUNT', price ='$PRICE',
+            image = '$IMAGE' WHERE id = '$ID'";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute();
         } catch (PDOException $e) {

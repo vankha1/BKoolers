@@ -78,4 +78,50 @@ if (array_key_exists('4', $url)) {
             http_response_code($e->getStatusCode());
         }
     }
+    // POST: web-assignment/backend/products/restock
+    elseif ($url['4'] == 'restock' and $method == 'POST') {
+        $data = (array) json_decode(file_get_contents('php://input'));
+        echo ProductController::restockProduct($data);
+        http_response_code(200);
+    }
+    // GET: web-assignment/backend/products/quantity?id=
+    elseif ($url['4'] == 'quantity' and $method == 'GET') {
+        try {
+            echo ProductController::getQuantity($params['id']);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
+    // GET: web-assignment/backend/products/catlist
+    elseif ($url['4'] == 'catlist' and $method == 'GET') {
+        try {
+            echo ProductController::getAllCategories();
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
+    // GET: web-assignment/backend/products/cat?id=
+    elseif ($url['4'] == 'cat' and $method == 'GET') {
+        try {
+            echo ProductController::filterCategories($params['id']);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
+    // GET: web-assignment/backend/products/size?value=
+    elseif ($url['4'] == 'size' and $method == 'GET') {
+        try {
+            echo ProductController::filterSize($params['value']);
+            http_response_code(200);
+        } catch (CustomError $e) {
+            echo json_encode(['msg' => $e->getMessage()]);
+            http_response_code($e->getStatusCode());
+        }
+    }
 }

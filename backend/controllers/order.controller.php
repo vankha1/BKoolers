@@ -18,7 +18,7 @@ class OrderController
             $rows = json_encode($new);
             return $rows;
         }
-        throw new FileNotFoundError("Product not found !");
+        throw new FileNotFoundError("Order not found!");
     }
     public static function getAllOrder($id)
     {
@@ -28,7 +28,7 @@ class OrderController
             $rows = json_encode($new);
             return $rows;
         }
-        throw new FileNotFoundError("Product not found !");
+        throw new FileNotFoundError("Order not found!");
     }
     public static function confirm($id)
     {
@@ -50,6 +50,6 @@ class OrderController
             $rows = json_encode($new);
             return $rows;
         }
-        throw new FileNotFoundError("Product not found !");
+        throw new FileNotFoundError("Order not found!");
     }
 }

@@ -5,10 +5,10 @@ include_once(dirname(__FILE__) . '/../middleware/error.php');
 
 class CartController
 {
-    public static function addCart($data)
+    public static function addToCart($data)
     {
         $temp = new Cart();
-        $temp->addCart($data);
+        $temp->addToCart($data);
     }
     public static function calculate($id)
     {
@@ -29,10 +29,10 @@ class CartController
         }
         throw new FileNotFoundError("Product not found !");
     }
-    public static function deleteCart($data)
+    public static function deleteItemFromCart($data)
     {
         $temp = new Cart();
-        $new = $temp->deleteCart($data);
+        $new = $temp->deleteItemFromCart($data);
     }
     public static function edit($data)
     {

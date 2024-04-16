@@ -12,6 +12,7 @@ CREATE TABLE PRODUCT(
     cat_id INT,
     name VARCHAR(100),
     size VARCHAR(10),
+    color VARCHAR(10),
 	description varchar(256),
     quantity INT,
     price INT,
@@ -89,6 +90,7 @@ CREATE TABLE OrderItem (
     order_id INT,
 	product_id VARCHAR(15),
     size VARCHAR(10),
+    color VARCHAR(10),
     quantity INT,
     primary key (product_id,SIZE,order_id),
 	FOREIGN KEY (product_id,SIZE) REFERENCES PRODUCT(id,SIZE) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -98,6 +100,7 @@ CREATE TABLE OrderItem (
 CREATE TABLE Cart(
 	product_id VARCHAR(15),
     size VARCHAR(5),
+    color VARCHAR(10),
     customer_id INT,
     quantity INT,
     primary key (product_id, size, customer_id),
@@ -144,16 +147,16 @@ INSERT INTO `Admin` (`id`, `FName`, `LName`, `phone`, `email`, `username`, `pass
 INSERT INTO `Admin` (`id`, `FName`, `LName`, `phone`, `email`, `username`, `password`) VALUES (3, 'Ren', 'FNC', '1905910500', 'ngairen@gmail.com', 'randomusername', 'randompassword');
 
 -- Product, image taken from https://4menshop.com/quan-ao-nam.html
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`, `name`,`size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('JM190', '1', 'ÁO KHOÁC DÙ PHỐI MÀU AK025 MÀU XANH ĐEN', 'S', 'Áo khoác nam rẻ tiền, sang trọng', '100', '0.41', '385000', 'https://4menshop.com/images/thumbs/2023/04/ao-khoac-du-phoi-mau-ak025-mau-xanh-den-17901-slide-products-643d0c92dd6d8.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('JM091', '1', 'ÁO KHOÁC PHAO REGULAR SỌC NGANG AK050 MÀU ĐEN', 'M', 'Áo khoác phao sọc ngang màu đen', '89', '0.5', '545000', 'https://4menshop.com/images/thumbs/2023/03/ao-khoac-phao-regular-soc-ngang-ak050-mau-den-17801-slide-products-64070f33c48d7.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('JM295', '1', 'ÁO KHOÁC DÙ SURFING FORM REGULAR AK051 MÀU RÊU', 'L', 'Áo khoác dù độc quyền của BK CLOTHES', '26', '0.5', '485000', 'https://4menshop.com/images/thumbs/2023/05/ao-khoac-du-surfing-form-regular-ak051-mau-reu-18000-slide-products-6455ba77498c6.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('TM290', '2', 'ÁO THUN RÃ PHỐI MAY TAG FORM SLIMFIT AT144 MÀU ĐỎ MẬN', 'XS', 'Áo thun được dệt 100% từ vải cotton', '30', '0', '245000', 'https://4menshop.com/images/thumbs/2024/02/ao-thun-theu-still-life-bo-co-kieu-form-slimfit-at143-18400-slide-products-65dd8201a04f4.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('TM291', '2', 'ÁO THUN RÃ PHỐI IN HOME IS FORM REGULAR AT141 MÀU TRẮNG', 'XL', 'Áo thun được dệt 100% từ vải cotton', '42', '0', '275000', 'https://4menshop.com/images/thumbs/2024/01/ao-thun-ra-phoi-in-home-is-form-regular-at141-mau-trang-18365-slide-products-659d096a9961e.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('SM920', '3', 'ÁO SƠ MI SỌC TAY DÀI RÃ PHỐI FORM REGULAR SM143 SỌC TRẮNG', 'XL', 'Áo sơ mi trắng sang trọng, lịch sự', '12', '0', '375000', 'https://4menshop.com/images/thumbs/2023/12/ao-so-mi-soc-tay-dai-theu-4men-form-regular-sm141-soc-den-18317-slide-products-658a49d46768f.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('SM124', '3', 'ÁO SƠ MI TAY DÀI RÃ NGỰC THÊU 4M FORM SLIMFIT SM140 MÀU NÂU', 'L', 'Áo sơ mi nâu sang trọng, lịch sự, giá cả phải chăng', '21', '0.1', '345000', 'https://4menshop.com/images/thumbs/2023/10/ao-so-mi-tay-dai-ra-nguc-theu-4m-form-slimfit-sm140-18313-slide-products-653b2dfbc0a29.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('TRM290', '4', 'QUẦN TÂY NAZAFU LINEN QT1137 MÀU XANH BÍCH', 'XXL', 'Quần tây rẻ tiền với chất liệu được nhập khẩu từ Hoa Kỳ', '40', '0.7', '545000', 'https://4menshop.com/images/thumbs/2023/08/quan-tay-nazafu-linen-qt1137-mau-xanh-bich-18205-slide-products-64ddbf07dcfaf.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('TRM023', '4', 'QUẦN TÂY SIDETAB LƯNG 2 NÚT FORM REGULAR CROPPED QT057', 'M', 'Quần tây sidetab 2 lưng độc quyền của BK CLOTHES', '123', '0', '445000', 'https://4menshop.com/images/thumbs/2023/12/quan-tay-sidetab-form-slim-cropped-qt056-18332-slide-products-658a5e5b4dbc7.jpg');
-INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `description`, `quantity`, `price`, `discount`, `image`) VALUES ('TRM023', '4', 'QUẦN TÂY SIDETAB LƯNG 2 NÚT FORM REGULAR CROPPED QT057', 'L', 'Quần tây sidetab 2 lưng độc quyền của BK CLOTHES', '12', '0', '545000', 'https://4menshop.com/images/thumbs/2023/12/quan-tay-sidetab-form-slim-cropped-qt056-18332-slide-products-658a5e5b4dbc7.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`, `name`,`size`, `color`, `description`, `quantity`, `discount`, `price`, `image`) VALUES ('JM190', '1', 'ÁO KHOÁC DÙ PHỐI MÀU AK025 MÀU XANH ĐEN', 'S', 'black', 'Áo khoác nam rẻ tiền, sang trọng', '100', '0.41', '385000', 'https://4menshop.com/images/thumbs/2023/04/ao-khoac-du-phoi-mau-ak025-mau-xanh-den-17901-slide-products-643d0c92dd6d8.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('JM091', '1', 'ÁO KHOÁC PHAO REGULAR SỌC NGANG AK050 MÀU ĐEN', 'M', 'yellow',  'Áo khoác phao sọc ngang màu đen', '89', '0.5', '545000', 'https://4menshop.com/images/thumbs/2023/03/ao-khoac-phao-regular-soc-ngang-ak050-mau-den-17801-slide-products-64070f33c48d7.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('JM295', '1', 'ÁO KHOÁC DÙ SURFING FORM REGULAR AK051 MÀU RÊU', 'L', 'orange', 'Áo khoác dù độc quyền của BK CLOTHES', '26', '0.5', '485000', 'https://4menshop.com/images/thumbs/2023/05/ao-khoac-du-surfing-form-regular-ak051-mau-reu-18000-slide-products-6455ba77498c6.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('TM290', '2', 'ÁO THUN RÃ PHỐI MAY TAG FORM SLIMFIT AT144 MÀU ĐỎ MẬN', 'XS', 'pink', 'Áo thun được dệt 100% từ vải cotton', '30', '0', '245000', 'https://4menshop.com/images/thumbs/2024/02/ao-thun-theu-still-life-bo-co-kieu-form-slimfit-at143-18400-slide-products-65dd8201a04f4.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('TM291', '2', 'ÁO THUN RÃ PHỐI IN HOME IS FORM REGULAR AT141 MÀU TRẮNG', 'XL', 'blue', 'Áo thun được dệt 100% từ vải cotton', '42', '0', '275000', 'https://4menshop.com/images/thumbs/2024/01/ao-thun-ra-phoi-in-home-is-form-regular-at141-mau-trang-18365-slide-products-659d096a9961e.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('SM920', '3', 'ÁO SƠ MI SỌC TAY DÀI RÃ PHỐI FORM REGULAR SM143 SỌC TRẮNG', 'XL', 'orange', 'Áo sơ mi trắng sang trọng, lịch sự', '12', '0', '375000', 'https://4menshop.com/images/thumbs/2023/12/ao-so-mi-soc-tay-dai-theu-4men-form-regular-sm141-soc-den-18317-slide-products-658a49d46768f.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('SM124', '3', 'ÁO SƠ MI TAY DÀI RÃ NGỰC THÊU 4M FORM SLIMFIT SM140 MÀU NÂU', 'L', 'pink', 'Áo sơ mi nâu sang trọng, lịch sự, giá cả phải chăng', '21', '0.1', '345000', 'https://4menshop.com/images/thumbs/2023/10/ao-so-mi-tay-dai-ra-nguc-theu-4m-form-slimfit-sm140-18313-slide-products-653b2dfbc0a29.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('TRM290', '4', 'QUẦN TÂY NAZAFU LINEN QT1137 MÀU XANH BÍCH', 'XXL', 'black', 'Quần tây rẻ tiền với chất liệu được nhập khẩu từ Hoa Kỳ', '40', '0.7', '545000', 'https://4menshop.com/images/thumbs/2023/08/quan-tay-nazafu-linen-qt1137-mau-xanh-bich-18205-slide-products-64ddbf07dcfaf.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('TRM023', '4', 'QUẦN TÂY SIDETAB LƯNG 2 NÚT FORM REGULAR CROPPED QT057', 'M', 'blue', 'Quần tây sidetab 2 lưng độc quyền của BK CLOTHES', '123', '0', '445000', 'https://4menshop.com/images/thumbs/2023/12/quan-tay-sidetab-form-slim-cropped-qt056-18332-slide-products-658a5e5b4dbc7.jpg');
+INSERT INTO `BK_CLOTHES`.`product` (`id`, `cat_id`,`name`, `size`, `color`,  `description`, `quantity`, `discount`, `price`, `image`) VALUES ('TRM023', '4', 'QUẦN TÂY SIDETAB LƯNG 2 NÚT FORM REGULAR CROPPED QT057', 'L', 'yellow', 'Quần tây sidetab 2 lưng độc quyền của BK CLOTHES', '12', '0', '545000', 'https://4menshop.com/images/thumbs/2023/12/quan-tay-sidetab-form-slim-cropped-qt056-18332-slide-products-658a5e5b4dbc7.jpg');
 /*
 -- Collection
 INSERT INTO `BK_CLOTHES`.`collection` (`NAME`, `DESCRIPTION`) VALUES ('Gửi em', 'Ôm trọn thanh xuân - Đẹp ở mọi vũ trụ!');
@@ -172,19 +175,19 @@ INSERT INTO `BK_CLOTHES`.`in_collection` (`ProductCode`, `CollectID`) VALUES ('D
 */
 
 -- Order
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('1', '2', 'La Nguyen Gia Hy', '2', '460000', 'cash', '0389205202', '27 Lý Chính Thắng, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('2', '4', 'Vo Van Kha', '1', '230000', 'momo', '0930269202', '32 Bà Huyện Thanh Quan, quận 8, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('3', '5', 'Nguyen Chau Long', '1', '240000', 'cash', '0293602060', '102 Hàm Nghi, phường 5, quận Gò Vấp, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('4', '6', 'Le Hong Phuc', '1', '200000', 'cash', '0290629603', '123 Huỳnh Thiện Lộc, Phú Nhuận, TP.HCM');
-INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('5', '7', 'Cristiano Messi', '2', '500000', 'bank', '0122204268', '42A Lê Trọng Tấn, Bình Thạnh, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('1', '2', 'La Nguyen Gia Hy', '2', '726800', 'cash', '0389205202', '27 Lý Chính Thắng, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('2', '4', 'Vo Van Kha', '1', '245000', 'momo', '0930269202', '32 Bà Huyện Thanh Quan, quận 8, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('3', '5', 'Nguyen Chau Long', '1', '275000', 'cash', '0293602060', '102 Hàm Nghi, phường 5, quận Gò Vấp, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('4', '6', 'Le Hong Phuc', '1', '163500', 'cash', '0290629603', '123 Huỳnh Thiện Lộc, Phú Nhuận, TP.HCM');
+INSERT INTO `BK_CLOTHES`.`Order` (`order_id`, `customer_id`, `name`, `total_quantity`, `total_price`, `payment_method`, `phone`, `address`) VALUES ('5', '7', 'Cristiano Messi', '3', '1635000', 'bank', '0122204268', '42A Lê Trọng Tấn, Bình Thạnh, TP.HCM');
 
 -- OrderItem
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('1','JM190','S','2');
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('1','JM091','M','1');
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('2','TM290','XS','1');
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('3','TM291','XL','1');
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('4','TRM290','XXL','1');
-INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `quantity`) VALUES ('5','TRM023','L','3');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('1','JM190','S','black','2');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('1','JM091','M','yellow','1');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('2','TM290','XS','pink','1');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('3','TM291','XL','blue','1');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('4','TRM290','XXL','black','1');
+INSERT INTO `BK_CLOTHES`.`OrderItem` (`order_id`, `product_id`, `size`, `color`, `quantity`) VALUES ('5','TRM023','L','yellow','3');
 
 -- comment
 INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `RATING`, `created_at`, `content`) VALUES ('1', 'SM920', '2', '5', '2024-04-01', 'Mặt hàng này rất tốt, giả cả phù hợp');
@@ -192,12 +195,12 @@ INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `
 INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `RATING`, `created_at`, `content`) VALUES ('3', 'TRM023', '5', '5', '2024-05-02', 'Sản phẩm chất lượng, sẽ mua lại vào lần sáu');
 
 -- add-to-cart
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('JM190','S' ,'4','1');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('JM091','M' ,'1','1');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TM290','XS' ,'2','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TM291','XL' ,'2','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TRM023','L' ,'3','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `customer_id`,`quantity`) VALUES ('TRM023','M' ,'5','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('JM190','S', 'black','4','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('JM091','M','yellow','1','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TM290','XS','pink','2','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TM291','XL','blue','2','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TRM023','L','yellow','3','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TRM023','M','blue','5','1');
 
 /*
 -- resource

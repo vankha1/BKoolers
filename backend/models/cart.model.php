@@ -12,23 +12,24 @@ class Cart
         $db = new db();
         $this->conn = $db->connect();
     }
-    public function addCart($data)
+    public function addToCart($data)
     { // id of customer
         try {
             $CUS = $data['customer_id'];
             $PRODUCT = $data['product_id'];
             $SIZE = $data['size'];
+            $COLOR = $data['color'];
             $QUANTITY = $data['quantity'];
-            $query = "SELECT * FROM Cart WHERE customer_id = '$CUS' AND product_id ='$PRODUCT' AND size ='$SIZE'";
+            $query = "SELECT * FROM Cart WHERE customer_id = '$CUS' AND product_id ='$PRODUCT' AND size ='$SIZE'  AND color ='$COLOR'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (count($result) > 0) {
-                $query = "UPDATE Cart SET quantity = quantity +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE'";
+                $query = "UPDATE Cart SET quantity = quantity +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE' AND color = '$COLOR'";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             } else {
-                $query = "INSERT INTO Cart (product_id, size, customer_id, quantity) VALUES ('$PRODUCT','$SIZE','$CUS','$QUANTITY')";
+                $query = "INSERT INTO Cart (product_id, size, color, customer_id, quantity) VALUES ('$PRODUCT','$SIZE','$COLOR','$CUS','$QUANTITY')";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             }
@@ -39,13 +40,14 @@ class Cart
     public function calculate($id)
     {
         try {
-            $query = "SELECT customer_id, SUM(quantity), SUM(quantity * (price * (1 - discount))) AS total_cost
+            $query = "SELECT customer_id, SUM(C.quantity) as total_quantity, SUM(C.quantity * (P.price * (1 - P.discount))) AS total_cost
             FROM Cart AS C JOIN Product AS P ON product_id = id AND C.size = P.size WHERE customer_id = '$id'
             GROUP BY customer_id;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            echo $e->getMessage();
             throw new InternalServerError('Server Error!');
         }
     }
@@ -61,13 +63,14 @@ class Cart
             throw new InternalServerError('Server Error !');
         }
     }
-    public function deleteCart($data)
+    public function deleteItemFromCart($data)
     {
         try {
             $ID = $data['product_id'];
             $SIZE = $data['size'];
+            $COLOR = $data['color'];
             $CUS = $data['customer_id'];
-            $query = "DELETE FROM Cart WHERE SIZE='$SIZE' AND product_id = '$ID' AND customer_id = '$CUS';";
+            $query = "DELETE FROM Cart WHERE SIZE='$SIZE' AND color = '$COLOR' AND product_id = '$ID' AND customer_id = '$CUS';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
         } catch (PDOException $e) {
@@ -79,9 +82,10 @@ class Cart
         try {
             $PRODUCT = $data['product_id'];
             $SIZE = $data['size'];
+            $COLOR = $data['color'];
             $CUS = $data['customer_id'];
             $QUANTITY = $data['quantity'];
-            $query = "UPDATE Cart SET quantity = '$QUANTITY' WHERE SIZE='$SIZE' AND product_id ='$PRODUCT' AND customer_id='$CUS';";
+            $query = "UPDATE Cart SET quantity = '$QUANTITY' WHERE SIZE='$SIZE' AND color = '$COLOR' AND product_id ='$PRODUCT' AND customer_id='$CUS';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
         } catch (PDOException $e) {
