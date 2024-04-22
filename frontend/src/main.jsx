@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Home from './pages/Home.jsx';
+import Admin from './pages/Admin.jsx';
+import Shipping from './pages/Shipping.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
 import Product from './pages/Product.jsx';
 import './styles/index.css';
@@ -21,9 +23,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="pants" element={<ProductDisplay title='Pants'/>}/>
             <Route path="footwears" element={<ProductDisplay title='Footwears'/>}/>
             <Route path="outerwears" element={<ProductDisplay title='Outerwears'/>}/>
+            <Route path="product/:productId" element={<Product/>}/>
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
-          <Route path="sanpham" element={<Product />}/>
+          <Route path="admin" element={<Admin />}/>
+          <Route path="shipping" element={<Shipping />}/>
           <Route path="about" element={<div>Hi !</div>}/>
           <Route path="user" element={<div>User</div>} />
           <Route path="cart" element={<CartMobile />}/>

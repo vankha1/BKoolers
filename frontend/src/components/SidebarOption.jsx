@@ -1,15 +1,34 @@
+import axios from 'axios';
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 
 
-const SidebarOption = ({title, options}) => {
+const SidebarOption = ({title, options, func}) => {
     const [icon, setIcon] = useState(true)
     const [check, setCheck] = useState(-1)
+    const [catlist, setCatlist] = useState([])
 
     const handleIconClick = () => {
         setIcon(!icon)
+    }
+
+    useEffect(() => {
+      axios.get('http://localhost/web-assignment/backend/products/catlist').then(res => setCatlist(res.data))
+    }, [])
+
+    const handleFilt = (option) => {
+      if (option.length == 1) {
+        axios.get(`http://localhost/web-assignment/backend/products/size?value=${option}`).then(res => func(res.data))
+      } else {
+        for (var i = 0; i < catlist.length; i++) {
+          if (option == catlist[i].name) {
+            axios.get(`http://localhost/web-assignment/backend/products/cat?id=${catlist[i].cat_id}`).then(res => func(res.data))
+            break
+          }
+        }
+      }
     }
 
   return (
@@ -21,9 +40,8 @@ const SidebarOption = ({title, options}) => {
             <div className={`${icon ? 'hidden' : 'block'}`}>
               <ul>
                 {options.map((option, index) => {
-                  return (<li key={index} onClick={() => {setCheck(index); console.log(index)}}>
-                    <div className={`flex items-center px-3 py-2 cursor-pointer hover:bg-gray-100 ${check == index && 'bg-gray-200'}`}>
-                      <div className='h-5 w-5 mr-3' style={title === 'Color' ? {backgroundColor: option} : {backgroundColor: 'lightgray', borderRadius: '50%'}}></div>
+                  return (<li key={index} onClick={() => {setCheck(index); handleFilt(option)}}>
+                    <div className={`flex items-center px-10 py-2 cursor-pointer hover:bg-gray-100 ${check == index && 'bg-gray-200'}`}>
                       <h1>{option[0].toUpperCase() + option.slice(1)}</h1>
                     </div>
                   </li>)

@@ -1,35 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Product_item from '../components/Product_item'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-const products = [
-  {
-    colors: ['black', 'white'],
-    name: 'Áo polo',
-    price: 300,
-    imageURL: 'https://down-vn.img.susercontent.com/file/8faf62247d4d3b33050725716526f874'
-  },
-  {
-    colors: ['black', 'white'],
-    name: 'Áo polo',
-    price: 300,
-    imageURL: 'https://down-vn.img.susercontent.com/file/0b12664f286ccc80b6e4ba39cbff338e'
-  },
-  {
-    colors: ['black', 'white'],
-    name: 'Áo polo',
-    price: 300,
-    imageURL: 'https://vn-test-11.slatic.net/p/241db312b371ef971cd74329edaa6bac.jpg'
-  },
-  {
-    colors: ['black', 'white'],
-    name: 'Áo polo',
-    price: 300,
-    imageURL: 'https://yeepvn.sgp1.digitaloceanspaces.com/2023/04/b4fd461e522e9a283576c3d0e637fa18.jpg'
-  }
-]
-
 const Home = () => {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost/web-assignment/backend/products/all').then(res => {
+      setProducts(res.data)
+    })
+  }, [])
+
   return (
     <div className='px-5'>
       <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
@@ -37,7 +19,7 @@ const Home = () => {
         <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
       </div>
       <div className='flex'>
-        {products.map((product, index) => {
+        {products.slice(0,4).map((product, index) => {
           return <Product_item key={index} product={product}/>
         })}
       </div>
@@ -47,7 +29,7 @@ const Home = () => {
         <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/bestsellers">Xem tất cả</Link>
       </div>
       <div className='flex'>
-        {products.map((product, index) => {
+        {products.slice(4,8).map((product, index) => {
           return <Product_item key={index} product={product}/>
         })}
       </div>
