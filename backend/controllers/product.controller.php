@@ -31,7 +31,7 @@ class ProductController {
 
     public static function updateProduct($data){
         $temp = new Product();
-        $newProduct = $temp->edit($data);
+        $newProduct = $temp->updateProduct($data);
         if ($newProduct) {
             return json_encode(["msg" => "Update success"]);
         }

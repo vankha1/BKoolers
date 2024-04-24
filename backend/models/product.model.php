@@ -67,7 +67,7 @@ class Product {
             // }
             // foreach ($sizes as $size) {
             //     foreach ($colors as $x => $val) {
-            $query = "INSERT INTO Product VALUES ('$ID','$CAT','$NAME','$size','$DESCRIPTION', '$QUANTITY' , '$PRICE', '$DISCOUNT','$IMAGE', '$color')";
+            $query = "INSERT INTO Product VALUES ('$ID','$CAT','$NAME','$size', '$color','$DESCRIPTION', '$QUANTITY' , '$PRICE', '$DISCOUNT','$IMAGE')";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             //     }
