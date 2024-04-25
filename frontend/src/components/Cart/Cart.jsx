@@ -1,8 +1,16 @@
 import { PiSuitcaseSimple } from "react-icons/pi";
-import useCheckDeviceScreen from "../customizes/useCheckDeviceScreen";
-import { useState, useEffect } from "react";
+import useCheckDeviceScreen from "../../customizes/useCheckDeviceScreen";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {Link} from "react-router-dom";
 import Cart_Item from "./Cart_item";
+import axios from "axios";
+import useFetchCart from "../../customizes/useFetchCart";
+
+const appName = "BKooler";
+//server routes
+const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
+const cartEdit = `http://localhost:80/${appName}/backend/cart/edit`;
+
 
 const NotifyIcon = (props) => {
     const { numb } = props;
@@ -22,40 +30,36 @@ const NotifyIcon = (props) => {
 }
 
 const Cart = (props) => {
-    const [product, setProduct] = useState([
-        {
-            colors: ['black', 'white'],
-            name: 'Áo polo',
-            price: 300,
-            imageURL: 'https://down-vn.img.susercontent.com/file/8faf62247d4d3b33050725716526f874'
-          },
-          {
-            colors: ['black', 'white'],
-            name: 'Áo polo',
-            price: 300,
-            imageURL: 'https://down-vn.img.susercontent.com/file/0b12664f286ccc80b6e4ba39cbff338e'
-          },
-          {
-            colors: ['black', 'white'],
-            name: 'Áo polo',
-            price: 300,
-            imageURL: 'https://vn-test-11.slatic.net/p/241db312b371ef971cd74329edaa6bac.jpg'
-          },
-          {
-            colors: ['black', 'white'],
-            name: 'Áo polo',
-            price: 300,
-            imageURL: 'https://yeepvn.sgp1.digitaloceanspaces.com/2023/04/b4fd461e522e9a283576c3d0e637fa18.jpg'
-          }
-    ])
+    const {data, stock, trigger} = useFetchCart(2);
+    const scrollRef = props.scrollRef;
     const [isCartOpen, setCartOpen] = useState(false);
     const isMobile = useCheckDeviceScreen();
 
-    const handleCartOpen = () => {
-        if(!isMobile) setCartOpen(!isCartOpen);
-    }
-    const itemNums = product.length;
+    const handleCartOpen = useCallback(() => {
+        if(!isMobile) {
+            setCartOpen(!isCartOpen);
+            if(isCartOpen) {
+                scrollRef.current.className = "overscroll-none";
+            } else {
+                scrollRef.current.className = "overscroll-default";
+            }
+        }
+    }, [isMobile, isCartOpen])
 
+    const itemNums = useMemo(() => data.length, [data]);
+
+    useEffect(() => {
+        if(isCartOpen) {
+            scrollRef.current.className = "overflow-hidden h-screen";
+        } else {
+            scrollRef.current.className = "";
+        }
+    }, [isCartOpen])
+
+    const handleShipping = useCallback(() => {
+        //TODO
+    }, [])
+  
     return (
         <> 
             <NotifyIcon numb={itemNums}/>
@@ -67,15 +71,16 @@ const Cart = (props) => {
                     <PiSuitcaseSimple size={"25"} onClick={() => handleCartOpen()}/>
                     <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[99] p-1 flex flex-col justify-between border-l border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
-                        <Cart_Item isMobile={false}/>
-                        <Cart_Item/>
-                        <Cart_Item/>
-                        <Cart_Item/>
-                        <Cart_Item/>
-                        <Cart_Item/>
+                        {
+                            data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index} stock={stock[index]} 
+                            trigger={trigger}
+                            ></Cart_Item>)
+                        }
                         </div>
                         <div className="h-[8%] w-full p-2">
-                            <div className="h-full w-full rounded-lg bg-black text-white text-xl flex justify-center items-center hover:text-2xl">BUY</div>
+                            <div className="h-full w-full rounded-md bg-black text-white text-xl flex justify-center items-center"
+                            onClick={() => {handleShipping()}}
+                            >Mua</div>
                         </div>
 
                         
