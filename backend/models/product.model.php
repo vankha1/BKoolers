@@ -13,7 +13,7 @@ class Product {
 
     public function getAllProducts() {
         try {
-            $query = "SELECT distinct(id), NAME, PRICE, discount, image FROM Product;";
+            $query = "SELECT distinct(id), name, price, discount, image FROM Product;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,8 +25,8 @@ class Product {
 
     public function getProduct($id){
         try {
-            $query = "SELECT id, NAME, DESCRIPTION, PRICE, discount , image, GROUP_CONCAT(distinct(SIZE)) AS SIZE, GROUP_CONCAT(distinct(COLOR) SEPARATOR '/') AS COLOR
-            From Product WHERE id = '$id' GROUP BY id, NAME, DESCRIPTION, price, discount, image;";
+            $query = "SELECT id, name, description, price, discount , image, GROUP_CONCAT(DISTINCT size) AS size, GROUP_CONCAT(DISTINCT COLOR SEPARATOR '/') AS color
+            FROM Product WHERE id = '$id' GROUP BY id, name, description, price, discount, image;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -67,9 +67,9 @@ class Product {
             // }
             // foreach ($sizes as $size) {
             //     foreach ($colors as $x => $val) {
-                    $query = "INSERT INTO Product VALUES ('$ID','$CAT','$NAME','$size','$color','$DESCRIPTION', '$QUANTITY' , '$PRICE', '$DISCOUNT','$IMAGE')";
-                    $stmt = $this->conn->prepare($query);
-                    $stmt->execute();
+            $query = "INSERT INTO Product VALUES ('$ID','$CAT','$NAME','$size', '$color','$DESCRIPTION', '$QUANTITY' , '$PRICE', '$DISCOUNT','$IMAGE')";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
             //     }
             // }
         } catch (PDOException $e) {
@@ -81,7 +81,7 @@ class Product {
     public function getInfo($id)
     {
         try {
-            $query = "SELECT id, GROUP_CONCAT(distinct(SIZE)) AS SIZE FROM Product WHERE id = '$id'";
+            $query = "SELECT id, GROUP_CONCAT(distinct(SIZE)) AS size FROM Product WHERE id = '$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
