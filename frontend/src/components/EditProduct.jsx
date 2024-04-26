@@ -20,7 +20,7 @@ const EditProduct = ({func, proid}) => {
     const [size, setSize] = useState("");
 
     useEffect(() => {
-        axios.get(`http://localhost/web-assignment/backend/products/detail?id=${proid}`).then(res => {
+        axios.get(`http://127.0.0.1:8080/web-assignment/backend/products/detail?id=${proid}`).then(res => {
             setId(proid)
             setName(res.data[0].NAME)
             setDescription(res.data[0].DESCRIPTION)
@@ -71,7 +71,7 @@ const EditProduct = ({func, proid}) => {
     }
     
     const handleSubmit = async () => {
-        await axios.put(`http://localhost/web-assignment/backend/products/update`, {
+        await axios.put(`http://127.0.0.1:8080/web-assignment/backend/products/update`, {
                 id: id,
                 cat: category,
                 name: name,

@@ -9,7 +9,7 @@ const SelectSizeCat = ({handCat, handSize}) => {
 
     useEffect(() => {
         axios
-          .get("http://localhost/web-assignment/backend/products/catlist")
+          .get("http://127.0.0.1:8080/web-assignment/backend/products/catlist")
           .then((res) => {
             const newCatList = res.data;
             for (var i = 0; i < newCatList.length; i++) {

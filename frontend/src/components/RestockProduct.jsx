@@ -11,7 +11,7 @@ const RestockProduct = ({ func, proid }) => {
   const [size, setSize] = useState("");
 
   const handleRestock = async () => {
-    await axios.post("http://localhost/web-assignment/backend/products/restock", {
+    await axios.post("http://127.0.0.1:8080/web-assignment/backend/products/restock", {
         data: {
             quantity: quantity,
             id: proid,

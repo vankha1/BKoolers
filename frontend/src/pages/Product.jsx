@@ -24,17 +24,17 @@ const Product = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost/web-assignment/backend/products/detail?id=${productId}`
+        `http://127.0.0.1:8080/web-assignment/backend/products/detail?id=${productId}`
       )
       .then((res) => setProduct(res.data[0]));
 
-    axios.get(`http://localhost/web-assignment/backend/products/quantity?id=${productId}`).then((res) => setStock(res.data[0].quantity))
+    axios.get(`http://127.0.0.1:8080/web-assignment/backend/products/quantity?id=${productId}`).then((res) => setStock(res.data[0].quantity))
   }, [productId]);
 
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/all').then(res => {
+    axios.get('http://127.0.0.1:8080/web-assignment/backend/products/all').then(res => {
       setProducts(res.data)
     })
   }, [])

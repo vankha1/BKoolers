@@ -9,7 +9,7 @@ const Sidebar = ({func}) => {
   const [catlist, setCatlist] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/catlist').then(res => {
+    axios.get('http://127.0.0.1:8080/web-assignment/backend/products/catlist').then(res => {
       var list = []
       for (var i = 0; i < res.data.length; i++) {
         list.push(res.data[i].name)

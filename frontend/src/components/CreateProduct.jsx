@@ -57,7 +57,7 @@ const CreateProduct = ({func}) => {
     }
 
     const handleSubmit = async () => {
-        await axios.put(`http://localhost/web-assignment/backend/products/add`, {
+        const res = await axios.put(`http://127.0.0.1:8080/web-assignment/backend/products/add`, {
                 id: id,
                 cat: category,
                 name: name,
@@ -66,7 +66,8 @@ const CreateProduct = ({func}) => {
                 quantity: quantity,
                 price: price,
                 discount: discount,
-                image: image
+                image: image,
+                color: "red"
         })
         func()
       };

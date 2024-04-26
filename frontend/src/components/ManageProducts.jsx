@@ -14,13 +14,13 @@ const ManageProducts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/web-assignment/backend/products/all")
+      .get("http://127.0.0.1:8080/web-assignment/backend/products/all")
       .then((res) => setProducts(res.data));
   }, [change]);
 
   const handleDelete = async (id) => {
     await axios.delete(
-      "http://localhost/web-assignment/backend/products/delete",
+      "http://127.0.0.1:8080/web-assignment/backend/products/delete",
       {
         data: {
           id: id,
@@ -67,8 +67,8 @@ const ManageProducts = () => {
                       <img src={product.image} alt="" />
                     </div>
                   </th>
-                  <td className="px-6 py-4 font-semibold">{product.NAME}</td>
-                  <td className="px-6 py-4">{product.PRICE} VND</td>
+                  <td className="px-6 py-4 font-semibold">{product.name}</td>
+                  <td className="px-6 py-4">{product.price} VND</td>
                   <td className="px-6 py-4">
                     <MdOutlineDelete
                       onClick={() => handleDelete(product.id)}

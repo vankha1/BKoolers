@@ -8,7 +8,7 @@ function ProductDisplay({title}) {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/all').then(res => {
+    axios.get('http://127.0.0.1:8080/web-assignment/backend/products/all').then(res => {
       setProducts(res.data)
     })
   }, [])

@@ -15,16 +15,16 @@ const SidebarOption = ({title, options, func}) => {
     }
 
     useEffect(() => {
-      axios.get('http://localhost/web-assignment/backend/products/catlist').then(res => setCatlist(res.data))
+      axios.get('http://127.0.0.1:8080/web-assignment/backend/products/catlist').then(res => setCatlist(res.data))
     }, [])
 
     const handleFilt = (option) => {
       if (option.length == 1) {
-        axios.get(`http://localhost/web-assignment/backend/products/size?value=${option}`).then(res => func(res.data))
+        axios.get(`http://127.0.0.1:8080/web-assignment/backend/products/size?value=${option}`).then(res => func(res.data))
       } else {
         for (var i = 0; i < catlist.length; i++) {
           if (option == catlist[i].name) {
-            axios.get(`http://localhost/web-assignment/backend/products/cat?id=${catlist[i].cat_id}`).then(res => func(res.data))
+            axios.get(`http://127.0.0.1:8080/web-assignment/backend/products/cat?id=${catlist[i].cat_id}`).then(res => func(res.data))
             break
           }
         }

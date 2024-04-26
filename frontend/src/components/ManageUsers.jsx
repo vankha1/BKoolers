@@ -4,7 +4,7 @@ import axios from "axios";
 const ManageUsers = () => {
     const [users, setUsers] = useState([])
     useEffect(() => {
-        axios.get('http://localhost/web-assignment/backend/users/all').then(res => setUsers(res.data))
+        axios.get('http://127.0.0.1:8080/web-assignment/backend/users/all').then(res => setUsers(res.data))
     }, [])
   
     return (
