@@ -102,7 +102,7 @@ CREATE TABLE Cart(
     size VARCHAR(5),
     color VARCHAR(10),
     customer_id INT,
-    quantity INT,
+    number INT,
     primary key (product_id, size, customer_id),
 	FOREIGN KEY (product_id, size) REFERENCES PRODUCT(id, size) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -195,12 +195,12 @@ INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `
 INSERT INTO `BK_CLOTHES`.`comment` (`comment_id`, `product_id`, `customer_id`, `RATING`, `created_at`, `content`) VALUES ('3', 'TRM023', '5', '5', '2024-05-02', 'Sản phẩm chất lượng, sẽ mua lại vào lần sáu');
 
 -- add-to-cart
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('JM190','S', 'black','4','1');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('JM091','M','yellow','1','1');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TM290','XS','pink','2','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TM291','XL','blue','2','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TRM023','L','yellow','3','2');
-INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`quantity`) VALUES ('TRM023','M','blue','5','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('JM190','S', 'black','4','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('JM091','M','yellow','1','1');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('TM290','XS','pink','2','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('TM291','XL','blue','2','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('TRM023','L','yellow','3','2');
+INSERT INTO `BK_CLOTHES`.`Cart` (`product_id`,`size`, `color`,`customer_id`,`number`) VALUES ('TRM023','M','blue','5','1');
 
 /*
 -- resource
