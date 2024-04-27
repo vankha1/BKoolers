@@ -6,7 +6,7 @@ import Cart_Item from "./Cart_item";
 import axios from "axios";
 import useFetchCart from "../../customizes/useFetchCart";
 
-const appName = "BKooler";
+const appName = "web-assignment";
 //server routes
 const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
 const cartEdit = `http://localhost:80/${appName}/backend/cart/edit`;

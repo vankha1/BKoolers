@@ -11,8 +11,8 @@ function Product_item(props) {
                     return <div key={color} className="h-8 w-8 mr-2 border border-gray-100" style={{background: color}}></div>
                 })}
             </div> */}
-            <div className="py-2 text-base truncate">{props.product.NAME || props.product.name}</div>
-            <div className="py-2 text-lg">{props.product.PRICE || props.product.price} VND</div>
+            <div className="py-2 text-base truncate">{props.product.name}</div>
+            <div className="py-2 text-lg">{props.product.price} VND</div>
         </div>
     </div>
     </Link>

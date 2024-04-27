@@ -1,6 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Shipping = () => {
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost/web-assignment/backend/cart/detailCart?id=2`)
+      .then((res) => setProducts(res.data));
+  }, []);
+
+  useEffect(() => {
+    axios.get(`http://localhost/web-assignment/backend/cart/calculate?id=2`).then(res => console.log(res))
+  }, [])
+
+  const handleMakeOrder = async () => {
+    await axios.post('http://localhost/web-assignment/backend/orders/add', {
+      data: {
+        customer_id: 1,
+        name: name,
+        phone: phone,
+        address: address,
+        payment_method: 'cash',
+        
+      }
+    })
+  }
+
   return (
     <>
       <div className="px-5 py-3 border border-gray-100">
@@ -23,6 +55,8 @@ const Shipping = () => {
               <input
                 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
                 type="text"
+                value={name}
+                onInput={e => setName(e.target.value)}
               />
             </div>
           </div>
@@ -37,6 +71,8 @@ const Shipping = () => {
               <input
                 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
                 type="text"
+                value={phone}
+                onInput={e => setPhone(e.target.value)}
               />
             </div>
           </div>
@@ -51,6 +87,8 @@ const Shipping = () => {
               <input
                 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
                 type="text"
+                value={address}
+                onInput={e => setAddress(e.target.value)}
               />
             </div>
           </div>
@@ -70,127 +108,31 @@ const Shipping = () => {
           </div>
 
           <div className="float-right py-2">
-            <button className="btn-primary px-5 mr-10">Xác nhận</button>
-            <button className="btn-secondary px-8">Thoát</button>
+            <button onClick={handleMakeOrder} className="btn-primary px-5 mr-10">Xác nhận</button>
+            <Link to="/" className="btn-secondary py-[10px] px-8">
+              Thoát
+            </Link>
           </div>
         </div>
 
         <div className="w-1/2 pr-20 pl-16 h-96 overflow-scroll">
-        <div className=" mb-6 font-semibold text-lg">
-            Danh sách sản phẩm
-          </div>
+          <div className=" mb-6 font-semibold text-lg">Danh sách sản phẩm</div>
 
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
+          {products.map((product, index) => (
+            <div key={index} className="flex mb-3">
+              <div className="w-16 border border-gray-200 mr-5">
+                <img src={product.image} alt="" />
+              </div>
+              <div className="flex-1">
+                <div className="font-medium mb-3">{product.name}</div>
                 <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
+                  <div className="mr-20">Size: {product.size}</div>
+                  <div>Số lượng: {product.quantity}</div>
                 </div>
-                <div>Giá: </div>
+                <div>Giá: {product.price} VND</div>
+              </div>
             </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
-
-          <div className="flex mb-3">
-            <div className="w-16 border border-gray-200 mr-5">
-                <img src="https://4men.com.vn/thumbs/2021/05/ao-polo-soc-ngang-po038-19560-p.jpg" alt="" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium mb-3">ÁO SƠ MI SLIMFIT TRƠN VẢI CHÉO SM061 MÀU ĐEN</div>
-                <div className="flex">
-                    <div className="mr-20">Size: </div>
-                    <div>Số lượng: </div>
-                </div>
-                <div>Giá: </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </>

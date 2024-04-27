@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
-const appName = "BKooler";
+const appName = "web-assignment";
 //server routes
 const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
 const productStock = `http://localhost:80/${appName}/backend/products/quantity`; 
@@ -16,7 +16,6 @@ const useFetchCart = (id) => {
                 id: i
             }
         }).then(async (res) => {
-            console.log(res.data);
             setData(res.data);
             const stock = await Promise.all(res.data.map(async (data) => {
                 const result = await axios.get(productStock, {

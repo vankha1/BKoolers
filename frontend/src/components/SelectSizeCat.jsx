@@ -3,8 +3,8 @@ import axios from 'axios';
 import Select from 'react-select'
 import { useEffect, useState } from 'react';
 
-const SelectSizeCat = ({handCat, handSize}) => {
-    
+const SelectSizeCat = ({handCat, handSize, selectSize}) => {
+    const [size, setSize] = useState(selectSize)
     const [catlist, setCatlist] = useState([]);
 
     useEffect(() => {
@@ -77,9 +77,10 @@ const SelectSizeCat = ({handCat, handSize}) => {
                   </div>
                   <div className="md:w-3/4">
                     <Select
+                      value={size}
                       styles={style}
                       options={sizelist}
-                      onChange={handSize}
+                      onChange={(opt) => {handSize(opt); setSize(opt)}}
                     />
                   </div>
                 </div>

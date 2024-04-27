@@ -19,7 +19,7 @@ const SidebarOption = ({title, options, func}) => {
     }, [])
 
     const handleFilt = (option) => {
-      if (option.length == 1) {
+      if (option.length <= 2) {
         axios.get(`http://localhost/web-assignment/backend/products/size?value=${option}`).then(res => func(res.data))
       } else {
         for (var i = 0; i < catlist.length; i++) {

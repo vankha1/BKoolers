@@ -11,7 +11,7 @@ import PopupContent from './PopupContent';
 const EditProduct = ({func, proid}) => {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
+    const [color, setColor] = useState("");
     const [quantity, setQuantity] = useState("");
     const [category, setCategory] = useState(0);
     const [price, setPrice] = useState("");
@@ -22,11 +22,11 @@ const EditProduct = ({func, proid}) => {
     useEffect(() => {
         axios.get(`http://localhost/web-assignment/backend/products/detail?id=${proid}`).then(res => {
             setId(proid)
-            setName(res.data[0].NAME)
-            setDescription(res.data[0].DESCRIPTION)
-            setPrice(res.data[0].PRICE)
+            setName(res.data[0].name)
+            setColor(res.data[0].color)
+            setPrice(res.data[0].price)
             setImage(res.data[0].image)
-            setSize(res.data[0].SIZE)
+            setSize(res.data[0].size)
             setDiscount(res.data[0].discount)
         })
     }, [])
@@ -40,9 +40,9 @@ const EditProduct = ({func, proid}) => {
             name: name,
             method: setName
         },
-        descriptionField: {
-            name: description,
-            method: setDescription
+        colorField: {
+            name: color,
+            method: setColor
         },
         quantityField: {
             name: quantity,
@@ -71,18 +71,29 @@ const EditProduct = ({func, proid}) => {
     }
     
     const handleSubmit = async () => {
+      console.log({id: id,
+        cat: category,
+        name: name,
+        size: size,
+        color: color,
+        description: '',
+        quantity: quantity,
+        price: price,
+        discount: discount,
+        image: image})
+
         await axios.put(`http://localhost/web-assignment/backend/products/update`, {
                 id: id,
                 cat: category,
                 name: name,
                 size: size,
-                description: description,
+                color: color,
+                description: '',
                 quantity: quantity,
                 price: price,
                 discount: discount,
                 image: image
         })
-        console.log('Update')
         func()
       };
   return (

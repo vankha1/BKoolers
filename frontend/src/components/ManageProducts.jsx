@@ -67,8 +67,8 @@ const ManageProducts = () => {
                       <img src={product.image} alt="" />
                     </div>
                   </th>
-                  <td className="px-6 py-4 font-semibold">{product.NAME}</td>
-                  <td className="px-6 py-4">{product.PRICE} VND</td>
+                  <td className="px-6 py-4 font-semibold">{product.name}</td>
+                  <td className="px-6 py-4">{product.price} VND</td>
                   <td className="px-6 py-4">
                     <MdOutlineDelete
                       onClick={() => handleDelete(product.id)}

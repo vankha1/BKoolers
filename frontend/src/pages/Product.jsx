@@ -5,46 +5,103 @@ import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Product_item from "../components/Product_item";
 
 const Product = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "auto",
-  });
-
   const [quantity, setQuantity] = useState(1);
   const [checkColor, setCheckColor] = useState();
   const [checkSize, setCheckSize] = useState();
+  const [sizes, setSizes] = useState([]);
   const [product, setProduct] = useState({});
-  const [stock, setStock] = useState(0)
+  const [productArr, setProductArr] = useState([]);
+  const [stock, setStock] = useState(0);
 
   const { productId } = useParams();
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
       .get(
         `http://localhost/web-assignment/backend/products/detail?id=${productId}`
       )
-      .then((res) => setProduct(res.data[0]));
+      .then((res) => {
+        setQuantity(1);
+        setProductArr(res.data);
+        setProduct(res.data[0]);
+        setSizes(res.data[0].size.split(","));
+      });
 
-    axios.get(`http://localhost/web-assignment/backend/products/quantity?id=${productId}`).then((res) => setStock(res.data[0].quantity))
+    axios
+      .get(
+        `http://localhost/web-assignment/backend/products/quantity?id=${productId}`
+      )
+      .then((res) => setStock(res.data[0].quantity));
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
   }, [productId]);
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/all').then(res => {
-      setProducts(res.data)
+    axios
+      .get("http://localhost/web-assignment/backend/products/all")
+      .then((res) => {
+        setProducts(res.data);
+      });
+  }, []);
+
+  const handleAdd = async () => {
+    console.log({
+      product_id: productId,
+      size: checkSize,
+      color: checkColor,
+      customer_id: 1,
+      // customer_id: Number(document.cookie.slice(
+      //   document.cookie.indexOf("userID") + 7
+      // )),
+      quantity: quantity
     })
-  }, [])
+    await axios.post("http://localhost/web-assignment/backend/cart/add", {
+      data: {
+        product_id: productId,
+        size: checkSize,
+        color: checkColor,
+        customer_id: 1,
+        // customer_id: Number(document.cookie.slice(
+        //   document.cookie.indexOf("userID") + 7
+        // )),
+        quantity: quantity
+      },
+    });
+  };
+
+  const handleBuy = async () => {
+    // await axios.post("http://localhost/web-assignment/backend/cart/add", {
+    //   data: {
+    //     product_id: productId,
+    //     size: checkSize,
+    //     color: checkColor,
+    //     customer_id: 1,
+    //     // customer_id: Number(document.cookie.slice(
+    //     //   document.cookie.indexOf("userID") + 7
+    //     // )),
+    //     quantity: quantity
+    //   }
+    // }).then(() => {
+    //   navigate('/shipping')
+    // })
+  }
 
   return (
     <>
-      <div className="text-lg font-medium px-5 py-4 border border-gray-200">
-        {product.NAME}
+      <div className="text-lg mb-8 font-medium px-5 py-4 border border-gray-200">
+        {product.name}
       </div>
-      <div className="flex py-10 mb-2">
+      <div className="flex mb-14">
         <div className="w-1/2 pl-20">
           <div className="w-7/12 m-auto">
             <img src={product.image} alt="" />
@@ -54,30 +111,52 @@ const Product = () => {
         <div className="w-1/2 pr-20">
           <div>
             <div className="w-3/5 m-auto">
-              <div className="py-3 text-lg font-medium">{product.NAME}</div>
-              <div className="py-3 text-2xl font-medium">{product.PRICE} VND</div>
-              <div className="flex justify-between py-3">
-                <div>Đánh giá sản phẩm</div>
-                <div className="mr-2 font-medium">4.5/5</div>
+              <div className="py-3 text-lg font-medium">{product.name}</div>
+              <div className="py-3 text-2xl font-medium">
+                {product.price} VND
               </div>
-              {/* <div className="flex justify-between py-3">
+              <div className="flex justify-between py-3">
                 <div>Color</div>
-                <div className='flex'>
-                  {product.colors.map(color => {
-                    return <div key={color} onClick={() => setCheckColor(color)} className={`${checkColor == color && 'border-2 border-black'}`}>
-                      <div className="h-8 w-8 m-0.5 border border-gray-200" style={{background: color}}></div>
-                    </div>
+                <div className="flex mr-2">
+                  {productArr.map((eproduct) => {
+                    return (
+                      <div
+                        key={eproduct.color}
+                        onClick={() => {
+                          setCheckColor(eproduct.color);
+                          setProduct(eproduct);
+                          setSizes(eproduct.size.split(","));
+                        }}
+                        className={`h-8 w-8 ml-2 border cursor-pointer ${
+                          checkColor == eproduct.color
+                            ? "border-2 border-black"
+                            : "border-gray-200"
+                        }`}
+                        style={{ background: eproduct.color }}
+                      ></div>
+                    );
                   })}
                 </div>
-              </div> */}
+              </div>
               <div className="flex justify-between py-3">
                 <div>Size</div>
-                <div className="mr-2">{product.SIZE}</div>
-                {/* <div className='flex justify-between'>
-                  {product.sizes.map(size => {
-                    return <div key={size} onClick={() => setCheckSize(size)} className={`border-2 ${checkSize == size ? 'border-black' : 'border-gray-200'}  px-2 py-1 mx-2`}>Size {size}</div>
+                <div className="flex justify-between">
+                  {sizes.map((psize) => {
+                    return (
+                      <div
+                        key={psize}
+                        onClick={() => setCheckSize(psize)}
+                        className={`border-2 cursor-pointer ${
+                          checkSize == psize
+                            ? "border-black"
+                            : "border-gray-200"
+                        }  px-2 py-1 mx-2`}
+                      >
+                        Size {psize}
+                      </div>
+                    );
                   })}
-                </div> */}
+                </div>
               </div>
 
               <div className="flex justify-between py-3">
@@ -98,40 +177,57 @@ const Product = () => {
 
               <div className="flex justify-between py-3">
                 <div>Tình trạng</div>
-                <div className="mr-2">{stock > 0 ? 'Còn hàng' : 'Hết hàng'}</div>
+                <div className="mr-2">
+                  {stock > 0 ? "Còn hàng" : "Hết hàng"}
+                </div>
               </div>
 
-              <div className="mt-16 mb-4">
-                <button className="btn-secondary w-full">
+              <div className="mt-12 mb-4">
+                <button
+                  onClick={handleAdd}
+                  className="btn-secondary w-full"
+                  disabled={stock <= 0}
+                >
                   Thêm vào giỏ hàng
                 </button>
               </div>
               <div>
-                <button className="btn-primary w-full">Mua ngay</button>
+                <button onClick={handleBuy} className="btn-primary w-full" disabled={stock <= 0}>
+                  Mua ngay
+                </button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
         <h1 className="title leading-10">NEW ARRIVAL</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
+        <Link
+          className="btn-primary px-5 flex items-center hover:text-white"
+          to="/products/newarrivals"
+        >
+          Xem tất cả
+        </Link>
       </div>
-      <div className='flex'>
-        {products.slice(0,4).map((barproduct, index) => {
-          return <Product_item key={index} product={barproduct}/>
+      <div className="flex">
+        {products.slice(0, 4).map((barproduct, index) => {
+          return <Product_item key={index} product={barproduct} />;
         })}
       </div>
 
       <div className="best-seller w-full h-20 flex justify-between items-center px-1">
         <h1 className="title leading-10">BEST SELLER</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/bestsellers">Xem tất cả</Link>
+        <Link
+          className="btn-primary px-5 flex items-center hover:text-white"
+          to="/products/bestsellers"
+        >
+          Xem tất cả
+        </Link>
       </div>
-      <div className='flex'>
-        {products.slice(4,8).map((barproduct, index) => {
-          return <Product_item key={index} product={barproduct}/>
+      <div className="flex">
+        {products.slice(4, 8).map((barproduct, index) => {
+          return <Product_item key={index} product={barproduct} />;
         })}
       </div>
     </>

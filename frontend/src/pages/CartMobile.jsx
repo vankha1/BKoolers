@@ -3,7 +3,7 @@ import axios from "axios";
 import Cart_Item from "../components/Cart/Cart_item";
 import useFetchCart from "../customizes/useFetchCart";
 
-const appName = "BKooler";
+const appName = "web-assignment";
 //server routes
 const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
 const cartEdit = `http://localhost:80/${appName}/backend/cart/edit`;

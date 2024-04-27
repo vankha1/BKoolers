@@ -4,6 +4,7 @@ import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import Admin from './pages/Admin.jsx';
 import Shipping from './pages/Shipping.jsx';
+import Signin from './pages/Signin.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
 import Product from './pages/Product.jsx';
 import './styles/index.css';
@@ -14,7 +15,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/signin" element={<div>Sign in</div>}/> 
+        <Route path="/signin" element={<Signin />}/>
+        <Route path="/admin" element={<Admin />}/>
         <Route path="/" element={<App/>}>
           <Route path="products/">
             <Route path="newarrivals" element={<ProductDisplay title='New Arrival'/>}/>
@@ -26,7 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="product/:productId" element={<Product/>}/>
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
-          <Route path="admin" element={<Admin />}/>
           <Route path="shipping" element={<Shipping />}/>
           <Route path="about" element={<div>Hi !</div>}/>
           <Route path="user" element={<div>User</div>} />

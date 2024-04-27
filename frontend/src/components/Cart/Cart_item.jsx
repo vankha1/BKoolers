@@ -2,7 +2,7 @@ import { FaMinus, FaPlus, FaX } from "react-icons/fa6";
 import { memo, useCallback } from "react";
 import axios from "axios";
 
-const appName = "BKooler";
+const appName = "web-assignment";
 //server routes
 const editCart = `http://localhost:80/${appName}/backend/cart/edit`;
 const deleteCart = `http://localhost:80/${appName}/backend/cart/delete`;
