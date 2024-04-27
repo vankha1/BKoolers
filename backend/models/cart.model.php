@@ -19,17 +19,17 @@ class Cart
             $PRODUCT = $data['product_id'];
             $SIZE = $data['size'];
             $COLOR = $data['color'];
-            $QUANTITY = $data['quantity'];
+            $QUANTITY = $data['number'];
             $query = "SELECT * FROM Cart WHERE customer_id = '$CUS' AND product_id ='$PRODUCT' AND size ='$SIZE'  AND color ='$COLOR'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (count($result) > 0) {
-                $query = "UPDATE Cart SET quantity = quantity +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE' AND color = '$COLOR'";
+                $query = "UPDATE Cart SET number = number +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE' AND color = '$COLOR'";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             } else {
-                $query = "INSERT INTO Cart (product_id, size, color, customer_id, quantity) VALUES ('$PRODUCT','$SIZE','$COLOR','$CUS','$QUANTITY')";
+                $query = "INSERT INTO Cart (product_id, size, color, customer_id, number) VALUES ('$PRODUCT','$SIZE','$COLOR','$CUS','$QUANTITY')";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             }
@@ -40,7 +40,7 @@ class Cart
     public function calculate($id)
     {
         try {
-            $query = "SELECT customer_id, SUM(C.quantity) as total_quantity, SUM(C.quantity * (P.price * (1 - P.discount))) AS total_cost
+            $query = "SELECT customer_id, SUM(C.number) as total_quantity, SUM(C.number * (P.price * (1 - P.discount))) AS total_cost
             FROM Cart AS C JOIN Product AS P ON product_id = id AND C.size = P.size WHERE customer_id = '$id'
             GROUP BY customer_id;";
             $stmt = $this->conn->prepare($query);
@@ -85,7 +85,7 @@ class Cart
             $COLOR = $data['color'];
             $CUS = $data['customer_id'];
             $QUANTITY = $data['quantity'];
-            $query = "UPDATE Cart SET quantity = '$QUANTITY' WHERE SIZE='$SIZE' AND color = '$COLOR' AND product_id ='$PRODUCT' AND customer_id='$CUS';";
+            $query = "UPDATE Cart SET number = '$QUANTITY' WHERE SIZE='$SIZE' AND color = '$COLOR' AND product_id ='$PRODUCT' AND customer_id='$CUS';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
         } catch (PDOException $e) {
