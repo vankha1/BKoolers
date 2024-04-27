@@ -17,7 +17,7 @@ const Header = (props) => {
         if(isMenuOpen) {
             scrollRef.current.className = "overflow-hidden h-screen";
         } else {
-            scrollRef.current.className = "";
+            scrollRef.current.className = "h-screen";
         }
     }, [isMenuOpen])
 
@@ -25,7 +25,7 @@ const Header = (props) => {
     return (
         <div className="w-full h-[8%] flex justify-between align-middle bg-gray-600">
             <div className="px-5 flex basis-1/3 items-center justify-between">
-                <div className={`h-fit ${isMenuOpen ? "hidden" : "block"}`}>
+                <div className={`h-fit ${isMenuOpen ? "hidden" : "block"} hover:cursor-pointer`}>
                     <FaBars size={25} onClick={() => { handleMenu() }} />
                 </div>
                 <div className={`fixed inset-0 z-[99] w-screen bg-black/20 ${isMenuOpen ? "h-screen" : "h-0"}`}>
@@ -36,7 +36,7 @@ const Header = (props) => {
             </div>
             <div className="flex basis-1/3 justify-center items-center">
                 <Link to="/">
-                    <div className='m-auto w-40 md:w-80 h-8 flex justify-center items-center font-bold bg-black text-white'>
+                    <div className='m-auto w-40 md:w-80 h-10 flex justify-center items-center font-bold bg-black text-white'>
                         BKooler
                     </div>
                 </Link>

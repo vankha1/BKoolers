@@ -8,8 +8,6 @@ const categories = [
         { name: "Best Sellers", link: "/products/bestsellers" },
         { name: "Shirts", link: "/products/shirts" },
         { name: "Pants", link: "/products/pants" },
-        { name: "Foot Wears", link: "/products/footwears" },
-        { name: "Outer Wears", link: "/products/outerwears" },
         { name: "About us", link: "/about" }
 ];
 
@@ -18,14 +16,14 @@ const Navbar = memo((props) => {
 
     return (
         <div className={`flex flex-col h-[100%] flex-1 ${menuState ? "block" : "hidden"}`}>
-            <div className="px-5 h-[8%] flex items-center">
+            <div className="px-5 h-[8%] flex items-center hover:cursor-pointer border-b border-gray-300">
                 <RiArrowLeftDoubleLine size={33} onClick={() => { handleMenu() }} />
             </div>
             <div className="flex flex-col flex-1">
                 {
                     categories.map((category, index) => {
                         return (
-                            <div key={index} className="h-[10%] flex items-center justify-center border-b-2 border-gray-300 hover:border-gray-700 hover:font-semibold">
+                            <div key={index} className="h-[15%] flex items-center justify-center border-b-2 border-gray-300 hover:border-gray-700 hover:font-semibold hover:cursor-pointer">
                                 <Link className="w-full text-center" to={category.link} onClick={() => { handleMenu() }}>{category.name}</Link>
                             </div>
                         )
