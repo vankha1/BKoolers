@@ -8,7 +8,6 @@ const productStock = `http://localhost:80/${appName}/backend/products/quantity`;
 
 const useFetchCart = (id) => {
     const [data, setData] = useState([]);
-    const [stock, setStock] = useState([]);
 
     const trigger = useCallback((i = id) => {
         axios.get(cartDetail, {
@@ -16,17 +15,7 @@ const useFetchCart = (id) => {
                 id: i
             }
         }).then(async (res) => {
-            console.log(res.data);
             setData(res.data);
-            const stock = await Promise.all(res.data.map(async (data) => {
-                const result = await axios.get(productStock, {
-                    params: {
-                        id: data.product_id
-                    }
-                })
-                return result.data[0];
-            }));
-            setStock(stock);
         }).catch(err => {
             console.log(err);
         })
@@ -36,7 +25,7 @@ const useFetchCart = (id) => {
         trigger();
     }, [])
 
-    return {data, stock, trigger};
+    return {data, trigger};
 }
 
 export default useFetchCart;

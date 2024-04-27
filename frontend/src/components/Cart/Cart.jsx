@@ -6,12 +6,6 @@ import Cart_Item from "./Cart_item";
 import axios from "axios";
 import useFetchCart from "../../customizes/useFetchCart";
 
-const appName = "BKooler";
-//server routes
-const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
-const cartEdit = `http://localhost:80/${appName}/backend/cart/edit`;
-
-
 const NotifyIcon = (props) => {
     const { numb } = props;
 
@@ -30,7 +24,10 @@ const NotifyIcon = (props) => {
 }
 
 const Cart = (props) => {
-    const {data, stock, trigger} = useFetchCart(2);
+    //let userId = document.cookie.split(";")[0];
+    const userId = 2;
+
+    const {data, trigger} = useFetchCart(userId);
     const scrollRef = props.scrollRef;
     const [isCartOpen, setCartOpen] = useState(false);
     const isMobile = useCheckDeviceScreen();
@@ -39,9 +36,9 @@ const Cart = (props) => {
         if(!isMobile) {
             setCartOpen(!isCartOpen);
             if(isCartOpen) {
-                scrollRef.current.className = "overscroll-none";
+                scrollRef.current.className = "overflow-hidden h-screen";
             } else {
-                scrollRef.current.className = "overscroll-default";
+                scrollRef.current.className = "h-screen";
             }
         }
     }, [isMobile, isCartOpen])
@@ -72,9 +69,11 @@ const Cart = (props) => {
                     <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[99] p-1 flex flex-col justify-between border-l border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
                         {
-                            data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index} stock={stock[index]} 
-                            trigger={trigger}
-                            ></Cart_Item>)
+                            data ? 
+                                data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
+                                trigger={trigger}
+                                ></Cart_Item>)
+                            : null
                         }
                         </div>
                         <div className="h-[8%] w-full p-2">

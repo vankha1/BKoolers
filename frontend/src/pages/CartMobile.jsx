@@ -4,28 +4,34 @@ import Cart_Item from "../components/Cart/Cart_item";
 import useFetchCart from "../customizes/useFetchCart";
 
 const appName = "BKooler";
-//server routes
-const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
-const cartEdit = `http://localhost:80/${appName}/backend/cart/edit`;
 
 const CartMobile = () => {
-    const {data, stock, trigger} = useFetchCart(2);
+    //const userId = document.cookie.split(';')[0];  
+    const userId = 2; 
+    const {data, trigger} = useFetchCart(userId);
 
     const handleShipping = useCallback(() => {
         //TODO
     }, [])
     
  return (
+    <>
+    <div className='px-5 py-3 border border-gray-100'>
+        <h1 className='title'>Giỏ hàng của bạn</h1>
+    </div>
     <div className="h-fit w-screen overflow-auto">
             {
-                data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} stock={stock} trigger={trigger}></Cart_Item>)
+                data ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : null
             }
         <div className="h-15 w-screen p-2">
-            <div className="h-full w-full flex items-center justify-center rounded-lg bg-black text-2xl text-white"
-                onClick={() => {handleShipping()}}
-            >Mua</div>
+            <button className="h-full w-full btn-primary rounded-md"
+            onClick={() => {handleShipping()}}
+            >
+                Mua
+            </button>
         </div>
     </div>
+    </>
  )
 }
 

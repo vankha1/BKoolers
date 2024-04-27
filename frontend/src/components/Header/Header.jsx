@@ -17,7 +17,7 @@ const Header = (props) => {
         if(isMenuOpen) {
             scrollRef.current.className = "overflow-hidden h-screen";
         } else {
-            scrollRef.current.className = "";
+            scrollRef.current.className = "h-screen";
         }
     }, [isMenuOpen])
 

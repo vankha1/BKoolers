@@ -7,51 +7,54 @@ const appName = "BKooler";
 const editCart = `http://localhost:80/${appName}/backend/cart/edit`;
 const deleteCart = `http://localhost:80/${appName}/backend/cart/delete`;
 
-const Cart_Item = memo(({isMobile, data, stock, trigger}) => {
+const Cart_Item = memo(({isMobile, data, trigger}) => {
     const handleIncrease = useCallback(() => {
-        if(data.quantity >= stock.quantity) return;
+        if(data.number >= data.quantity) return;
         const newData = {
             product_id: data.product_id,
             size: data.size,
             color: data.color,
-            quantity: data.quantity+1
+            quantity: data.number+1,
+            customer_id: data.customer_id
         };
         axios.post(editCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
-    }, [trigger, data]);
+    }, [trigger, data.number, data.quantity]);
     
     const handleDecrease = useCallback(() => {
-        if(data.quantity <= 1) return;
+        if(data.number <= 1) return;
         const newData = {
             product_id: data.product_id,
             size: data.size,
             color: data.color,
-            quantity: data.quantity-1
+            quantity: data.number-1,
+            customer_id: data.customer_id
         }; 
         axios.post(editCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
-    }, [trigger, data]);
+    }, [trigger, data.number, data.quantity]);
 
     const handleAbort = useCallback(() => {
         const newData = {
             product_id: data.product_id,
             size: data.size,
-            color: data.color
+            color: data.color,
+            customer_id: data.customer_id
         };
         axios.post(deleteCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
     }, [trigger, data]);
 
-    if (stock && data) {
+    if (data) {
         if(!isMobile) return (
-            <div className="w-full h-1/5 my-1 flex items-center bg-white border-b-2 border-gray-700">
-                <div className="w-1/4 lg:w-1/3 h-[90%] mx-1 my-auto flex items-start lg:items-center">
-                    <img className="object-fill max-h-full" src='https://vn-test-11.slatic.net/p/241db312b371ef971cd74329edaa6bac.jpg' alt="" /> 
+            <div className="w-full h-fit my-1 flex items-center bg-white border-b-2 border-gray-700">
+                <div className="w-1/3 h-full mx-1 my-auto flex items-start lg:items-center">
+                    <img className="object-fit" src={data.image} alt="" /> 
                 </div>
-                <div className="h-full w-full my-auto">
+                <div className="h-full w-2/3 my-auto">
                     <div className="h-1/4 py-2 my-1 mx-2 lg:mx-0 truncate">
                         {data.name}
                     </div>
@@ -63,29 +66,29 @@ const Cart_Item = memo(({isMobile, data, stock, trigger}) => {
                     </div>
                     <div className="h-1/5 w-full my-1 mx-2 lg:mx-0 flex">
                         <button
-                        disabled={data.quantity <= 1}
+                        disabled={data.number <= 1}
                         onClick={() => {handleDecrease()}}
                         >
-                            <FaMinus className={data.quantity <= 1 ? "text-gray-600" : "text-black"}/>
+                            <FaMinus className={data.number <= 1 ? "text-gray-600" : "text-black"}/>
                         </button>
                         <div className="h-full w-1/6 mx-2 flex items-center justify-center">
-                            {data.quantity}
+                            {data.number}
                         </div>
                         <button
-                        disabled={data.quantity >= stock.quantity}
+                        disabled={data.number >= data.quantity}
                         onClick={() => {handleIncrease()}}
                         >
-                            <FaPlus className={data.quantity >= stock.quantity ? "text-gray-600" : "text-black"}/>
+                            <FaPlus className={data.number >= data.quantity ? "text-gray-600" : "text-black"}/>
                         </button>
                     </div>
                     <div className="h-1/5 w-full my-1 mx-2 lg:mx-0 bg-white flex justify-between">
                         <div className="h-ful w-3/4">
                             {`Tổng: ${data.price}VND`}
                         </div>
-                        <div className="h-full w-1/4 mx-2 rounded-md bg-gray-200 flex items-center justify-center"
+                        <button className="w-1/4 py-1 mx-2 rounded-md btn-secondary"
                         onClick={() => {handleAbort()}}>
                             Huỷ
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -109,13 +112,13 @@ const Cart_Item = memo(({isMobile, data, stock, trigger}) => {
                             <span className="text-gray-500">
                                 Màu: 
                             </span>
-                            <div className="h-6 w-6" style={{background: data.color}}></div>
+                            <div className="h-6 w-6 mx-3" style={{background: data.color}}></div>
                         </div>
                         <div className="h-1/6 w-full flex items-center">
                             <span className="text-gray-500">
                                 Kích thước:
                             </span>
-                            <span className="text-gray-500 text-xl">
+                            <span className="text-gray-500 text-xl mx-3">
                                 {data.size}
                             </span>
                         </div>
@@ -124,19 +127,19 @@ const Cart_Item = memo(({isMobile, data, stock, trigger}) => {
                                 Số lượng:
                             </span>
                             <button
-                            disabled={data.quantity <= 1}
+                            disabled={data.number <= 1}
                             onClick={() => {handleDecrease()}}
                             >
-                                <FaMinus className={data.quantity <= 1 ? "text-gray-600" : "text-black"}/>
+                                <FaMinus className={data.number <= 1 ? "text-gray-600" : "text-black"}/>
                             </button>
                             <div className="h-full w-1/12 mx-2 flex items-center justify-center">
-                                {data.quantity}
+                                {data.number}
                             </div>
                             <button
-                            disabled={data.quantity >= stock.quantity}
+                            disabled={data.number >= data.quantity}
                             onClick={() => {handleIncrease()}}
                             >
-                                <FaPlus className={data.quantity >= stock.quantity ? "text-gray-600" : "text-black"}/>
+                                <FaPlus className={data.number >= data.quantity ? "text-gray-600" : "text-black"}/>
                             </button>
                         </div>
                         <div className="h-1/6 w-full flex items-center">
