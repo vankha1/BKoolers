@@ -37,6 +37,7 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
     }, [trigger, data.number, data.quantity]);
 
     const handleAbort = useCallback(() => {
+        console.log(">>> run abort")
         const newData = {
             product_id: data.product_id,
             size: data.size,
@@ -50,11 +51,11 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
 
     if (data) {
         if(!isMobile) return (
-            <div className="w-full h-fit my-1 flex items-center bg-white border-b-2 border-gray-700">
+            <div className="w-full h-fit my-1 flex bg-white border-b-2 border-gray-700">
                 <div className="w-1/3 h-full mx-1 my-auto flex items-start lg:items-center">
                     <img className="object-fit" src={data.image} alt="" /> 
                 </div>
-                <div className="h-full w-2/3 my-auto">
+                <div className="h-full w-2/3">
                     <div className="h-1/4 py-2 my-1 mx-2 lg:mx-0 truncate">
                         {data.name}
                     </div>
@@ -82,14 +83,12 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
                         </button>
                     </div>
                     <div className="h-1/5 w-full my-1 mx-2 lg:mx-0 bg-white flex justify-between">
-                        <div className="h-ful w-3/4">
-                            {`Tổng: ${data.price}VND`}
-                        </div>
-                        <button className="w-1/4 py-1 mx-2 rounded-md btn-secondary"
-                        onClick={() => {handleAbort()}}>
-                            Huỷ
-                        </button>
+                        {`Tổng: ${data.price}VND`}
                     </div>
+                    <button className="w-1/4 mt-1 float-right rounded-md btn-secondary"
+                    onClick={() => {handleAbort()}}>
+                        Huỷ
+                    </button>
                 </div>
             </div>
         )
@@ -97,24 +96,24 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
             return (
                 <div className="h-1/4 w-full p-1 flex bg-white">
                     <div className="w-1/2 h-full mx-1 my-auto flex items-center">
-                        <img className="object-fill max-h-full" src='https://vn-test-11.slatic.net/p/241db312b371ef971cd74329edaa6bac.jpg' alt="" /> 
+                        <img className="object-fill" src={data.image} alt="" /> 
                     </div>
                     <div className="h-full w-1/2 px-1">
-                        <div className="h-1/3 w-full py-auto flex font-semibold text-xl text-gray-500">
+                        <div className="h-1/3 w-full py-auto flex justify-between font-semibold text-xl text-gray-500">
                             <div className="h-full w-4/5 truncate">
                                 {data.name}
                             </div>
-                            <button className="mx-1" onClick={() => {handleAbort()}}>
+                            <button className="px-3 rounded btn-secondary" onClick={() => {handleAbort()}}>
                                 <FaX/>
                             </button>
                         </div>
-                        <div className="h-1/6 w-full flex items-center">
+                        <div className="h-1/6 w-full pt-3 flex items-center">
                             <span className="text-gray-500">
                                 Màu: 
                             </span>
                             <div className="h-6 w-6 mx-3" style={{background: data.color}}></div>
                         </div>
-                        <div className="h-1/6 w-full flex items-center">
+                        <div className="h-1/6 w-full pt-3 flex items-center">
                             <span className="text-gray-500">
                                 Kích thước:
                             </span>
@@ -122,7 +121,7 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
                                 {data.size}
                             </span>
                         </div>
-                        <div className="h-1/6 w-full flex items-center">
+                        <div className="h-1/6 w-full pt-3 flex items-center">
                             <span className="text-gray-500 mr-2">
                                 Số lượng:
                             </span>
@@ -142,7 +141,7 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
                                 <FaPlus className={data.number >= data.quantity ? "text-gray-600" : "text-black"}/>
                             </button>
                         </div>
-                        <div className="h-1/6 w-full flex items-center">
+                        <div className="h-1/6 w-full pt-3 flex items-center">
                             <span className="text-gray-500 mr-7">Tổng:</span>
                             <span className="text-gray-500 text-xl">
                                 {`${data.price}VND`}

@@ -2,16 +2,18 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Cart_Item from "../components/Cart/Cart_item";
 import useFetchCart from "../customizes/useFetchCart";
+import { useNavigate } from "react-router-dom";
 
 const appName = "BKooler";
 
 const CartMobile = () => {
-    //const userId = document.cookie.split(';')[0];  
-    const userId = 2; 
+    const userId = document.cookie.split(';')[0];  
+
+    const navigate = useNavigate();
     const {data, trigger} = useFetchCart(userId);
 
     const handleShipping = useCallback(() => {
-        //TODO
+        navigate("/shipping");
     }, [])
     
  return (
@@ -24,7 +26,7 @@ const CartMobile = () => {
                 data ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : null
             }
         <div className="h-15 w-screen p-2">
-            <button className="h-full w-full btn-primary rounded-md"
+            <button className="h-full w-full btn-primary"
             onClick={() => {handleShipping()}}
             >
                 Mua

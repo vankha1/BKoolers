@@ -1,10 +1,13 @@
 import { PiSuitcaseSimple } from "react-icons/pi";
 import useCheckDeviceScreen from "../../customizes/useCheckDeviceScreen";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Cart_Item from "./Cart_item";
 import axios from "axios";
 import useFetchCart from "../../customizes/useFetchCart";
+
+const appName = "BKooler"
+const addOrder = `http://localhost:80/${appName}/backend/orders/add`;
 
 const NotifyIcon = (props) => {
     const { numb } = props;
@@ -26,7 +29,7 @@ const NotifyIcon = (props) => {
 const Cart = (props) => {
     //let userId = document.cookie.split(";")[0];
     const userId = 2;
-
+    const navigate = useNavigate();
     const {data, trigger} = useFetchCart(userId);
     const scrollRef = props.scrollRef;
     const [isCartOpen, setCartOpen] = useState(false);
@@ -45,17 +48,20 @@ const Cart = (props) => {
 
     const itemNums = useMemo(() => data.length, [data]);
 
+    const handleShipping = useCallback(() => {
+        setCartOpen(false);
+        navigate("/shipping");
+    }, [])
+
     useEffect(() => {
         if(isCartOpen) {
             scrollRef.current.className = "overflow-hidden h-screen";
         } else {
-            scrollRef.current.className = "";
+            scrollRef.current.className = "h-screen";
         }
     }, [isCartOpen])
 
-    const handleShipping = useCallback(() => {
-        //TODO
-    }, [])
+    
   
     return (
         <> 
@@ -65,7 +71,7 @@ const Cart = (props) => {
                     <PiSuitcaseSimple size={"25"}/>
                 </Link> :
                 <div>
-                    <PiSuitcaseSimple size={"25"} onClick={() => handleCartOpen()}/>
+                    <PiSuitcaseSimple className="hover:cursor-pointer" size={"25"} onClick={() => handleCartOpen()}/>
                     <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[99] p-1 flex flex-col justify-between border-l border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
                         {
@@ -76,13 +82,10 @@ const Cart = (props) => {
                             : null
                         }
                         </div>
-                        <div className="h-[8%] w-full p-2">
-                            <div className="h-full w-full rounded-md bg-black text-white text-xl flex justify-center items-center"
-                            onClick={() => {handleShipping()}}
-                            >Mua</div>
-                        </div>
-
-                        
+                        <button className="h-[8] w-ful p-2 btn-primary"
+                        onClick={() => handleShipping()}>
+                            Mua
+                        </button>
                     </div>
                 </div>
             }
