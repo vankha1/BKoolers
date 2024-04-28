@@ -23,7 +23,7 @@ const Header = (props) => {
 
 
     return (
-        <div className="w-full h-[8%] flex justify-between align-middle bg-gray-600">
+        <div className="w-full h-[8%] flex justify-between align-middle bg-white">
             <div className="px-5 flex basis-1/3 items-center justify-between">
                 <div className={`h-fit ${isMenuOpen ? "hidden" : "block"} hover:cursor-pointer`}>
                     <FaBars size={25} onClick={() => { handleMenu() }} />
@@ -36,13 +36,13 @@ const Header = (props) => {
             </div>
             <div className="flex basis-1/3 justify-center items-center">
                 <Link to="/">
-                    <div className='m-auto w-40 md:w-80 h-10 flex justify-center items-center font-bold bg-black text-white'>
+                    <div className='m-auto w-40 md:w-52 h-10 flex justify-center items-center font-bold bg-black text-white'>
                         BKooler
                     </div>
                 </Link>
             </div>
             <div className="flex basis-1/3 justify-end">
-                <input className="h-1/2 w-1/3 md:w-1/2 mx-3 my-auto px-5 rounded focus:border-3 focus:border-gray-800" />
+                <input className="h-1/2 w-1/3 md:w-1/2 mx-3 my-auto px-2 rounded border-2 border-gray-300 focus:border-gray-500 outline-none" />
                 <IoIosSearch className="my-auto hidden md:block" size={25} />
                 <div className="relative inline-flex mx-0 md:mx-3 mr-3 my-auto">
                     <Cart scrollRef={scrollRef}/>

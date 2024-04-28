@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Product_item from "../components/Product_item";
+import useFetchCart from "../customizes/useFetchCart";
 
 const Product = () => {
   const [quantity, setQuantity] = useState(1);
@@ -16,6 +17,8 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [productArr, setProductArr] = useState([]);
   const [stock, setStock] = useState(0);
+
+  const {data, trigger} = useFetchCart(2);
 
   const { productId } = useParams();
 
@@ -55,45 +58,29 @@ const Product = () => {
   }, []);
 
   const handleAdd = async () => {
-    console.log({
-      product_id: productId,
-      size: checkSize,
-      color: checkColor,
-      customer_id: 1,
-      // customer_id: Number(document.cookie.slice(
-      //   document.cookie.indexOf("userID") + 7
-      // )),
-      quantity: quantity
-    })
     await axios.post("http://localhost/web-assignment/backend/cart/add", {
-      data: {
         product_id: productId,
         size: checkSize,
         color: checkColor,
-        customer_id: 1,
-        // customer_id: Number(document.cookie.slice(
-        //   document.cookie.indexOf("userID") + 7
-        // )),
-        quantity: quantity
-      },
-    });
+        customer_id: 2,
+        number: quantity
+      });
+    trigger();
   };
 
   const handleBuy = async () => {
-    // await axios.post("http://localhost/web-assignment/backend/cart/add", {
-    //   data: {
-    //     product_id: productId,
-    //     size: checkSize,
-    //     color: checkColor,
-    //     customer_id: 1,
-    //     // customer_id: Number(document.cookie.slice(
-    //     //   document.cookie.indexOf("userID") + 7
-    //     // )),
-    //     quantity: quantity
-    //   }
-    // }).then(() => {
-    //   navigate('/shipping')
-    // })
+    await axios.post("http://localhost/web-assignment/backend/cart/add", {
+        product_id: productId,
+        size: checkSize,
+        color: checkColor,
+        customer_id: 2,
+        // customer_id: Number(document.cookie.slice(
+        //   document.cookie.indexOf("userID") + 7
+        // )),
+        number: quantity
+    }).then(() => {
+      navigate('/shipping')
+    })
   }
 
   return (

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useState } from 'react'
 
 
-const Sidebar = ({func}) => {
+const Sidebar = ({func, isAll}) => {
   const sizes = ['S', 'M', 'L', 'XL']
   const [catlist, setCatlist] = useState([])
 
@@ -21,7 +21,7 @@ const Sidebar = ({func}) => {
   return (
     <div className="sidebar w-1/4">
         <SidebarOption title='Size' options={sizes} func={func}/>
-        <SidebarOption title='Category' options={catlist} func={func}/>
+        {isAll && <SidebarOption title='Category' options={catlist} func={func}/>}
     </div>
   )
 }

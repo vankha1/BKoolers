@@ -6,12 +6,32 @@ import axios from 'axios';
 
 function ProductDisplay({title}) {
   const [products, setProducts] = useState([])
+  let content = ''
+
+  switch (title) {
+    case 'New Arrival':
+    case 'All Products':
+      content = 'all'
+      break
+    case 'T-shirts':
+      content = 'cat?id=2'
+      break
+    case 'Shirts':
+      content = 'cat?id=3'
+      break
+    case 'Pants':
+      content = 'cat?id=4'
+      break
+    case 'Outerwears':
+      content = 'cat?id=1'
+      break
+  }
 
   useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/all').then(res => {
+    axios.get(`http://localhost/web-assignment/backend/products/${content}`).then(res => {
       setProducts(res.data)
     })
-  }, [])
+  }, [content])
 
   const handleChange = (opt) => {
     let newProducts = [...products]
@@ -34,24 +54,6 @@ function ProductDisplay({title}) {
     }
   ]
 
-  // const [page, setPage] = useState(1)
-  // const [pages, setPages] = useState(() => {
-  //   let result = []
-  //   for (var i = 1; i <= Math.ceil(products.length / 20); i++) {
-  //     result.push(i)
-  //   }
-  //   return result
-  // })
-  // const [pageContent, setPageContent] = useState(products.slice(0, 20))
-
-  // const handleClick = (page) => {
-  //   setPage(page)
-  //   setPageContent(products.slice(20*(page-1),20*page))
-  //   window.scrollTo({ 
-  //     top: 0,  
-  //     behavior: 'smooth'
-  //   });
-  // }
 
   return (
     <div>
@@ -59,7 +61,7 @@ function ProductDisplay({title}) {
         <h1 className='title'>{title}</h1>
       </div>
       <div className="flex">
-        <Sidebar func={setProducts}/>
+        <Sidebar isAll={title == 'New Arrival' || title == 'All Products'} func={setProducts}/>
         <div className="content w-3/4">
           <div className="flex justify-between items-center p-5 border border-gray-100">
             <div>
@@ -74,7 +76,7 @@ function ProductDisplay({title}) {
           </div>
           <div className='flex flex-wrap'>
             {/* {pageContent.map(product => <Product_item key={product.id} product={product}/>)} */}
-            {products.map((product, index) => <Product_item key={index} product={product}/>)}
+            {products ? products.map((product, index) => <Product_item key={index} product={product}/>) : <div>Không có sản phẩm phù hợp</div>}
           </div>
           <div>
             {/* {pages.map(curpage => <button className={`m-5 ${curpage == page && 'underline'}`} key={curpage} onClick={() => handleClick(curpage)}>Page {curpage}</button>)} */}

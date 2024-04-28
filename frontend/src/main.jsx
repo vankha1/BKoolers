@@ -17,18 +17,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/signin" element={<Signin />}/>
         <Route path="/admin" element={<Admin />}/>
+        <Route path="/shipping" element={<Shipping />}/>
         <Route path="/" element={<App/>}>
           <Route path="products/">
             <Route path="newarrivals" element={<ProductDisplay title='New Arrival'/>}/>
-            <Route path="bestsellers" element={<ProductDisplay title='Best Seller'/>}/>
+            <Route path="tshirts" element={<ProductDisplay title='T-shirts'/>}/>
             <Route path="shirts" element={<ProductDisplay title='Shirts'/>}/>
             <Route path="pants" element={<ProductDisplay title='Pants'/>}/>
-            <Route path="footwears" element={<ProductDisplay title='Footwears'/>}/>
             <Route path="outerwears" element={<ProductDisplay title='Outerwears'/>}/>
             <Route path="product/:productId" element={<Product/>}/>
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
-          <Route path="shipping" element={<Shipping />}/>
           <Route path="about" element={<div>Hi !</div>}/>
           <Route path="user" element={<div>User</div>} />
           <Route path="cart" element={<CartMobile />}/>

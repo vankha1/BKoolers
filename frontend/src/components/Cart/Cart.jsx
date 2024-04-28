@@ -15,12 +15,12 @@ const NotifyIcon = (props) => {
     if (numb == 0) return null;
     else if (numb > 99)
         return (
-            <span className="absolute -right-1 h-3 w-3 rounded-full bg-red-600 flex justify-center items-center items">
+            <span className="absolute -right-1 h-3 w-3 rounded-full bg-black flex justify-center items-center items">
                 <span className="text-white text-xs">99+</span>
             </span>
         );
     else return (
-        <span className="absolute -right-1 h-3 w-3 rounded-full bg-red-600 flex justify-center items-center items">
+        <span className="absolute -right-1 h-3 w-3 rounded-full bg-black flex justify-center items-center items">
             <span className="text-white text-xs">{numb}</span>
         </span>
     );

@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 const categories = [
         { name: "All Products", link: "/products" },
         { name: "New Arrivals", link: "/products/newarrivals" },
-        { name: "Best Sellers", link: "/products/bestsellers" },
         { name: "Shirts", link: "/products/shirts" },
+        { name: "T-shirts", link: "/products/tshirts" },
         { name: "Pants", link: "/products/pants" },
+        { name: "Outerwears", link: "/products/outerwears" },
         { name: "About us", link: "/about" }
 ];
 
