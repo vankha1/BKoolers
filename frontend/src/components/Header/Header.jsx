@@ -7,6 +7,7 @@ import Cart from "../Cart/Cart";
 import Navbar from "./Navbar";
 
 const Header = (props) => {
+    const userId = document.cookie.split(';')[0];
     const [isMenuOpen, setMenuStatus] = useState(false);
     const scrollRef = props.scrollRef;
     const handleMenu = async () => {
@@ -44,14 +45,23 @@ const Header = (props) => {
             <div className="flex basis-1/3 justify-end">
                 <input className="h-1/2 w-1/3 md:w-1/2 mx-3 my-auto px-2 rounded border-2 border-gray-300 focus:border-gray-500 outline-none" />
                 <IoIosSearch className="my-auto hidden md:block" size={25} />
-                <div className="relative inline-flex mx-0 md:mx-3 mr-3 my-auto">
+                <div className="relative inline-flex mx-0 md:ml-3 mr-3 my-auto">
                     <Cart scrollRef={scrollRef}/>
                 </div>
-                <Link to={"/user"} className="h-[90%] w-10">
-                    <div className="h-full w-full mx-3 my-auto flex bg-black">
-                        a
-                    </div>
-                </Link>
+                {
+                    userId ?
+                    <Link to={"/user"} className="h-[95%] w-20 px-1 flex justify-between items-center">
+                        <div className="h-10 w-10 rounded-full flex justify-between items-center border border-gray-300">
+                            <img className="object-scale-down h-6 w-10" src="/images/user.webp" alt=""></img>
+                        </div>
+                    </Link>
+                    :
+                    <Link to={"/signin"} className="h-[95%] w-20 py-3 px-1">
+                        <div className="h-full w-full flex items-center justify-center rounded-lg border-2 border-gray-300 text-sm hover:border-gray-700">
+                            Sign in
+                        </div>
+                    </Link>
+                }
             </div>
         </div>
     )

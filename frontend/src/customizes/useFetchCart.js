@@ -9,7 +9,7 @@ const productStock = `http://localhost:80/${appName}/backend/products/quantity`;
 const useFetchCart = (id) => {
     const [data, setData] = useState([]);
 
-    const trigger = useCallback((i = id) => {
+    const trigger = (i = id) => {
         axios.get(cartDetail, {
             params: {
                 id: i
@@ -19,7 +19,7 @@ const useFetchCart = (id) => {
         }).catch(err => {
             console.log(err);
         })
-    }, []);
+    };
 
     useEffect(() => {
         trigger();

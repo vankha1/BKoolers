@@ -13,7 +13,8 @@ const CartMobile = () => {
     const {data, trigger} = useFetchCart(userId);
 
     const handleShipping = useCallback(() => {
-        navigate("/shipping");
+        if(userId) navigate("/shipping");
+        else return;
     }, [])
     
  return (
