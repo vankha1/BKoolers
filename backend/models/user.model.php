@@ -37,7 +37,7 @@ class User
     public function getUserAdmin($username)
     {
         try {
-            $query = "SELECT `id`, `FName`, `LName` FROM `Admin` WHERE username = '$username'";
+            $query = "SELECT `id`, `FName`, `LName`, password FROM `Admin` WHERE username = '$username'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

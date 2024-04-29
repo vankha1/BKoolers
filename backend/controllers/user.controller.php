@@ -73,7 +73,7 @@ class UserController
         $user = $temp->getUser($info['username']);
 
         if (count($user) == 0) {
-            $newUser = $temp->createUser($info['FName'], $info['LName'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address'], $info['address']);
+            $newUser = $temp->createUser($info['FName'], $info['LName'], $info['phone'], $info['email'], $info['birthday'], $info['username'], $info['password'], $info['address'], $info['avatar']);
             if ($newUser) {
                 http_response_code(200);
                 return json_encode(["msg" => "success"]);
