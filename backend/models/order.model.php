@@ -43,12 +43,12 @@ class Order
     public function confirm($id)
     {
         try {
-            $query = "UPDATE `Order` SET status = 1  WHERE order_id ='$id'";
+            $query = "UPDATE `Order` SET status = 1  WHERE order_id = '$id'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
             $query = "UPDATE Product AS P, OrderItem AS D SET P.QUANTITY = P.QUANTITY - D.quantity
-            WHERE id = product_id AND P.size = D.size AND order_id = '$id';";
+            WHERE id = product_id AND P.size = D.size AND P.color = D.color AND order_id = '$id';";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -68,19 +68,19 @@ class Order
             $PHONE = $data['phone'];
             $ADD = $data['address'];
 
-            $query = "INSERT INTO Order (customer_id, name, total_quantity, total_cost, payment_method, phone, address) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$PHONE','$ADD');";
+            $query = "INSERT INTO `Order` (customer_id, `name`, total_quantity, total_price, payment_method, phone, `address`) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$PHONE','$ADD');";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
+            $query = "INSERT INTO OrderItem (product_id, `size`, color, quantity, order_id) SELECT product_id, `size`, color, `number`, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-
 
             $query = "DELETE FROM Cart WHERE customer_id = '$CUSTOMER'";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
         } catch (PDOException $e) {
+            echo $e->getMessage();
             throw new InternalServerError('Server Error !');
         }
     }
