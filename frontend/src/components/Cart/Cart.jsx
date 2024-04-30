@@ -10,6 +10,7 @@ const appName = "web-assignment"
 const addOrder = `http://localhost:80/${appName}/backend/orders/add`;
 
 const NotifyIcon = (props) => {
+    console.log(">>> rerender notify");
     const { numb } = props;
 
     if (numb == 0) return null;
@@ -27,8 +28,7 @@ const NotifyIcon = (props) => {
 }
 
 const Cart = (props) => {
-    //let userId = document.cookie.split(";")[0];
-    const userId = 2;
+    let userId = document.cookie.split(";")[0];
     const navigate = useNavigate();
     const {data, trigger} = useFetchCart(userId);
     const scrollRef = props.scrollRef;
@@ -46,7 +46,7 @@ const Cart = (props) => {
         }
     }, [isMobile, isCartOpen])
 
-    const itemNums = useMemo(() => data.length, [data]);
+    const itemNums = data.length;
 
     const handleShipping = useCallback(() => {
         setCartOpen(false);

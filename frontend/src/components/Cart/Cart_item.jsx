@@ -7,8 +7,8 @@ const appName = "web-assignment";
 const editCart = `http://localhost:80/${appName}/backend/cart/edit`;
 const deleteCart = `http://localhost:80/${appName}/backend/cart/delete`;
 
-const Cart_Item = memo(({isMobile, data, trigger}) => {
-    const handleIncrease = useCallback(() => {
+const Cart_Item = ({isMobile, data, trigger}) => {
+    const handleIncrease = () => {
         if(data.number >= data.quantity) return;
         const newData = {
             product_id: data.product_id,
@@ -20,9 +20,9 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
         axios.post(editCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
-    }, [trigger, data.number, data.quantity]);
+    };
     
-    const handleDecrease = useCallback(() => {
+    const handleDecrease = () => {
         if(data.number <= 1) return;
         const newData = {
             product_id: data.product_id,
@@ -34,20 +34,20 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
         axios.post(editCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
-    }, [trigger, data.number, data.quantity]);
+    };
 
-    const handleAbort = useCallback(() => {
-        console.log(">>> run abort")
+    const handleAbort = () => {
         const newData = {
             product_id: data.product_id,
             size: data.size,
             color: data.color,
             customer_id: data.customer_id
         };
+        console.log(newData)
         axios.post(deleteCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
-    }, [trigger, data]);
+    };
 
     if (data) {
         if(!isMobile) return (
@@ -152,6 +152,6 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
             )
         } 
     }
-}, )
+}
 
 export default Cart_Item;
