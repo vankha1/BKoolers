@@ -6,6 +6,14 @@ import axios from 'axios';
 
 function ProductDisplay({title}) {
   const [products, setProducts] = useState([])
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    if (window.screen.width < 640) {
+      setIsMobile(true)
+    }
+  }, [])
+
   let content = ''
 
   switch (title) {
@@ -61,22 +69,22 @@ function ProductDisplay({title}) {
         <h1 className='title'>{title}</h1>
       </div>
       <div className="flex">
-        <Sidebar isAll={title == 'New Arrival' || title == 'All Products'} func={setProducts}/>
-        <div className="content w-3/4">
-          <div className="flex justify-between items-center p-5 border border-gray-100">
-            <div>
+        {!isMobile && <Sidebar isAll={title == 'New Arrival' || title == 'All Products'} func={setProducts}/>}
+        <div className={`content ${isMobile ? 'w-full' : 'w-3/4'} `}>
+          <div className={`${!isMobile && 'flex'} justify-between items-center p-5 border border-gray-100`}>
+            <div className={`${isMobile && 'text-center mb-4 font-semibold'}`}>
               {products.length} sản phẩm
             </div>
-            <div className='flex items-center justify-between w-1/4'>
+            <div className={`flex items-center justify-between ${isMobile ? 'w-full' : 'w-1/4 md:w-1/2'} `}>
               <label>Sắp xếp theo</label>
               <div className='w-3/5'>
                 <Select placeholder='Mặc định' onChange={handleChange} options={orderlist} />
               </div>
             </div>
           </div>
-          <div className='flex flex-wrap'>
+          <div className={`flex flex-wrap ${isMobile && 'px-5'}`}>
             {/* {pageContent.map(product => <Product_item key={product.id} product={product}/>)} */}
-            {products ? products.map((product, index) => <Product_item key={index} product={product}/>) : <div>Không có sản phẩm phù hợp</div>}
+            {products ? products.map((product, index) => <Product_item key={index} product={product} isMobile={isMobile}/>) : <div>Không có sản phẩm phù hợp</div>}
           </div>
           <div>
             {/* {pages.map(curpage => <button className={`m-5 ${curpage == page && 'underline'}`} key={curpage} onClick={() => handleClick(curpage)}>Page {curpage}</button>)} */}

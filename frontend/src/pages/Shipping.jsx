@@ -12,6 +12,13 @@ const Shipping = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [remove, setRemove] = useState(true);
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    if (window.screen.width <= 768) {
+      setIsMobile(true)
+    }
+  }, [])
 
   const navigate = useNavigate()
 
@@ -58,6 +65,14 @@ const Shipping = () => {
       .then(() => setRemove(!remove));
   };
 
+  let totalPrice = ''
+  for (var i = Math.round(total.total_cost).toString().length - 1; i >= 0; i--) {
+    totalPrice = (Math.round(total.total_cost).toString()[i]) + totalPrice
+    if ((Math.round(total.total_cost).toString().length - 1 - i) % 3 == 2 && i != 0) {
+      totalPrice = '.' + totalPrice
+    }
+  }
+
   return (
     <>
       <div className="flex justify-center py-3 border-b border-gray-200">
@@ -70,12 +85,12 @@ const Shipping = () => {
         </div>
 
       <div className="px-5 py-3 border border-gray-100">
-        <h1 className="title">Shipping</h1>
+        <h1 className="title">Xác nhận đơn hàng</h1>
       </div>
 
-      <div className="content flex my-10">
-        <div className="w-1/2 pl-20 pr-16 border-r border-gray-300">
-          <div className=" mb-6 font-semibold text-lg">
+      <div className={`content ${!isMobile && 'flex my-10'}`}>
+        <div className={`${isMobile ? 'px-5 border-t border-b border-gray-200' : 'w-1/2 px-5 lg:pl-20 lg:pr-16 border-r border-gray-300'}`}>
+          <div className={`${isMobile ? 'my-5' : 'mb-6'} font-semibold text-lg`}>
             Thông tin khách hàng
           </div>
 
@@ -96,7 +111,7 @@ const Shipping = () => {
           </div>
 
           <div className="md:flex md:items-center mb-6 w-full">
-            <div className="w-1/5">
+            <div className={`${isMobile ? 'w-2/5 md:w-1/5' : 'w-1/5'}`}>
               <label className="block text-gray-500 font-bold mb-1 md:mb-0 ">
                 Điện thoại
               </label>
@@ -141,7 +156,7 @@ const Shipping = () => {
             </div>
           </div>
 
-          <div className="float-right py-2">
+          {!isMobile && <div className="float-right py-2">
             <button
               onClick={handleMakeOrder}
               className="btn-primary px-5 mr-10"
@@ -151,24 +166,33 @@ const Shipping = () => {
             <Link to="/" className="btn-secondary py-[10px] px-8">
               Thoát
             </Link>
-          </div>
+          </div>}
         </div>
 
-        <div className="w-1/2 pr-20 pl-16 h-96 overflow-scroll">
-          <div className=" mb-6 font-semibold text-lg">Danh sách sản phẩm</div>
-          {products.map((product, index) => (
-            <div key={index} className="flex mb-3">
-              <div className="w-16 border border-gray-200 mr-5">
+        <div className={`${isMobile ? 'px-5' : 'w-1/2 pr-20 pl-16'} h-96 overflow-scroll`}>
+          <div className={`${isMobile ? 'my-6' : 'mb-6'} font-semibold text-lg`}>Danh sách sản phẩm</div>
+          {products.map((product, index) => {
+            let price = ''
+            for (var i = product.price.toString().length - 1; i >= 0; i--) {
+              price = (product.price.toString()[i]) + price
+              if (i % 3 == 0) {
+                price = '.' + price
+              }
+            }
+            price = price.slice(1)
+
+            return <div key={index} className="flex justify-between mb-3">
+              <div className={`${isMobile ? 'w-1/6' : 'w-1/6'} border border-gray-200`}>
                 <img src={product.image} alt="" />
               </div>
-              <div className="flex-1">
-                <div className="font-medium mb-2">{product.name}</div>
+              <div className={`${isMobile ? 'w-4/5' : 'w-4/5'}`}>
+                <div className="font-medium mb-2 truncate">{product.name}</div>
                 <div className="flex justify-between mb-1">
                   <div>Size: {product.size}</div>
                   <div>Số lượng: {product.number}</div>
                 </div>
                 <div className="flex justify-between">
-                  <div>Giá: {product.price} VND</div>
+                  <div>Giá: {price} VND</div>
                   <div
                     onClick={() => handleDelete(product)}
                     className="hover:text-red-600 font-medium cursor-pointer"
@@ -178,12 +202,26 @@ const Shipping = () => {
                 </div>
               </div>
             </div>
-          ))}
+          })}
           <div className="mt-8">
-            <span className="text-xl font-normal">Total: </span>
-            <span className="text-2xl font-semibold">{Math.round(total ? total.total_cost : 0)} VND</span>
+            <span className="text-xl font-normal">Tổng cộng: </span>
+            <span className="text-2xl font-semibold">{(total ? totalPrice : 0)} VND</span>
           </div>
         </div>
+
+        {isMobile && <div className={`${isMobile ? 'py-10 border-b border-gray-200' : 'float-right py-2'}`}>
+            <div className="w-fit m-auto">
+              <button
+                onClick={handleMakeOrder}
+                className="btn-primary px-5 mr-10"
+              >
+                Xác nhận
+              </button>
+              <Link to="/" className="btn-secondary py-[10px] px-8">
+                Thoát
+              </Link>
+            </div>
+          </div>}
       </div>
       <Footer />
     </>

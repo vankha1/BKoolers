@@ -12,7 +12,12 @@ const Login = () => {
     await axios.put("http://localhost/web-assignment/backend/users/login", {username, password}).then((res) => {
       document.cookie = `userID=${res.data.data.id}`
       document.cookie = `type=${res.data.data.type}`
-      navigate('/')
+      if(res.data.data.type == 'user') {
+        window.location.reload()
+      } else {
+        navigate('/admin')
+      }
+      
     })
     .catch(() => {
       setError(true)

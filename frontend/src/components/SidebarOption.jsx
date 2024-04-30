@@ -41,7 +41,7 @@ const SidebarOption = ({title, options, func}) => {
               <ul>
                 {options.map((option, index) => {
                   return (<li key={index} onClick={() => {setCheck(index); handleFilt(option); handleIconClick()}}>
-                    <div className={`flex items-center px-10 py-2 cursor-pointer hover:bg-gray-100 ${check == index && 'bg-gray-200'}`}>
+                    <div className={`flex items-center px-5 lg:px-10 py-2 cursor-pointer hover:bg-gray-100 ${check == index && 'bg-gray-200'}`}>
                       <h1>{option[0].toUpperCase() + option.slice(1)}</h1>
                     </div>
                   </li>)

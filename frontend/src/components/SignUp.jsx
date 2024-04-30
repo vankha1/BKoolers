@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SignUp = () => {
   const [username, setUsername] = useState('')
@@ -11,6 +11,13 @@ const SignUp = () => {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
   const [error, setError] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (window.screen.width <= 640) {
+      setIsMobile(true)
+    }
+  }, [])
 
   const handleSignup = async () => {
     await axios.put("http://localhost/web-assignment/backend/users/signup", {
@@ -71,7 +78,7 @@ const SignUp = () => {
         </div>
 
         <div className="md:flex md:items-center mb-6 w-full">
-          <div className="w-1/5">
+          <div className={`${isMobile ? 'w-2/5' : 'w-1/5'}`}>
             <label className="block text-gray-500 font-bold mb-1 md:mb-0">
               First Name
             </label>
@@ -87,7 +94,7 @@ const SignUp = () => {
         </div>
 
         <div className="md:flex md:items-center mb-6 w-full">
-          <div className="w-1/5">
+          <div className={`${isMobile ? 'w-2/5' : 'w-1/5'}`}>
             <label className="block text-gray-500 font-bold mb-1 md:mb-0">
               Last Name
             </label>

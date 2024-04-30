@@ -51,7 +51,7 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
 
     if (data) {
         if(!isMobile) return (
-            <div className="w-full h-fit my-1 flex bg-white border-b-2 border-gray-700">
+            <div className="w-full h-fit py-1 flex bg-white border-b border-gray-300">
                 <div className="w-1/3 h-full mx-1 my-auto flex items-start lg:items-center">
                     <img className="object-fit" src={data.image} alt="" /> 
                 </div>
@@ -87,7 +87,7 @@ const Cart_Item = memo(({isMobile, data, trigger}) => {
                     </div>
                     <button className="w-1/4 mt-1 float-right rounded-md btn-secondary"
                     onClick={() => {handleAbort()}}>
-                        Huỷ
+                        Xóa
                     </button>
                 </div>
             </div>

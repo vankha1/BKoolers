@@ -1,11 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 
 const Signin = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (window.screen.width <= 768) {
+      setIsMobile(true)
+    }
+  }, [])
+
+  const handleLogout = () => {
+    document.cookie = 'userID=; expires=Thu, 18 Dec 2013 12:00:00 UTC'
+    document.cookie = 'type=; expires=Thu, 18 Dec 2013 12:00:00 UTC'
+    window.location.reload()
+  }
 
   if (document.cookie.includes("userID"))
     return (
@@ -26,6 +39,10 @@ const Signin = () => {
         <div className="w-full flex justify-center mt-10">
           <Link to="/" className="hover:text-gray-400 text-xl font-medium">Tiếp tục mua sắm</Link>
         </div>
+
+        <div className="w-full flex justify-center mt-10">
+          <button className="btn-secondary px-5" onClick={handleLogout}>Đăng xuất</button>
+        </div>
       </>
     );
 
@@ -41,7 +58,7 @@ const Signin = () => {
       </div>
 
       <div className="w-full mt-5">
-        <div className="w-2/5 px-5 pb-5 m-auto border border-gray-300 rounded-xl">
+        <div className={`${isMobile ? 'w-11/12' : 'w-2/3 xl:w-2/5'} px-5 pb-5 m-auto border border-gray-300 rounded-xl`}>
           <div className="flex border-b border-gray-200 mb-5">
             <div
               onClick={() => setIsLogin(true)}

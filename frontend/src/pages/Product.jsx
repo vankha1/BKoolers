@@ -17,12 +17,20 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [productArr, setProductArr] = useState([]);
   const [stock, setStock] = useState(0);
+  const [price, setPrice] = useState('');
+  const [isMobile, setIsMobile] = useState(false)
 
-  const {data, trigger} = useFetchCart(2);
+  useEffect(() => {
+    if (window.screen.width < 640) {
+      setIsMobile(true)
+    }
+  }, [])
+
+  const { data, trigger } = useFetchCart(2);
 
   const { productId } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -34,13 +42,22 @@ const Product = () => {
         setProductArr(res.data);
         setProduct(res.data[0]);
         setSizes(res.data[0].size.split(","));
+        let price = "";
+        for (var i = res.data[0].price.toString().length - 1; i >= 0; i--) {
+          price = res.data[0].price.toString()[i] + price;
+          if ((res.data[0].price.toString().length - 1 - i) % 3 == 2 && i != 0) {
+            price = "." + price;
+          }
+        }
+        setPrice(price);
       });
 
     axios
       .get(
         `http://localhost/web-assignment/backend/products/quantity?id=${productId}`
       )
-      .then((res) => setStock(res.data[0].quantity));
+      .then((res) => {setStock(res.data[0].quantity);});
+
     window.scrollTo({
       top: 0,
       behavior: "auto",
@@ -59,17 +76,18 @@ const Product = () => {
 
   const handleAdd = async () => {
     await axios.post("http://localhost/web-assignment/backend/cart/add", {
-        product_id: productId,
-        size: checkSize,
-        color: checkColor,
-        customer_id: 2,
-        number: quantity
-      });
+      product_id: productId,
+      size: checkSize,
+      color: checkColor,
+      customer_id: 2,
+      number: quantity,
+    });
     trigger();
   };
 
   const handleBuy = async () => {
-    await axios.post("http://localhost/web-assignment/backend/cart/add", {
+    await axios
+      .post("http://localhost/web-assignment/backend/cart/add", {
         product_id: productId,
         size: checkSize,
         color: checkColor,
@@ -77,31 +95,30 @@ const Product = () => {
         // customer_id: Number(document.cookie.slice(
         //   document.cookie.indexOf("userID") + 7
         // )),
-        number: quantity
-    }).then(() => {
-      navigate('/shipping')
-    })
-  }
+        number: quantity,
+      })
+      .then(() => {
+        navigate("/shipping");
+      });
+  };
 
   return (
     <>
-      <div className="text-lg mb-8 font-medium px-5 py-4 border border-gray-200">
+      <div className={`text-lg ${!isMobile && 'mb-8'} font-medium px-5 py-4 border border-gray-200`}>
         {product.name}
       </div>
-      <div className="flex mb-14">
-        <div className="w-1/2 pl-20">
-          <div className="w-7/12 m-auto">
+      <div className={`${!isMobile && 'flex'} mb-14`}>
+        <div className={`${isMobile ? 'w-full pb-10 border-b border-gray-200' : 'w-1/2 md:pl-5 pl-20'}`}>
+          <div className={`${isMobile ? 'px-5' : 'w-full lg:w-7/12'} m-auto`}>
             <img src={product.image} alt="" />
           </div>
         </div>
 
-        <div className="w-1/2 pr-20">
+        <div className={`${isMobile ? 'py-5 border-b border-gray-200' : 'w-1/2 md:pr-0 pr-20'}`}>
           <div>
-            <div className="w-3/5 m-auto">
+            <div className={`${isMobile ? 'px-5' : 'w-4/5 lg:w-3/5 m-auto'}`}>
               <div className="py-3 text-lg font-medium">{product.name}</div>
-              <div className="py-3 text-2xl font-medium">
-                {product.price} VND
-              </div>
+              <div className="py-3 text-2xl font-medium">{price} VND</div>
               <div className="flex justify-between py-3">
                 <div>Color</div>
                 <div className="flex mr-2">
@@ -179,7 +196,11 @@ const Product = () => {
                 </button>
               </div>
               <div>
-                <button onClick={handleBuy} className="btn-primary w-full" disabled={stock <= 0}>
+                <button
+                  onClick={handleBuy}
+                  className="btn-primary w-full"
+                  disabled={stock <= 0}
+                >
                   Mua ngay
                 </button>
               </div>
@@ -188,35 +209,32 @@ const Product = () => {
         </div>
       </div>
 
-      <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
-        <h1 className="title leading-10">NEW ARRIVAL</h1>
-        <Link
-          className="btn-primary px-5 flex items-center hover:text-white"
-          to="/products/newarrivals"
-        >
-          Xem tất cả
-        </Link>
-      </div>
-      <div className="flex">
-        {products.slice(0, 4).map((barproduct, index) => {
-          return <Product_item key={index} product={barproduct} />;
-        })}
+      <div className="px-5">
+        <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
+          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>SẢN PHẨM MỚI</h1>
+          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
+        </div>
+        <div className='flex'>
+          {isMobile ? products.slice(0,2).map((product, index) => {
+            return <Product_item key={index} product={product} isMobile/>
+          }) : products.slice(0,4).map((product, index) => {
+            return <Product_item key={index} product={product}/>
+          })}
+        </div>
+
+        <div className="best-seller w-full h-20 flex justify-between items-center px-1">
+          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>TẤT CẢ SẢN PHẨM</h1>
+          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/bestsellers">Xem tất cả</Link>
+        </div>
+        <div className='flex'>
+        {isMobile ? products.slice(4,6).map((product, index) => {
+            return <Product_item key={index} product={product} isMobile/>
+          }) : products.slice(4,8).map((product, index) => {
+            return <Product_item key={index} product={product}/>
+          })}
+        </div>
       </div>
 
-      <div className="best-seller w-full h-20 flex justify-between items-center px-1">
-        <h1 className="title leading-10">BEST SELLER</h1>
-        <Link
-          className="btn-primary px-5 flex items-center hover:text-white"
-          to="/products/bestsellers"
-        >
-          Xem tất cả
-        </Link>
-      </div>
-      <div className="flex">
-        {products.slice(4, 8).map((barproduct, index) => {
-          return <Product_item key={index} product={barproduct} />;
-        })}
-      </div>
     </>
   );
 };
