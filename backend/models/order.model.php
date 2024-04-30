@@ -68,13 +68,13 @@ class Order
             $PHONE = $data['phone'];
             $ADD = $data['address'];
 
-            $query = "INSERT INTO Order (customer_id, name, total_quantity, total_cost, payment_method, phone, address) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$PHONE','$ADD');";
+            $query = "INSERT INTO `Order` (customer_id, name, total_quantity, total_price, payment_method, phone, address) VALUES ('$CUSTOMER','$NAME','$TOTAL_PRODUCT','$COST','$PAY','$PHONE','$ADD');";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            // $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM `Order`) AS TEMP WHERE customer_id ='$CUSTOMER';";
+            // $stmt = $this->conn->prepare($query);
+            // $stmt->execute();
 
 
             $query = "DELETE FROM Cart WHERE customer_id = '$CUSTOMER'";
