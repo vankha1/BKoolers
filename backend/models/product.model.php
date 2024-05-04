@@ -13,7 +13,7 @@ class Product {
 
     public function getAllProducts() {
         try {
-            $query = "SELECT distinct(id), name, price, discount, image FROM Product;";
+            $query = "SELECT distinct(id), name, price, color, discount, image FROM Product;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
