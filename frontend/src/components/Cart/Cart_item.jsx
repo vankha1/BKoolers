@@ -5,7 +5,7 @@ import axios from "axios";
 const appName = "web-assignment";
 //server routes
 const editCart = `http://localhost:80/${appName}/backend/cart/edit`;
-const deleteCart = `http://localhost:80/${appName}/backend/cart/delete`;
+const deleteCart = `http://localhost:80/${appName}/backend/cart/deleteCart`;
 
 const Cart_Item = ({isMobile, data, trigger}) => {
     const handleIncrease = () => {

@@ -18,7 +18,10 @@ const Product = () => {
   const [productArr, setProductArr] = useState([]);
   const [stock, setStock] = useState(0);
   const [price, setPrice] = useState('');
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
+  const [error, setError] = useState(false);
+
+  const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];
 
   useEffect(() => {
     if (window.screen.width < 640) {
@@ -26,7 +29,7 @@ const Product = () => {
     }
   }, [])
 
-  const { data, trigger } = useFetchCart(2);
+  // const { data, trigger } = useFetchCart(userID);
 
   const { productId } = useParams();
 
@@ -75,31 +78,36 @@ const Product = () => {
   }, []);
 
   const handleAdd = async () => {
-    await axios.post("http://localhost/web-assignment/backend/cart/add", {
+    if (document.cookie.indexOf('user') == -1) {
+      navigate('/signin')
+    } else {
+      await axios.post("http://localhost/web-assignment/backend/cart/add", {
       product_id: productId,
       size: checkSize,
       color: checkColor,
-      customer_id: 2,
+      customer_id: userID,
       number: quantity,
-    });
-    trigger();
+    }).catch(() => setError(true));
+    //trigger();
+    }
   };
 
   const handleBuy = async () => {
-    await axios
+    if (document.cookie.indexOf('user') == -1) {
+      navigate('/signin')
+    } else {
+      await axios
       .post("http://localhost/web-assignment/backend/cart/add", {
         product_id: productId,
         size: checkSize,
         color: checkColor,
-        customer_id: 2,
-        // customer_id: Number(document.cookie.slice(
-        //   document.cookie.indexOf("userID") + 7
-        // )),
+        customer_id: userID,
         number: quantity,
       })
       .then(() => {
         navigate("/shipping");
-      });
+      }).catch(() => setError(true));
+    }
   };
 
   return (
@@ -129,6 +137,7 @@ const Product = () => {
                         onClick={() => {
                           setCheckColor(eproduct.color);
                           setProduct(eproduct);
+                          setError(false);
                           setSizes(eproduct.size.split(","));
                         }}
                         className={`h-8 w-8 ml-2 border cursor-pointer ${
@@ -149,7 +158,7 @@ const Product = () => {
                     return (
                       <div
                         key={psize}
-                        onClick={() => setCheckSize(psize)}
+                        onClick={() => {setCheckSize(psize); setError(false)}}
                         className={`border-2 cursor-pointer ${
                           checkSize == psize
                             ? "border-black"
@@ -185,6 +194,8 @@ const Product = () => {
                   {stock > 0 ? "Còn hàng" : "Hết hàng"}
                 </div>
               </div>
+
+              {error && <div className="text-red-600 float-right">Vui lòng chọn size và màu</div>}
 
               <div className="mt-12 mb-4">
                 <button

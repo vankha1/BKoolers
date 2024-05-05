@@ -26,19 +26,19 @@ const ManageOrders = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Name
+                Tên khách hàng
               </th>
               <th scope="col" className="px-6 py-3">
-                Address
+                Địa chỉ
               </th>
               <th scope="col" className="px-6 py-3">
-                Phone
+                Liên hệ
               </th>
               <th scope="col" className="px-6 py-3">
-                Total
+                Tổng cộng
               </th>
               <th scope="col" className="px-6 py-3">
-                Action
+                Hoàn tất
               </th>
             </tr>
           </thead>
@@ -59,7 +59,7 @@ const ManageOrders = () => {
                       onClick={() => handleConfirm(order.order_id)}
                       size={22}
                       className="mr-4 inline-block cursor-pointer hover:text-green-500"/>
-                    </>) : <span className='font-semibold text-green-500'>Completed</span>}
+                    </>) : <span className='font-semibold text-green-500'>Thành công</span>}
                 </td>
               </tr>
             })}

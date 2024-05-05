@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import PopupContent from "./PopupContent";
 
-const CreateProduct = ({ func }) => {
+const CreateProduct = ({ func, toast }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("");
@@ -68,14 +68,31 @@ const CreateProduct = ({ func }) => {
       price: price,
       discount: 0.2,
       image: image,
+    }).then(() => {
+      toast.success("Thêm sản phẩm thành công", {
+        autoClose: 3000,
+      });
+    }).catch(() => {
+      toast.error("Đã xảy ra lỗi", {
+        autoClose: 3000,
+      });
     });
+    setId('')
+    setName('')
+    setColor('')
+    setQuantity('')
+    setCategory('')
+    setPrice('')
+    setImage('')
+    setDiscount('')
+    setSize('')
     func();
   };
 
   return (
     <Popup
       trigger={
-        <button className="btn-primary px-5 m-5"> Create new product </button>
+        <button className="btn-primary px-5 m-5">Thêm sản phẩm</button>
       }
       modal
       nested

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signin = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -48,6 +50,7 @@ const Signin = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex justify-center py-3 border-b border-gray-200">
         <Link
           to="/"
@@ -81,7 +84,7 @@ const Signin = () => {
               Đăng ký
             </div>
           </div>
-          {isLogin ? <Login /> : <SignUp />}
+          {isLogin ? <Login /> : <SignUp toast={toast} setLog={setIsLogin}/>}
         </div>
       </div>
     </>

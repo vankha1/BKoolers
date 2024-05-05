@@ -5,22 +5,34 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
+  const [userErr, setUserErr] = useState(false)
+  const [passErr, setPassErr] = useState(false)
   const navigate = useNavigate()
 
   const handleLogin = async () => {
-    await axios.put("http://localhost/web-assignment/backend/users/login", {username, password}).then((res) => {
+    if (username == '') {
+      setUserErr(true);
+    }
+
+    if (password == '') {
+      setPassErr(true);
+    }
+
+    await axios.put("http://localhost/web-assignment/backend/users/login", {username, password}).then((res) => { 
       document.cookie = `userID=${res.data.data.id}`
       document.cookie = `type=${res.data.data.type}`
       if(res.data.data.type == 'user') {
-        window.location.reload()
+        navigate('/')
       } else {
         navigate('/admin')
       }
-      
-    })
-    .catch(() => {
-      setError(true)
+    }).catch(err => {
+      if (err.response.data.msg.includes('Incorrect')) {
+        setPassErr(true)
+      } else {
+        setPassErr(true)
+        setUserErr(true)
+      }
     });
   }
 
@@ -34,10 +46,10 @@ const Login = () => {
             </div>
             <div className="md:w-4/5">
               <input
-                className={`appearance-none border-2 ${error ? 'border-red-300' : 'border-gray-200'}  rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
+                className={`appearance-none border-2 ${userErr ? 'border-red-300' : 'border-gray-200'}  rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
                 type="text"
                 value={username}
-                onInput={(e) => {setUsername(e.target.value); setError(false)}}
+                onInput={(e) => {setUsername(e.target.value); setUserErr(false)}}
               />
             </div>
           </div>
@@ -50,10 +62,10 @@ const Login = () => {
             </div>
             <div className="md:w-4/5">
               <input
-                className={`appearance-none border-2 ${error ? 'border-red-300' : 'border-gray-200'}  rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
+                className={`appearance-none border-2 ${passErr ? 'border-red-300' : 'border-gray-200'}  rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
                 type="password"
                 value={password}
-                onInput={(e) => {setPassword(e.target.value); setError(false)}}
+                onInput={(e) => {setPassword(e.target.value); setPassErr(false)}}
                 onKeyUp={(e) => {if (e.key == 'Enter') handleLogin()}}
               />
             </div>

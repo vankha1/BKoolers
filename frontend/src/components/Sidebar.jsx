@@ -4,24 +4,14 @@ import axios from 'axios'
 import { useState } from 'react'
 
 
-const Sidebar = ({func, isAll}) => {
+const Sidebar = ({func, now, products}) => {
   const sizes = ['S', 'M', 'L', 'XL']
-  const [catlist, setCatlist] = useState([])
-
-  useEffect(() => {
-    axios.get('http://localhost/web-assignment/backend/products/catlist').then(res => {
-      var list = []
-      for (var i = 0; i < res.data.length; i++) {
-        list.push(res.data[i].name)
-      }
-      setCatlist(list)
-    })
-  }, [])
+  const prices = ['100.000đ - 400.000đ', '400.000đ - 700.000đ', '700.000đ - 1.000.000đ']
 
   return (
     <div className="sidebar w-1/4">
-        <SidebarOption title='Size' options={sizes} func={func}/>
-        {isAll && <SidebarOption title='Category' options={catlist} func={func}/>}
+        <SidebarOption title='Size' options={sizes} now={now} func={func} products={products}/>
+        <SidebarOption title='Price' options={prices} now={now} func={func} products={products}/>
     </div>
   )
 }

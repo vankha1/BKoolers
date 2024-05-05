@@ -5,7 +5,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
   return (
     <>
       <div className="title font-medium px-5 py-4">
-        {isCreate ? "New product" : "Update product"}
+        {isCreate ? "Sản phẩm mới" : "Thông tin sản phẩm"}
       </div>
       <div className="w-full">
         <div className="md:flex md:items-center mb-6 w-full">
@@ -27,7 +27,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Name
+              Tên
             </label>
           </div>
           <div className="md:w-3/4">
@@ -43,7 +43,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Price
+              Giá
             </label>
           </div>
           <div className="md:w-3/4">
@@ -65,7 +65,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Color
+              Màu
             </label>
           </div>
           <div className="md:w-3/4">
@@ -81,7 +81,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Quantity
+              Số lượng
             </label>
           </div>
           <div className="md:w-3/4">
@@ -97,7 +97,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Discount
+              Ưu đãi
             </label>
           </div>
           <div className="md:w-3/4">
@@ -113,7 +113,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
         <div className="md:flex md:items-center mb-6 w-full">
           <div className="w-1/5">
             <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-              Image
+              Hình ảnh
             </label>
           </div>
           <div className="md:w-3/4">
@@ -134,7 +134,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
               close();
             }}
           >
-            {isCreate ? "Create" : "Update"}
+            {isCreate ? "Tạo mới" : "Cập nhật"}
           </button>
           <button
             className="btn-secondary px-8"
@@ -142,7 +142,7 @@ const PopupContent = ({ close, content, action, isCreate }) => {
               close();
             }}
           >
-            Exit
+            Hủy
           </button>
         </div>
       </div>

@@ -57,7 +57,7 @@ const SelectSizeCat = ({handCat, handSize, selectSize}) => {
         <div className="md:flex md:items-center mb-6 w-full">
                   <div className="w-1/5">
                     <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-                      Category
+                      Danh mục
                     </label>
                   </div>
                   <div className="md:w-3/4">
@@ -72,7 +72,7 @@ const SelectSizeCat = ({handCat, handSize, selectSize}) => {
                 <div className="md:flex md:items-center mb-6 w-full">
                   <div className="w-1/5">
                     <label className="block text-gray-500 font-bold mb-1 md:mb-0 pl-8">
-                      Size
+                      Kích thước
                     </label>
                   </div>
                   <div className="md:w-3/4">

@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 const appName = "BKooler";
 
 const CartMobile = () => {
-    const userId = document.cookie.split(';')[0];  
+    const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];  
 
     const navigate = useNavigate();
-    const {data, trigger} = useFetchCart(userId);
+    const {data, trigger} = useFetchCart(2);
 
     const handleShipping = useCallback(() => {
-        if(userId) navigate("/shipping");
+        if(userID) navigate("/shipping");
         else return;
     }, [])
     

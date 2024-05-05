@@ -25,7 +25,7 @@ const Navbar = memo((props) => {
                     categories.map((category, index) => {
                         return (
                             <div key={index} className="h-[15%] flex items-center justify-center border-b-2 border-gray-300 hover:border-gray-700 hover:font-semibold hover:cursor-pointer">
-                                <Link className="w-full text-center" to={category.link} onClick={() => { handleMenu() }}>{category.name}</Link>
+                                <a className="w-full text-center" href={category.link} onClick={() => { handleMenu() }}>{category.name}</a>
                             </div>
                         )
                     })

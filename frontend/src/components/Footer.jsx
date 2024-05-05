@@ -12,15 +12,15 @@ function Footer() {
       content: '1900 1945'
     },
     {
-      title: 'Email for customer',
+      title: 'CSKH',
       content: 'bkoolercustomercare@gmail.com'
     },
     {
-      title: 'Email for business',
+      title: 'Liên hệ hợp tác',
       content: 'bkoolerbusiness@gmail.com'
     },
     {
-      title: 'Email for recruitment',
+      title: 'Tuyển dụng',
       content: 'bkoolerhr@gmail.com'
     }
   ]

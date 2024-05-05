@@ -7,7 +7,7 @@ import Cart from "../Cart/Cart";
 import Navbar from "./Navbar";
 
 const Header = (props) => {
-    const userId = document.cookie.split(';')[0];
+    const userId = document.cookie.includes('user');
     const [isMenuOpen, setMenuStatus] = useState(false);
     const scrollRef = props.scrollRef;
     const handleMenu = async () => {

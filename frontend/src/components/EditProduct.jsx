@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 
 import PopupContent from './PopupContent';
 
-const EditProduct = ({func, proid}) => {
+const EditProduct = ({func, proid, toast}) => {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [color, setColor] = useState("");
@@ -71,17 +71,6 @@ const EditProduct = ({func, proid}) => {
     }
     
     const handleSubmit = async () => {
-      console.log({id: id,
-        cat: category,
-        name: name,
-        size: size,
-        color: color,
-        description: '',
-        quantity: quantity,
-        price: price,
-        discount: discount,
-        image: image})
-
         await axios.put(`http://localhost/web-assignment/backend/products/update`, {
                 id: id,
                 cat: category,
@@ -93,7 +82,15 @@ const EditProduct = ({func, proid}) => {
                 price: price,
                 discount: discount,
                 image: image
-        })
+        }).then(() => {
+          toast.success("Cập nhật thành công", {
+            autoClose: 3000,
+          });
+        }).catch(() => {
+          toast.error("Đã xảy ra lỗi", {
+            autoClose: 3000,
+          });
+        });
         func()
       };
   return (

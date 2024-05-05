@@ -14,6 +14,8 @@ const Shipping = () => {
   const [remove, setRemove] = useState(true);
   const [isMobile, setIsMobile] = useState(false)
 
+  const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];
+
   useEffect(() => {
     if (window.screen.width <= 768) {
       setIsMobile(true)
@@ -24,7 +26,7 @@ const Shipping = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost/web-assignment/backend/cart/detailCart?id=2`)
+      .get(`http://localhost/web-assignment/backend/cart/detailCart?id=${userID}`)
       .then((res) => setProducts(res.data)).catch(() => {
         navigate('/')
       });
@@ -32,7 +34,7 @@ const Shipping = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost/web-assignment/backend/cart/calculate?id=2`)
+      .get(`http://localhost/web-assignment/backend/cart/calculate?id=${userID}`)
       .then((res) => setTotal(res.data[0])).catch(() => {
         navigate('/')
       });
@@ -41,7 +43,7 @@ const Shipping = () => {
   const handleMakeOrder = async () => {
     await axios
       .post("http://localhost/web-assignment/backend/orders/add", {
-          customer_id: 2,
+          customer_id: userID,
           name: name,
           phone: phone,
           address: address,
@@ -66,10 +68,12 @@ const Shipping = () => {
   };
 
   let totalPrice = ''
-  for (var i = Math.round(total.total_cost).toString().length - 1; i >= 0; i--) {
-    totalPrice = (Math.round(total.total_cost).toString()[i]) + totalPrice
-    if ((Math.round(total.total_cost).toString().length - 1 - i) % 3 == 2 && i != 0) {
-      totalPrice = '.' + totalPrice
+  if (total) {
+    for (var i = Math.round(total.total_cost).toString().length - 1; i >= 0; i--) {
+      totalPrice = (Math.round(total.total_cost).toString()[i]) + totalPrice
+      if ((Math.round(total.total_cost).toString().length - 1 - i) % 3 == 2 && i != 0) {
+        totalPrice = '.' + totalPrice
+      }
     }
   }
 
@@ -175,11 +179,10 @@ const Shipping = () => {
             let price = ''
             for (var i = product.price.toString().length - 1; i >= 0; i--) {
               price = (product.price.toString()[i]) + price
-              if (i % 3 == 0) {
+              if ((product.price.toString().length - 1 - i) % 3 == 2 && i != 0) {
                 price = '.' + price
               }
             }
-            price = price.slice(1)
 
             return <div key={index} className="flex justify-between mb-3">
               <div className={`${isMobile ? 'w-1/6' : 'w-1/6'} border border-gray-200`}>

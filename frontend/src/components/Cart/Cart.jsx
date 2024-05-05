@@ -28,9 +28,9 @@ const NotifyIcon = (props) => {
 }
 
 const Cart = (props) => {
-    let userId = document.cookie.split(";")[0];
+    const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];
     const navigate = useNavigate();
-    const {data, trigger} = useFetchCart(userId);
+    const {data, trigger} = useFetchCart(userID);
     const scrollRef = props.scrollRef;
     const [isCartOpen, setCartOpen] = useState(false);
     const isMobile = useCheckDeviceScreen();
@@ -79,7 +79,7 @@ const Cart = (props) => {
                                 data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
                                 trigger={trigger}
                                 ></Cart_Item>)
-                            : null
+                            : <div>Chưa có sản phẩm nào</div>
                         }
                         </div>
                         <button className="h-[8] w-ful p-2 btn-primary"

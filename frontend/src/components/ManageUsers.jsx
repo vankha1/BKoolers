@@ -14,16 +14,16 @@ const ManageUsers = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Name
+                Tên khách hàng
               </th>
               <th scope="col" className="px-6 py-3">
-                Address
+                Địa chỉ
               </th>
               <th scope="col" className="px-6 py-3">
-                Phone
+                Liên hệ
               </th>
               <th scope="col" className="px-6 py-3">
-                Birthday
+                Ngày sinh
               </th>
             </tr>
           </thead>
