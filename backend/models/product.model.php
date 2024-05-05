@@ -13,7 +13,7 @@ class Product {
 
     public function getAllProducts() {
         try {
-            $query = "SELECT distinct(id), name, price, discount, image FROM Product;";
+            $query = "SELECT distinct(id), name, price, discount, image, color, size, cat_id FROM Product;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ class Product {
     public function filterCategories($cat)
     {
         try {
-            $query = "SELECT distinct(id), name, price, discount, image FROM Product
+            $query = "SELECT distinct(id), name, price, discount, image, size FROM Product
             WHERE cat_id = '$cat';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
