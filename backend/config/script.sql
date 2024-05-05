@@ -18,7 +18,7 @@ CREATE TABLE PRODUCT(
     price INT,
     discount FLOAT,
     image varchar(1024),
-	PRIMARY KEY (id, size),
+	PRIMARY KEY (id, size, color),
     FOREIGN KEY (cat_id) REFERENCES Category(cat_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (quantity >= 0),
     CHECK (price >= 0)
