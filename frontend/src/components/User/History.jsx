@@ -55,7 +55,7 @@ const History = () => {
                     Tổng tiền
                 </div>
                 <div className="mx-5 text-lg text-gray-500">
-                    {d.total_price}
+                    {`${d.total_price}VND`}
                 </div>
             </div>
             <div className="flex mb-2">
