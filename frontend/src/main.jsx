@@ -7,6 +7,7 @@ import Shipping from './pages/Shipping.jsx';
 import Signin from './pages/Signin.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
 import Product from './pages/Product.jsx';
+import Aboutus from './pages/Aboutus.jsx';
 import User from './pages/User.jsx';
 import './styles/index.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
@@ -29,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="product/:productId" element={<Product/>}/>
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
-          <Route path="about" element={<div>Hi !</div>}/>
+          <Route path="about" element={<Aboutus/>}/>
           <Route path="user" element={<User/>} />
           <Route path="cart" element={<CartMobile />}/>
           <Route index element={<Home />}/>  

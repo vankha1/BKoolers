@@ -5,7 +5,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 
 
-const SidebarOption = ({title, options, func, products, now}) => {
+const SidebarOption = ({title, options, func, products, now, setVal, setFunc}) => {
     const [icon, setIcon] = useState(true)
     const [check, setCheck] = useState()
 
@@ -14,55 +14,61 @@ const SidebarOption = ({title, options, func, products, now}) => {
     }
     
     const handleCheck = (option) => {
-      setCheck(option)
-      handleFilt(option)
+      if (check == option) {
+        setCheck('')
+        setFunc('')
+        handleFilt('')
+      } else {
+        setFunc(option)
+        setCheck(option)
+        handleFilt(option)
+      }
     }
 
     const handleFilt = (option) => {
-      if (option.length <= 2) {
-        let newproducts = products.filter(product => product.size == option)
-        func(newproducts)
-      } else {
-          let newproducts =[]
-          if (option.includes('100.000')) {
-            const r1pro = products.filter(pro => pro.price >= 100000 && pro.price < 400000)
-            newproducts = [...newproducts, ...r1pro]
-          } else if (option.includes('1.000.000')) {
-            const r3pro = products.filter(pro => pro.price >= 700000 && pro.price <= 1000000)
-            newproducts = [...newproducts, ...r3pro]
+      if (option.length <= 2 && option.length > 0) {
+        let newproducts = []
+        if (setVal == '') {
+          newproducts = [...products]
+        } else {
+          if (setVal.includes('100.000')) {
+            newproducts = products.filter(pro => pro.price >= 100000 && pro.price < 400000)
+          } else if (setVal.includes('1.000.000')) {
+            newproducts = products.filter(pro => pro.price >= 700000 && pro.price <= 1000000)
+          } else if (setVal.includes('400.000')) {
+            newproducts = products.filter(pro => pro.price >= 400000 && pro.price < 700000)
           } else {
-            const r2pro = products.filter(pro => pro.price >= 400000 && pro.price < 700000)
-            newproducts = [...newproducts, ...r2pro]
+            newproducts = products
           }
+        }
+        if (option == '') {
           func(newproducts)
+        } else {
+          let filtpro = newproducts.filter(product => product.size == option)
+          func(filtpro)
+        }
+      } else {
+          let newproducts = []
+          if (setVal.length == 0) {
+            newproducts = [...products]
+          } else {
+            newproducts = products.filter(pro => pro.size == setVal)
+          }
+          
+          let filtpro = []
+          if(option == '') {
+            filtpro = [...newproducts]
+          } else {
+            if (option.includes('100.000')) {
+              filtpro = newproducts.filter(pro => pro.price >= 100000 && pro.price < 400000)
+            } else if (option.includes('1.000.000')) {
+              filtpro = newproducts.filter(pro => pro.price >= 700000 && pro.price <= 1000000)
+            } else {
+              filtpro = newproducts.filter(pro => pro.price >= 400000 && pro.price < 700000)
+            }
+          }
+          func(filtpro)
       }
-      // if (options[0].length <= 2) {
-      //   if (newcheck.length == 0) {
-      //     func(products)
-      //   } else {
-      //     let newproducts = now.filter(product => newcheck.includes(product.size))
-      //     func(newproducts)
-      //   }
-      // } else {
-      //   if (newcheck.length == 0) {
-      //     func(products)
-      //   } else {
-      //     let newproducts = []
-      //     newcheck.forEach(range => {
-      //       if (range.includes('100.000')) {
-      //         const r1pro = now.filter(pro => pro.price >= 100000 && pro.price < 400000)
-      //         newproducts = [...newproducts, ...r1pro]
-      //       } else if (range.includes('1.000.000')) {
-      //         const r3pro = now.filter(pro => pro.price >= 700000 && pro.price <= 1000000)
-      //         newproducts = [...newproducts, ...r3pro]
-      //       } else {
-      //         const r2pro = now.filter(pro => pro.price >= 400000 && pro.price < 700000)
-      //         newproducts = [...newproducts, ...r2pro]
-      //       }
-      //     })
-      //     func(newproducts)
-      //   }
-      // }
     }
 
   return (

@@ -10,6 +10,14 @@ function Product_item(props) {
     }
   }
 
+  let newprice = ''
+  for (var i = Math.round(props.product.price * (1 - props.product.discount)).toString().length - 1; i >= 0; i--) {
+    newprice = (Math.round(props.product.price * (1 - props.product.discount)).toString()[i]) + newprice
+    if ((Math.round(props.product.price * (1 - props.product.discount)).toString().length - 1 - i) % 3 == 2 && i != 0) {
+      newprice = '.' + newprice
+    }
+  }
+
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -20,6 +28,7 @@ function Product_item(props) {
 
   return (
     <Link to={`/products/product/${props.product.id}`} className={`product_item block ${props.isMobile ? 'w-1/2' : 'w-1/4'} h-2/3 hover:text-gray-500`}>
+      <div className={`relative top-10 left-5 ${props.product.discount == 0 ? 'text-gray-100' : 'bg-red-500 text-white'}  w-fit px-3`}>-{props.product.discount * 100}%</div>
       <div className="border bg-gray-100">
         <img src={props.product.image} alt="" />
         <div className="pl-3">
@@ -30,7 +39,12 @@ function Product_item(props) {
                 })} */}
             </div>
             <div className={`py-2 ${isMobile ? 'text-sm' : 'text-base'} truncate`}>{props.product.name}</div>
-            <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg'} truncate`}>{price} VND</div>
+            
+            {props.product.discount != 0 ? <div className="flex">
+              <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg'} text-red-500 font-medium mr-5`}>{newprice} VND</div>
+              <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg'} line-through text-gray-400`}>{price} VND</div>
+            </div> : <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg font-medium'}`}>{price} VND</div>}
+            
         </div>
     </div>
     </Link>

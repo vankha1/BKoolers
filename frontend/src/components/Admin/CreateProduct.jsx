@@ -14,8 +14,8 @@ const CreateProduct = ({ func, toast }) => {
   const [category, setCategory] = useState(0);
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [size, setSize] = useState("S");
+  const [discount, setDiscount] = useState('');
+  const [size, setSize] = useState("");
 
   const createField = {
     idField: {
@@ -57,7 +57,8 @@ const CreateProduct = ({ func, toast }) => {
   };
 
   const handleSubmit = async () => {
-    await axios.put("http://localhost/web-assignment/backend/products/add", {
+    if (!isNaN(Number(quantity)) && !isNaN(Number(price)) && id != '' && name != '' && price != '' && color != '' && category != '' && size != '' && quantity != '' && discount != '' && image != '') {
+      await axios.put("http://localhost/web-assignment/backend/products/add", {
       id: id,
       cat: category,
       name: name,
@@ -66,17 +67,18 @@ const CreateProduct = ({ func, toast }) => {
       description: "",
       quantity: quantity,
       price: price,
-      discount: 0.2,
+      discount: discount,
       image: image,
     }).then(() => {
       toast.success("Thêm sản phẩm thành công", {
         autoClose: 3000,
       });
-    }).catch(() => {
+    })
+    } else {
       toast.error("Đã xảy ra lỗi", {
         autoClose: 3000,
       });
-    });
+    }
     setId('')
     setName('')
     setColor('')

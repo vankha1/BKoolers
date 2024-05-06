@@ -7,6 +7,7 @@ const cartDetail = `http://localhost:80/${appName}/backend/cart/detailCart`;
 const productStock = `http://localhost:80/${appName}/backend/products/quantity`; 
 
 const useFetchCart = (id) => {
+
     const [data, setData] = useState([]);
 
     const trigger = (i = id) => {
@@ -26,6 +27,7 @@ const useFetchCart = (id) => {
     }, [])
 
     return {data, trigger};
+    
 }
 
 export default useFetchCart;

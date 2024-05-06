@@ -20,29 +20,34 @@ const Home = () => {
   }, [])
 
   return (
-    <div className='px-5'>
-      <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
-        <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>SẢN PHẨM MỚI</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
+    <div>
+      <div className=''>
+        <img src="https://i.pinimg.com/originals/cb/52/0d/cb520d2a114034d8363641ea5da3559c.jpg" alt="" />
       </div>
-      <div className='flex'>
-        {isMobile ? products.slice(0,2).map((product, index) => {
-          return <Product_item key={index} product={product} isMobile/>
-        }) : products.slice(0,4).map((product, index) => {
-          return <Product_item key={index} product={product}/>
-        })}
-      </div>
+      <div className='px-5'>
+        <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
+          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>SẢN PHẨM MỚI</h1>
+          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
+        </div>
+        <div className='flex'>
+          {isMobile ? products.slice(0,2).map((product, index) => {
+            return <Product_item key={index} product={product} isMobile/>
+          }) : products.slice(0,4).map((product, index) => {
+            return <Product_item key={index} product={product}/>
+          })}
+        </div>
 
-      <div className="best-seller w-full h-20 flex justify-between items-center px-1">
-        <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>TẤT CẢ SẢN PHẨM</h1>
-        <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products">Xem tất cả</Link>
-      </div>
-      <div className='flex'>
-      {isMobile ? products.slice(4,6).map((product, index) => {
-          return <Product_item key={index} product={product} isMobile/>
-        }) : products.slice(4,8).map((product, index) => {
-          return <Product_item key={index} product={product}/>
-        })}
+        <div className="best-seller w-full h-20 flex justify-between items-center px-1">
+          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>TẤT CẢ SẢN PHẨM</h1>
+          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products">Xem tất cả</Link>
+        </div>
+        <div className='flex'>
+        {isMobile ? products.slice(4,6).map((product, index) => {
+            return <Product_item key={index} product={product} isMobile/>
+          }) : products.slice(4,8).map((product, index) => {
+            return <Product_item key={index} product={product}/>
+          })}
+        </div>
       </div>
     </div>
   )

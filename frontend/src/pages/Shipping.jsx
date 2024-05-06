@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Shipping = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState({});
@@ -27,8 +30,8 @@ const Shipping = () => {
   useEffect(() => {
     axios
       .get(`http://localhost/web-assignment/backend/cart/detailCart?id=${userID}`)
-      .then((res) => setProducts(res.data)).catch(() => {
-        navigate('/')
+      .then((res) => {setProducts(res.data);}).catch(() => {
+        setProducts([])
       });
   }, [remove]);
 
@@ -41,7 +44,13 @@ const Shipping = () => {
   }, [remove]);
 
   const handleMakeOrder = async () => {
-    await axios
+    if (products.length == 0) {
+      toast.info('Chưa có sản phẩm nào trong giỏ')
+      return
+    }
+
+    if (name != '' && phone != '' && address != '') {
+      await axios
       .post("http://localhost/web-assignment/backend/orders/add", {
           customer_id: userID,
           name: name,
@@ -52,8 +61,11 @@ const Shipping = () => {
           total_price: Math.round(total.total_cost),
       })
       .then(() => {
-        console.log("Success");
+        navigate('/')
       });
+    } else {
+      toast.error('Vui lòng điền đầy đủ thông tin')
+    }
   };
 
   const handleDelete = async (product) => {
@@ -79,6 +91,7 @@ const Shipping = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex justify-center py-3 border-b border-gray-200">
           <Link
             to="/"
@@ -175,11 +188,11 @@ const Shipping = () => {
 
         <div className={`${isMobile ? 'px-5' : 'w-1/2 pr-20 pl-16'} h-96 overflow-scroll`}>
           <div className={`${isMobile ? 'my-6' : 'mb-6'} font-semibold text-lg`}>Danh sách sản phẩm</div>
-          {products.map((product, index) => {
+          {products.length > 0 ? products.map((product, index) => {
             let price = ''
-            for (var i = product.price.toString().length - 1; i >= 0; i--) {
-              price = (product.price.toString()[i]) + price
-              if ((product.price.toString().length - 1 - i) % 3 == 2 && i != 0) {
+            for (var i = Math.round(product.price * (1 - product.discount)).toString().length - 1; i >= 0; i--) {
+              price = (Math.round(product.price * (1 - product.discount)).toString()[i]) + price
+              if ((Math.round(product.price * (1 - product.discount)).toString().length - 1 - i) % 3 == 2 && i != 0) {
                 price = '.' + price
               }
             }
@@ -205,10 +218,14 @@ const Shipping = () => {
                 </div>
               </div>
             </div>
-          })}
+          }) : <div className="w-1/2 m-auto">
+            <img src="https://www.adasglobal.com/img/empty-cart.png" alt="" />
+            </div>}
           <div className="mt-8">
+            {products.length != 0 ? <>
             <span className="text-xl font-normal">Tổng cộng: </span>
             <span className="text-2xl font-semibold">{(total ? totalPrice : 0)} VND</span>
+            </> : <Link className="block m-auto w-fit font-semibold text-xl text-gray-500 hover:text-gray-300" to='/'>Tiếp tục mua sắm</Link>}
           </div>
         </div>
 

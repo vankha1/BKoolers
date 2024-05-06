@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Regular";
+  src: local("regular"),
+  url('../assets/fonts/regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Light";
+  src: local("light"),
+  url('../assets/fonts/light.ttf') format("truetype");
+}
+
+/* @font-face {
+  font-family: "Medium";
+  src: local("futurMedium"),
+  url('../assets/fonts/futurMedium.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Bold";
+  src: local("futurBold"),
+  url('../assets/fonts/futurBold.ttf') format("truetype");
+} */
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -31,3 +55,4 @@
   .btn-primary:hover, .btn-secondary:hover, .product_item:hover {
     transform: scale(1.01);
   }
+

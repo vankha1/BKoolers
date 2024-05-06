@@ -72,9 +72,9 @@ class Order
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            // $query = "INSERT INTO include (product_id, size, quantity, order_id) SELECT product_id, size, quantity, order_id FROM Cart JOIN (SELECT max(order_id) AS order_id FROM Order) AS TEMP WHERE customer_id ='$CUSTOMER';";
+            // $stmt = $this->conn->prepare($query);
+            // $stmt->execute();
 
 
             $query = "DELETE FROM Cart WHERE customer_id = '$CUSTOMER'";

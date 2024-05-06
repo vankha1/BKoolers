@@ -34,7 +34,7 @@ const Signin = () => {
           </Link>
         </div>
 
-        <div className="mx-52 py-10 text-white bg-black text-center text-4xl font-medium mt-20">
+        <div className={`${isMobile ? 'py-5 mx-3 text-2xl' : 'mx-52 py-10 text-4xl'} text-white bg-black text-center font-medium mt-20`}>
           Bạn đã đăng nhập thành công
         </div>
 

@@ -36,7 +36,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
         .catch(err => console.log(err));
     };
 
-    const handleAbort = () => {
+    const handleAbort = async() => {
         const newData = {
             product_id: data.product_id,
             size: data.size,
@@ -44,7 +44,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
             customer_id: data.customer_id
         };
         console.log(newData)
-        axios.post(deleteCart, newData)
+        await axios.post(deleteCart, newData)
         .then(res => trigger())
         .catch(err => console.log(err));
     };
