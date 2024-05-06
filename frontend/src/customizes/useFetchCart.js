@@ -19,6 +19,7 @@ const useFetchCart = (id) => {
             setData(res.data);
         }).catch(err => {
             console.log(err);
+            setData([]);
         })
     };
 
