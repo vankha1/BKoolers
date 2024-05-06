@@ -25,8 +25,8 @@ class Product {
 
     public function getProduct($id){
         try {
-            $query = "SELECT id, name, description, price, discount , image, GROUP_CONCAT(DISTINCT size) AS size, GROUP_CONCAT(DISTINCT COLOR SEPARATOR '/') AS color
-            FROM Product WHERE id = '$id' GROUP BY id, name, description, price, discount, image;";
+            $query = "SELECT id, name, description, price, discount, cat_id, image, quantity, GROUP_CONCAT(DISTINCT size) AS size, GROUP_CONCAT(DISTINCT COLOR SEPARATOR '/') AS color
+            FROM Product WHERE id = '$id' GROUP BY id, name, description, price, discount, cat_id, image, quantity;";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
