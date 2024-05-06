@@ -10,7 +10,6 @@ const appName = "web-assignment"
 const addOrder = `http://localhost:80/${appName}/backend/orders/add`;
 
 const NotifyIcon = (props) => {
-    console.log(">>> rerender notify");
     const { numb } = props;
 
     if (numb == 0) return null;

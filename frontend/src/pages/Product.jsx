@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import Product_item from "../components/Product_item";
 import useFetchCart from "../customizes/useFetchCart";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [checkColor, setCheckColor] = useState();
@@ -17,17 +20,20 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [productArr, setProductArr] = useState([]);
   const [stock, setStock] = useState(0);
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState(false);
 
-  const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];
+  const userID = document.cookie
+    .slice(document.cookie.indexOf("userID"))
+    .split(";")[0]
+    .split("=")[1];
 
   useEffect(() => {
     if (window.screen.width < 640) {
-      setIsMobile(true)
+      setIsMobile(true);
     }
-  }, [])
+  }, []);
 
   // const { data, trigger } = useFetchCart(userID);
 
@@ -42,13 +48,18 @@ const Product = () => {
       )
       .then((res) => {
         setQuantity(1);
+        setCheckColor();
+        setCheckSize();
         setProductArr(res.data);
         setProduct(res.data[0]);
         setSizes(res.data[0].size.split(","));
         let price = "";
         for (var i = res.data[0].price.toString().length - 1; i >= 0; i--) {
           price = res.data[0].price.toString()[i] + price;
-          if ((res.data[0].price.toString().length - 1 - i) % 3 == 2 && i != 0) {
+          if (
+            (res.data[0].price.toString().length - 1 - i) % 3 == 2 &&
+            i != 0
+          ) {
             price = "." + price;
           }
         }
@@ -59,7 +70,9 @@ const Product = () => {
       .get(
         `http://localhost/web-assignment/backend/products/quantity?id=${productId}`
       )
-      .then((res) => {setStock(res.data[0].quantity);});
+      .then((res) => {
+        setStock(res.data[0].quantity);
+      });
 
     window.scrollTo({
       top: 0,
@@ -78,53 +91,97 @@ const Product = () => {
   }, []);
 
   const handleAdd = async () => {
-    if (document.cookie.indexOf('user') == -1) {
-      navigate('/signin')
+    if (document.cookie.indexOf("user") == -1) {
+      navigate("/signin");
     } else {
-      await axios.post("http://localhost/web-assignment/backend/cart/add", {
-      product_id: productId,
-      size: checkSize,
-      color: checkColor,
-      customer_id: userID,
-      number: quantity,
-    }).catch(() => setError(true));
-    //trigger();
+      if (checkSize && checkColor) {
+        await axios
+          .post("http://localhost/web-assignment/backend/cart/add", {
+            product_id: productId,
+            size: checkSize,
+            color: checkColor,
+            customer_id: userID,
+            number: quantity,
+          })
+          .then(() => {
+            toast.success("Thêm vào giỏ hàng thành công");
+          });
+      } else {
+        toast.error("Vui lòng chọn size và màu sắc");
+      }
     }
   };
 
   const handleBuy = async () => {
-    if (document.cookie.indexOf('user') == -1) {
-      navigate('/signin')
+    if (document.cookie.indexOf("user") == -1) {
+      navigate("/signin");
     } else {
-      await axios
-      .post("http://localhost/web-assignment/backend/cart/add", {
-        product_id: productId,
-        size: checkSize,
-        color: checkColor,
-        customer_id: userID,
-        number: quantity,
-      })
-      .then(() => {
-        navigate("/shipping");
-      }).catch(() => setError(true));
+      if (checkSize && checkColor) {
+        await axios
+          .post("http://localhost/web-assignment/backend/cart/add", {
+            product_id: productId,
+            size: checkSize,
+            color: checkColor,
+            customer_id: userID,
+            number: quantity,
+          })
+          .then(() => {
+            navigate("/shipping");
+          });
+      } else {
+        setError(true);
+      }
     }
   };
 
   return (
     <>
-      <div className={`text-lg ${!isMobile && 'mb-8'} font-medium px-5 py-4 border border-gray-200`}>
-        {product.name}
+      <ToastContainer />
+      <div
+        className={`text-base ${
+          !isMobile && "mb-8"
+        } font-medium px-5 py-4 border border-gray-200`}
+      >
+        <Link className="text-gray-400" to="/">
+          Trang chủ
+        </Link>{" "}
+        /{" "}
+        <Link
+        className="text-gray-400"
+          to={
+            (product.cat_id == 1 && "/products/outerwears") ||
+            (product.cat_id == 2 && "/products/tshirts") ||
+            (product.cat_id == 3 && "/products/shirts") ||
+            (product.cat_id == 4 && "/products/pants")
+          }
+        >
+          {(product.cat_id == 1 && "Áo khoác nam") ||
+            (product.cat_id == 2 && "Áo thun nam") ||
+            (product.cat_id == 3 && "Áo sơ mi nam") ||
+            (product.cat_id == 4 && "Quần tây nam")}
+        </Link>{" "}
+        / {product.name}
       </div>
-      <div className={`${!isMobile && 'flex'} mb-14`}>
-        <div className={`${isMobile ? 'w-full pb-10 border-b border-gray-200' : 'w-1/2 md:pl-5 pl-20'}`}>
-          <div className={`${isMobile ? 'px-5' : 'w-full lg:w-7/12'} m-auto`}>
+      <div className={`${!isMobile && "flex"} mb-14`}>
+        <div
+          className={`${
+            isMobile
+              ? "w-full pb-10 border-b border-gray-200"
+              : "w-1/2 md:pl-5 pl-20"
+          }`}
+        >
+          <div className={`${isMobile ? "px-5" : "w-full lg:w-7/12"} m-auto`}>
             <img src={product.image} alt="" />
           </div>
         </div>
 
-        <div className={`${isMobile ? 'py-5 border-b border-gray-200' : 'w-1/2 md:pr-0 pr-20'}`}>
+        <div
+          className={`${
+            isMobile ? "py-5 border-b border-gray-200" : "w-1/2 md:pr-0 pr-20"
+          }`}
+        >
           <div>
-            <div className={`${isMobile ? 'px-5' : 'w-4/5 lg:w-3/5 m-auto'}`}>
+            <div className={`${isMobile ? "px-5" : "w-4/5 lg:w-3/5 m-auto"}`}>
               <div className="py-3 text-lg font-medium">{product.name}</div>
               <div className="py-3 text-2xl font-medium">{price} VND</div>
               <div className="flex justify-between py-3">
@@ -158,7 +215,10 @@ const Product = () => {
                     return (
                       <div
                         key={psize}
-                        onClick={() => {setCheckSize(psize); setError(false)}}
+                        onClick={() => {
+                          setCheckSize(psize);
+                          setError(false);
+                        }}
                         className={`border-2 cursor-pointer ${
                           checkSize == psize
                             ? "border-black"
@@ -195,7 +255,11 @@ const Product = () => {
                 </div>
               </div>
 
-              {error && <div className="text-red-600 float-right">Vui lòng chọn size và màu</div>}
+              {error && (
+                <div className="text-red-600 float-right">
+                  Vui lòng chọn size và màu
+                </div>
+              )}
 
               <div className="mt-12 mb-4">
                 <button
@@ -222,30 +286,55 @@ const Product = () => {
 
       <div className="px-5">
         <div className="new-arrival w-full h-20 flex justify-between items-center px-1">
-          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>SẢN PHẨM MỚI</h1>
-          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/newarrivals">Xem tất cả</Link>
+          <h1
+            className={`${
+              isMobile ? "text-lg font-semibold" : "title"
+            } leading-10`}
+          >
+            SẢN PHẨM MỚI
+          </h1>
+          <Link
+            className="btn-primary px-5 flex items-center hover:text-white"
+            to="/products/newarrivals"
+          >
+            Xem tất cả
+          </Link>
         </div>
-        <div className='flex'>
-          {isMobile ? products.slice(0,2).map((product, index) => {
-            return <Product_item key={index} product={product} isMobile/>
-          }) : products.slice(0,4).map((product, index) => {
-            return <Product_item key={index} product={product}/>
-          })}
+        <div className="flex">
+          {isMobile
+            ? products.slice(0, 2).map((product, index) => {
+                return <Product_item key={index} product={product} isMobile />;
+              })
+            : products.slice(0, 4).map((product, index) => {
+                return <Product_item key={index} product={product} />;
+              })}
         </div>
 
         <div className="best-seller w-full h-20 flex justify-between items-center px-1">
-          <h1 className={`${isMobile ? 'text-lg font-semibold' : 'title'} leading-10`}>TẤT CẢ SẢN PHẨM</h1>
-          <Link className="btn-primary px-5 flex items-center hover:text-white" to="/products/bestsellers">Xem tất cả</Link>
+          <h1
+            className={`${
+              isMobile ? "text-lg font-semibold" : "title"
+            } leading-10`}
+          >
+            TẤT CẢ SẢN PHẨM
+          </h1>
+          <Link
+            className="btn-primary px-5 flex items-center hover:text-white"
+            to="/products/bestsellers"
+          >
+            Xem tất cả
+          </Link>
         </div>
-        <div className='flex'>
-        {isMobile ? products.slice(4,6).map((product, index) => {
-            return <Product_item key={index} product={product} isMobile/>
-          }) : products.slice(4,8).map((product, index) => {
-            return <Product_item key={index} product={product}/>
-          })}
+        <div className="flex">
+          {isMobile
+            ? products.slice(4, 6).map((product, index) => {
+                return <Product_item key={index} product={product} isMobile />;
+              })
+            : products.slice(4, 8).map((product, index) => {
+                return <Product_item key={index} product={product} />;
+              })}
         </div>
       </div>
-
     </>
   );
 };

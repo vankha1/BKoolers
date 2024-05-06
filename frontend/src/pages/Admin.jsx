@@ -28,10 +28,10 @@ const Admin = () => {
           </Link>
           <CiLogout onClick={handleLogout} size={30} className="absolute right-14 top-7 cursor-pointer hover:text-gray-400"/>
         </div>
-        <div className="flex px-5 border border-gray-100">
+        <div className="flex text-lg font-semibold px-5 mb-2 border border-gray-100">
           <h1
             onClick={() => setCurrent(1)}
-            className={`title w-1/6 py-3 text-center cursor-pointer hover:text-black ${
+            className={`px-5 py-3 text-center cursor-pointer hover:text-black ${
               current == 1 ? "border-b-2 border-black" : "text-gray-400"
             }`}
           >
@@ -39,7 +39,7 @@ const Admin = () => {
           </h1>
           <h1
             onClick={() => setCurrent(2)}
-            className={`title w-1/6 py-3 text-center cursor-pointer hover:text-black ${
+            className={`px-5 py-3 text-center cursor-pointer hover:text-black ${
               current == 2 ? "border-b-2 border-black" : "text-gray-400"
             }`}
           >
@@ -47,16 +47,18 @@ const Admin = () => {
           </h1>
           <h1
             onClick={() => setCurrent(3)}
-            className={`title w-1/6 py-3 text-center cursor-pointer hover:text-black ${
+            className={`px-5 py-3 text-center cursor-pointer hover:text-black ${
               current == 3 ? "border-b-2 border-black" : "text-gray-400"
             }`}
           >
             Đơn hàng
           </h1>
         </div>
-        {current == 1 && <ManageProducts />}
-        {current == 2 && <ManageUsers />}
-        {current == 3 && <ManageOrders />}
+        <div className="px-5">
+          {current == 1 && <ManageProducts />}
+          {current == 2 && <ManageUsers />}
+          {current == 3 && <ManageOrders />}
+        </div>
         <Footer />
       </>
     );
