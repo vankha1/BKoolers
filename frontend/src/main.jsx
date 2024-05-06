@@ -8,6 +8,7 @@ import Signin from './pages/Signin.jsx';
 import ProductDisplay from './pages/ProductDisplay.jsx';
 import Product from './pages/Product.jsx';
 import Aboutus from './pages/Aboutus.jsx';
+import User from './pages/User.jsx';
 import './styles/index.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import CartMobile from './pages/CartMobile.jsx';
@@ -30,7 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route index element={<ProductDisplay title='All Products'/>}/>
           </Route>
           <Route path="about" element={<Aboutus/>}/>
-          <Route path="user" element={<div>User</div>} />
+          <Route path="user" element={<User/>} />
           <Route path="cart" element={<CartMobile />}/>
           <Route index element={<Home />}/>  
         </Route>

@@ -2,13 +2,11 @@ import React from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
+import { useState } from "react";
 
-import { useState, useEffect } from "react";
+import PopupContent from "../PopupContent";
 
-import PopupContent from "./PopupContent";
-
-const EditProduct = ({ func, proid, toast }) => {
+const CreateProduct = ({ func, toast }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("");
@@ -16,26 +14,8 @@ const EditProduct = ({ func, proid, toast }) => {
   const [category, setCategory] = useState(0);
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
-  const [discount, setDiscount] = useState("");
+  const [discount, setDiscount] = useState('');
   const [size, setSize] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(
-        `http://localhost/web-assignment/backend/products/detail?id=${proid}`
-      )
-      .then((res) => {
-        setId(proid);
-        setName(res.data[0].name);
-        setColor(res.data[0].color);
-        setPrice(res.data[0].price);
-        setImage(res.data[0].image);
-        setSize(res.data[0].size);
-        setDiscount(res.data[0].discount);
-        setCategory(res.data[0].cat_id);
-        setQuantity(res.data[0].quantity);
-      });
-  }, []);
 
   const createField = {
     idField: {
@@ -78,41 +58,43 @@ const EditProduct = ({ func, proid, toast }) => {
 
   const handleSubmit = async () => {
     if (!isNaN(Number(quantity)) && !isNaN(Number(price)) && id != '' && name != '' && price != '' && color != '' && category != '' && size != '' && quantity != '' && discount != '' && image != '') {
-      await axios
-        .put(`http://localhost/web-assignment/backend/products/update`, {
-          id: id,
-          cat: category,
-          name: name,
-          size: size,
-          color: color,
-          description: "",
-          quantity: quantity,
-          price: price,
-          discount: discount,
-          image: image,
-        })
-        .then(() => {
-          toast.success("Cập nhật thành công", {
-            autoClose: 3000,
-          });
-        });
+      await axios.put("http://localhost/web-assignment/backend/products/add", {
+      id: id,
+      cat: category,
+      name: name,
+      size: size,
+      color: color,
+      description: "",
+      quantity: quantity,
+      price: price,
+      discount: discount,
+      image: image,
+    }).then(() => {
+      toast.success("Thêm sản phẩm thành công", {
+        autoClose: 3000,
+      });
+    })
     } else {
       toast.error("Đã xảy ra lỗi", {
         autoClose: 3000,
       });
     }
+    setId('')
+    setName('')
+    setColor('')
+    setQuantity('')
+    setCategory('')
+    setPrice('')
+    setImage('')
+    setDiscount('')
+    setSize('')
     func();
   };
+
   return (
     <Popup
       trigger={
-        <button>
-          {" "}
-          <FaRegEdit
-            className="inline-block cursor-pointer hover:text-blue-500"
-            size={20}
-          />{" "}
-        </button>
+        <button className="btn-primary px-5 m-5">Thêm sản phẩm</button>
       }
       modal
       nested
@@ -133,6 +115,7 @@ const EditProduct = ({ func, proid, toast }) => {
               close={close}
               content={createField}
               action={handleSubmit}
+              isCreate
             />
           </div>
         </div>
@@ -141,4 +124,4 @@ const EditProduct = ({ func, proid, toast }) => {
   );
 };
 
-export default EditProduct;
+export default CreateProduct;

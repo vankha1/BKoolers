@@ -71,11 +71,11 @@ const Cart = (props) => {
                 </Link> :
                 <div>
                     <PiSuitcaseSimple className="hover:cursor-pointer" size={"25"} onClick={() => handleCartOpen()}/>
-                    <div className={`h-[90%] w-[30%] fixed top-[10%] left-full z-[99] p-1 flex flex-col justify-between border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
+                    <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[95] p-1 flex flex-col justify-between border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
                         {
-                            data ? 
-                                data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
+                            data != null ? 
+                            data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
                                 trigger={trigger}
                                 ></Cart_Item>)
                             : <div>Chưa có sản phẩm nào</div>
