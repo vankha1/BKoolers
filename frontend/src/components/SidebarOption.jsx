@@ -17,7 +17,23 @@ const SidebarOption = ({title, options, func, products, now, setVal, setFunc}) =
       if (check == option) {
         setCheck('')
         setFunc('')
-        handleFilt('')
+        if (setVal == '') {
+          func(products)
+        } else {
+          let newproducts = []
+          if(setVal.length > 2) {
+            if (setVal.includes('100.000')) {
+              newproducts = products.filter(pro => pro.price >= 100000 && pro.price < 400000)
+            } else if (setVal.includes('1.000.000')) {
+              newproducts = products.filter(pro => pro.price >= 700000 && pro.price <= 1000000)
+            } else if (setVal.includes('400.000')) {
+              newproducts = products.filter(pro => pro.price >= 400000 && pro.price < 700000)
+            }
+          } else {
+            newproducts = products.filter(pro => pro.size == setVal)
+          }
+          func(newproducts)
+        }
       } else {
         setFunc(option)
         setCheck(option)

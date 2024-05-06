@@ -84,7 +84,9 @@ const Signin = () => {
               Đăng ký
             </div>
           </div>
-          {isLogin ? <Login /> : <SignUp toast={toast} setLog={setIsLogin}/>}
+          <div className={`${isLogin ? 'h-40' : 'h-[480px]'} duration-[1s] transition-all ease-in-out`}>
+            {isLogin ? <Login /> : <SignUp toast={toast} setLog={setIsLogin}/>}
+          </div>
         </div>
       </div>
     </>
