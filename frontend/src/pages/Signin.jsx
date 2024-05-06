@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Login from "../components/Login";
-import SignUp from "../components/SignUp";
+import Login from "../components/Signin/Login";
+import SignUp from "../components/Signin/SignUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -6,7 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 
 import { useState, useEffect } from 'react';
 
-import PopupContent from './PopupContent';
+import PopupContent from '../PopupContent';
 
 const EditProduct = ({func, proid, toast}) => {
     const [id, setId] = useState("");

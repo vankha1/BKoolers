@@ -6,8 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-import CreateProduct from "./CreateProduct";
-import EditProduct from "./EditProduct";
+import CreateProduct from "./Admin/CreateProduct";
+import EditProduct from "./Admin/EditProduct";
 import RestockProduct from "./RestockProduct";
 
 const ManageProducts = () => {
