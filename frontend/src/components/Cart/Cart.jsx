@@ -34,6 +34,8 @@ const Cart = (props) => {
     const [isCartOpen, setCartOpen] = useState(false);
     const isMobile = useCheckDeviceScreen();
 
+    console.log(data)
+
     const handleCartOpen = useCallback(() => {
         if(!isMobile) {
             setCartOpen(!isCartOpen);
@@ -74,11 +76,11 @@ const Cart = (props) => {
                     <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[95] p-1 flex flex-col justify-between border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
                         {
-                            data != null ? 
+                            data ? 
                             data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
-                                trigger={trigger}
-                                ></Cart_Item>)
-                            : <div>Chưa có sản phẩm nào</div>
+                            trigger={trigger}
+                            ></Cart_Item>)
+                        : <div>Chưa có sản phẩm nào</div>
                         }
                         </div>
                         <button className="h-[8] w-ful p-2 btn-primary"
