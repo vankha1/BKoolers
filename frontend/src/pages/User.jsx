@@ -3,6 +3,7 @@ import UserProfile from "../components/User/UserProfile";
 import History from "../components/User/History";
 import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { IoReload } from "react-icons/io5";
 
 const User = () => {
     const [editMode, setEditMode] = useState(false);
@@ -12,7 +13,10 @@ const User = () => {
     }
 
     const handleLogOut = () => {
-        navigate("/signin");
+        document.cookie = 'userID=; expires=Thu, 18 Dec 2013 12:00:00 UTC';
+        document.cookie = 'type=; expires=Thu, 18 Dec 2013 12:00:00 UTC';
+        navigate("/");
+        window.location.reload();
     }
 
     return (
