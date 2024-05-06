@@ -21,6 +21,7 @@ const Product = () => {
   const [productArr, setProductArr] = useState([]);
   const [stock, setStock] = useState(0);
   const [price, setPrice] = useState("");
+  const [newprice, setNewprice] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState(false);
 
@@ -64,6 +65,18 @@ const Product = () => {
           }
         }
         setPrice(price);
+
+        let newprice = "";
+        for (var i = Math.round(res.data[0].price * (1 - res.data[0].discount)).toString().length - 1; i >= 0; i--) {
+          newprice = Math.round(res.data[0].price * (1 - res.data[0].discount)).toString()[i] + newprice;
+          if (
+            (Math.round(res.data[0].price * (1 - res.data[0].discount)).toString().length - 1 - i) % 3 == 2 &&
+            i != 0
+          ) {
+            newprice = "." + newprice;
+          }
+        }
+        setNewprice(newprice)
       });
 
     axios
@@ -183,7 +196,11 @@ const Product = () => {
           <div>
             <div className={`${isMobile ? "px-5" : "w-4/5 lg:w-3/5 m-auto"}`}>
               <div className="py-3 text-lg font-medium">{product.name}</div>
-              <div className="py-3 text-2xl font-medium">{price} VND</div>
+              <div className="flex">
+                <div className="py-3 text-2xl font-medium text-red-500">{newprice} VND</div>
+                <div className="py-3 text-2xl line-through text-gray-400 mx-5">{price} VND</div>
+                <div className="my-4 px-2 bg-red-500 text-white">-{product.discount * 100}%</div>
+              </div>
               <div className="flex justify-between py-3">
                 <div>Color</div>
                 <div className="flex mr-2">

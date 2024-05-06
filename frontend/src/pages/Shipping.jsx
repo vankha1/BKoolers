@@ -30,7 +30,7 @@ const Shipping = () => {
   useEffect(() => {
     axios
       .get(`http://localhost/web-assignment/backend/cart/detailCart?id=${userID}`)
-      .then((res) => setProducts(res.data)).catch(() => {
+      .then((res) => {setProducts(res.data);}).catch(() => {
         setProducts([])
       });
   }, [remove]);
@@ -190,9 +190,9 @@ const Shipping = () => {
           <div className={`${isMobile ? 'my-6' : 'mb-6'} font-semibold text-lg`}>Danh sách sản phẩm</div>
           {products.length > 0 ? products.map((product, index) => {
             let price = ''
-            for (var i = product.price.toString().length - 1; i >= 0; i--) {
-              price = (product.price.toString()[i]) + price
-              if ((product.price.toString().length - 1 - i) % 3 == 2 && i != 0) {
+            for (var i = Math.round(product.price * (1 - product.discount)).toString().length - 1; i >= 0; i--) {
+              price = (Math.round(product.price * (1 - product.discount)).toString()[i]) + price
+              if ((Math.round(product.price * (1 - product.discount)).toString().length - 1 - i) % 3 == 2 && i != 0) {
                 price = '.' + price
               }
             }
