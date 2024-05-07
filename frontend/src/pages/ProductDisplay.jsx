@@ -13,7 +13,7 @@ function ProductDisplay({title}) {
   const [pageContent, setPageContent] = useState([])
 
   useEffect(() => {
-    if (window.screen.width < 640) {
+    if (window.screen.width <= 768) {
       setIsMobile(true)
     }
   }, [])

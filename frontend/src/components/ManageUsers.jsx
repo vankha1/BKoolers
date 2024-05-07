@@ -10,7 +10,7 @@ const ManageUsers = () => {
     return (
     <>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-base text-left rtl:text-right text-slate-800 dark:text-gray-400">
+        <table className="w-full text-lg text-left rtl:text-right text-slate-800 dark:text-gray-400">
           <thead className="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">

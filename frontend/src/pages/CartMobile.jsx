@@ -10,7 +10,7 @@ const CartMobile = () => {
     const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];  
 
     const navigate = useNavigate();
-    const {data, trigger} = useFetchCart(2);
+    const {data, trigger} = useFetchCart(userID);
 
     const handleShipping = useCallback(() => {
         if(userID) navigate("/shipping");
@@ -24,7 +24,7 @@ const CartMobile = () => {
     </div>
     <div className="h-fit w-screen overflow-auto">
             {
-                data ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : null
+                Array.isArray(data) ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : null
             }
         <div className="h-15 w-screen p-2">
             <button className="h-full w-full btn-primary"

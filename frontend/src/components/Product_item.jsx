@@ -21,13 +21,13 @@ function Product_item(props) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    if (window.screen.width < 640) {
+    if (window.screen.width <= 768) {
       setIsMobile(true)
     }
   }, [])
 
   return (
-    <Link to={`/products/product/${props.product.id}`} className={`product_item block ${props.isMobile ? 'w-1/2' : 'w-1/4'} h-2/3 hover:text-gray-500`}>
+    <Link to={`/products/product/${props.product.id}`} className={`product_item block ${props.isMobile ? 'w-1/2' : 'w-1/3 lg:w-1/4'} h-2/3 hover:text-gray-500`}>
       <div className={`relative top-10 left-5 ${props.product.discount == 0 ? 'text-gray-100' : 'bg-red-500 text-white'}  w-fit px-3`}>-{props.product.discount * 100}%</div>
       <div className="border bg-gray-100">
         <img src={props.product.image} alt="" />
@@ -40,10 +40,14 @@ function Product_item(props) {
             </div>
             <div className={`py-2 ${isMobile ? 'text-sm' : 'text-base'} truncate`}>{props.product.name}</div>
             
-            {props.product.discount != 0 ? <div className="flex">
-              <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg'} text-red-500 font-medium mr-5`}>{newprice} VND</div>
-              <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg'} line-through text-gray-400`}>{price} VND</div>
-            </div> : <div className={`py-2 ${isMobile ? 'text-base' : 'text-lg font-medium'}`}>{price} VND</div>}
+            {props.product.discount != 0 ? <div>
+            <div className={`${isMobile ? 'text-xs' : 'text-base'} line-through text-gray-400`}>{price} VND</div>
+              <div className={`pb-2 ${isMobile ? 'text-xs' : 'text-base'} text-red-500 font-medium`}>{newprice} VND</div>
+            </div> : <div>
+            <div className={`${isMobile ? 'text-xs' : 'text-base'} text-transparent`}>{price} VND</div>
+              <div className={`pb-2 ${isMobile ? 'text-xs' : 'text-base font-medium'}`}>{price} VND</div>
+              </div>}
+            
             
         </div>
     </div>

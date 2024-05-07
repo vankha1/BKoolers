@@ -25,7 +25,7 @@ const Header = (props) => {
 
 
     return (
-        <div className="w-full h-fit">
+        <div className="w-full h-fit py-4">
             <div className="w-full h-[8%] flex justify-between align-middle bg-white">
                 <div className="px-5 flex basis-1/3 items-center justify-between">
                     <div className={`h-fit ${isMenuOpen ? "hidden" : "block"} hover:cursor-pointer`}>

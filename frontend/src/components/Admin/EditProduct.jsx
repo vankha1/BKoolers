@@ -27,6 +27,8 @@ const EditProduct = ({func, proid, toast}) => {
             setPrice(res.data[0].price)
             setImage(res.data[0].image)
             setSize(res.data[0].size)
+            setCategory(res.data[0].cat_id)
+            setQuantity(res.data[0].quantity)
             setDiscount(res.data[0].discount)
         })
     }, [])

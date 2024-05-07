@@ -42,6 +42,14 @@ const PopupContent = ({ close, content, action, isCreate }) => {
   {
     value: "pink",
     label: "pink",
+  },
+  {
+    value: "gray",
+    label: "gray",
+  },
+  {
+    value: "beige",
+    label: "beige",
   }]
 
   const style = {

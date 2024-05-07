@@ -17,10 +17,14 @@ const Shipping = () => {
   const [remove, setRemove] = useState(true);
   const [isMobile, setIsMobile] = useState(false)
 
+  const [nameErr, setNameErr] = useState(false)
+  const [phoneErr, setPhoneErr] = useState(false)
+  const [addErr, setAddErr] = useState(false)
+
   const userID = document.cookie.slice(document.cookie.indexOf('userID')).split(';')[0].split('=')[1];
 
   useEffect(() => {
-    if (window.screen.width <= 768) {
+    if (window.screen.width <= 1028) {
       setIsMobile(true)
     }
   }, [])
@@ -47,6 +51,12 @@ const Shipping = () => {
     if (products.length == 0) {
       toast.info('Chưa có sản phẩm nào trong giỏ')
       return
+    } else if (name == '') {
+      setNameErr(true)
+    } else if (phone == '') {
+      setPhoneErr(true)
+    } else if (address == '') {
+      setAddErr(true)
     }
 
     if (name != '' && phone != '' && address != '') {
@@ -111,7 +121,7 @@ const Shipping = () => {
             Thông tin khách hàng
           </div>
 
-          <div className="md:flex md:items-center mb-6 w-full">
+          <div className={`md:flex md:items-center ${nameErr ? '' : 'mb-6'} w-full`}>
             <div className="w-1/5">
               <label className="block text-gray-500 font-bold mb-1 md:mb-0 ">
                 Họ tên
@@ -119,15 +129,16 @@ const Shipping = () => {
             </div>
             <div className="md:w-4/5">
               <input
-                className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+                className={`appearance-none border-2 ${nameErr ? 'border-red-400' : 'border-gray-200'} rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
                 type="text"
                 value={name}
-                onInput={(e) => setName(e.target.value)}
+                onInput={(e) => {setName(e.target.value); setNameErr(false)}}
               />
             </div>
           </div>
+          {nameErr && <div className="float-right text-red-500 mb-6">Vui lòng điền thông tin</div>}
 
-          <div className="md:flex md:items-center mb-6 w-full">
+          <div className={`md:flex md:items-center ${phoneErr ? '' : 'mb-6'} w-full`}>
             <div className={`${isMobile ? 'w-2/5 md:w-1/5' : 'w-1/5'}`}>
               <label className="block text-gray-500 font-bold mb-1 md:mb-0 ">
                 Điện thoại
@@ -135,15 +146,16 @@ const Shipping = () => {
             </div>
             <div className="md:w-4/5">
               <input
-                className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+                className={`appearance-none border-2 ${phoneErr ? 'border-red-400' : 'border-gray-200'} rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
                 type="text"
                 value={phone}
-                onInput={(e) => setPhone(e.target.value)}
+                onInput={(e) => {setPhone(e.target.value); setPhoneErr(false)}}
               />
             </div>
           </div>
+          {phoneErr && <div className="float-right text-red-500 mb-6">Vui lòng điền thông tin</div>}
 
-          <div className="md:flex md:items-center mb-6 w-full">
+          <div className={`md:flex md:items-center ${addErr ? '' : 'mb-6'} w-full`}>
             <div className="w-1/5">
               <label className="block text-gray-500 font-bold mb-1 md:mb-0 ">
                 Địa chỉ
@@ -151,13 +163,14 @@ const Shipping = () => {
             </div>
             <div className="md:w-4/5">
               <input
-                className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+                className={`appearance-none border-2 ${addErr ? 'border-red-400' : 'border-gray-200'} rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white`}
                 type="text"
                 value={address}
-                onInput={(e) => setAddress(e.target.value)}
+                onInput={(e) => {setAddress(e.target.value); setAddErr(false)}}
               />
             </div>
           </div>
+          {addErr && <div className="float-right text-red-500 mb-6">Vui lòng điền thông tin</div>}
 
           <div className="md:flex md:items-center mb-6 w-full">
             <div className="w-1/5">

@@ -23,6 +23,7 @@ const Product = () => {
   const [price, setPrice] = useState("");
   const [newprice, setNewprice] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [error, setError] = useState(false);
 
   const userID = document.cookie
@@ -33,10 +34,10 @@ const Product = () => {
   useEffect(() => {
     if (window.screen.width < 640) {
       setIsMobile(true);
+    } else if (window.screen.width >= 640 && window.screen.width <= 1028) {
+      setIsTablet(true);
     }
   }, []);
-
-  // const { data, trigger } = useFetchCart(userID);
 
   const { productId } = useParams();
 
@@ -67,16 +68,32 @@ const Product = () => {
         setPrice(price);
 
         let newprice = "";
-        for (var i = Math.round(res.data[0].price * (1 - res.data[0].discount)).toString().length - 1; i >= 0; i--) {
-          newprice = Math.round(res.data[0].price * (1 - res.data[0].discount)).toString()[i] + newprice;
+        for (
+          var i =
+            Math.round(
+              res.data[0].price * (1 - res.data[0].discount)
+            ).toString().length - 1;
+          i >= 0;
+          i--
+        ) {
+          newprice =
+            Math.round(
+              res.data[0].price * (1 - res.data[0].discount)
+            ).toString()[i] + newprice;
           if (
-            (Math.round(res.data[0].price * (1 - res.data[0].discount)).toString().length - 1 - i) % 3 == 2 &&
+            (Math.round(
+              res.data[0].price * (1 - res.data[0].discount)
+            ).toString().length -
+              1 -
+              i) %
+              3 ==
+              2 &&
             i != 0
           ) {
             newprice = "." + newprice;
           }
         }
-        setNewprice(newprice)
+        setNewprice(newprice);
       });
 
     axios
@@ -118,6 +135,9 @@ const Product = () => {
           })
           .then(() => {
             toast.success("Thêm vào giỏ hàng thành công");
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       } else {
         toast.error("Vui lòng chọn size và màu sắc");
@@ -149,7 +169,7 @@ const Product = () => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
       <div
         className={`text-base ${
           !isMobile && "mb-8"
@@ -160,7 +180,7 @@ const Product = () => {
         </Link>{" "}
         /{" "}
         <Link
-        className="text-gray-400"
+          className="text-gray-400"
           to={
             (product.cat_id == 1 && "/products/outerwears") ||
             (product.cat_id == 2 && "/products/tshirts") ||
@@ -196,10 +216,24 @@ const Product = () => {
           <div>
             <div className={`${isMobile ? "px-5" : "w-4/5 lg:w-3/5 m-auto"}`}>
               <div className="py-3 text-lg font-medium">{product.name}</div>
-              <div className="flex">
-                <div className="py-3 text-2xl font-medium text-red-500">{newprice} VND</div>
-                <div className="py-3 text-2xl line-through text-gray-400 mx-5">{price} VND</div>
-                <div className="my-4 px-2 bg-red-500 text-white">-{product.discount * 100}%</div>
+              <div className="flex items-center">
+                <div
+                  className={`py-3 ${
+                    isMobile ? "text-lg" : "text-2xl"
+                  } font-medium text-red-500`}
+                >
+                  {newprice} VND
+                </div>
+                {product.discount != 0 && (
+                  <div className="py-3 text-base md:text-sm line-through text-gray-400 mx-5">
+                    {price} VND
+                  </div>
+                )}
+                {product.discount != 0 && (
+                  <div className="my-4 px-2 bg-red-500 text-white">
+                    -{product.discount * 100}%
+                  </div>
+                )}
               </div>
               <div className="flex justify-between py-3">
                 <div>Color</div>
@@ -318,13 +352,14 @@ const Product = () => {
           </Link>
         </div>
         <div className="flex">
-          {isMobile
-            ? products.slice(0, 2).map((product, index) => {
-                return <Product_item key={index} product={product} isMobile />;
-              })
-            : products.slice(0, 4).map((product, index) => {
+          {(isMobile &&
+            products.slice(0, 2).map((product, index) => {
+              return <Product_item key={index} product={product} isMobile />;
+            })) ||
+            (isTablet &&
+              products.slice(0, 3).map((product, index) => {
                 return <Product_item key={index} product={product} />;
-              })}
+              })) || products.slice(0, 4).map((product, index) => <Product_item key={index} product={product}/>) }
         </div>
 
         <div className="best-seller w-full h-20 flex justify-between items-center px-1">
@@ -344,12 +379,12 @@ const Product = () => {
         </div>
         <div className="flex">
           {isMobile
-            ? products.slice(4, 6).map((product, index) => {
+            && products.slice(4, 6).map((product, index) => {
                 return <Product_item key={index} product={product} isMobile />;
               })
-            : products.slice(4, 8).map((product, index) => {
+            || isTablet && products.slice(4, 7).map((product, index) => {
                 return <Product_item key={index} product={product} />;
-              })}
+              }) || products.slice(4,8).map((product, index) => <Product_item key={index} product={product} />)}
         </div>
       </div>
     </>

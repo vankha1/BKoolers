@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const SignUp = ({ toast, setLog }) => {
+const SignUp = ({ setLog }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [fname, setFname] = useState("");
@@ -45,10 +47,14 @@ const SignUp = ({ toast, setLog }) => {
         avatar:
           "https://www.fiaregion1.com/wp-content/uploads/2021/02/avatar-vector-male-profile-gray.jpg",
       }).then(res => {
+        
         if (res.data.msg == 'success') {
           toast.success('Đăng ký thành công')
-          setLog(true)
+          setTimeout(() => {
+            setLog(true)
+          }, 1500)
         } else {
+          setUserErr(true)
           toast.error('Đăng ký thất bại')
         }
       });
@@ -57,6 +63,7 @@ const SignUp = ({ toast, setLog }) => {
 
   return (
     <>
+    <ToastContainer autoClose={1000}/>
       <div className="mb-6 w-full">
         <div className="md:flex md:items-center">
           <div className="w-1/5">
@@ -80,7 +87,7 @@ const SignUp = ({ toast, setLog }) => {
         </div>
         {userErr && (
           <span className="text-xs float-right text-red-500">
-            Vui lòng nhập thông tin
+            Vui lòng nhập đúng thông tin
           </span>
         )}
       </div>

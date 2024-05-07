@@ -34,8 +34,6 @@ const Cart = (props) => {
     const [isCartOpen, setCartOpen] = useState(false);
     const isMobile = useCheckDeviceScreen();
 
-    console.log(data)
-
     const handleCartOpen = useCallback(() => {
         if(!isMobile) {
             setCartOpen(!isCartOpen);
@@ -47,7 +45,7 @@ const Cart = (props) => {
         }
     }, [isMobile, isCartOpen])
 
-    const itemNums = data.length;
+    const itemNums = Array.isArray(data) ? data.length : 0;
 
     const handleShipping = useCallback(() => {
         setCartOpen(false);
@@ -76,11 +74,13 @@ const Cart = (props) => {
                     <div className={`h-[92%] w-[30%] fixed top-[8%] left-full z-[95] p-1 flex flex-col justify-between border-gray-700 bg-white ${isCartOpen ? "-translate-x-full" : "translate-x-full"} duration-[0.25s] transition-all ease-in-out`}>
                         <div className="h-full overflow-auto">
                         {
-                            data ? 
+                            (Array.isArray(data) && data.length != 0) ? 
                             data.map((d, index) => <Cart_Item isMobile={isMobile} data={data[index]} key={index}
                             trigger={trigger}
                             ></Cart_Item>)
-                        : <div>Chưa có sản phẩm nào</div>
+                        : <div>
+                            <img src="https://www.adasglobal.com/img/empty-cart.png" alt="" />
+                        </div>
                         }
                         </div>
                         <button className="h-[8] w-ful p-2 btn-primary"

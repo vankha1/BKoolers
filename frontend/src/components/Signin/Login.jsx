@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -29,15 +31,18 @@ const Login = () => {
     }).catch(err => {
       if (err.response.data.msg.includes('Incorrect')) {
         setPassErr(true)
+        toast.error("Sai mật khẩu")
       } else {
         setPassErr(true)
         setUserErr(true)
+        toast.error("Sai thông tin đăng nhập")
       }
     });
   }
 
   return (
     <>
+    <ToastContainer autoClose={1000}/>
     <div className="md:flex md:items-center mb-6 w-full">
             <div className="w-1/5">
               <label className="block text-gray-500 font-bold mb-1 md:mb-0">
