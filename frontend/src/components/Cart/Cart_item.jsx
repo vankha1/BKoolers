@@ -83,7 +83,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
                         </button>
                     </div>
                     <div className="h-1/5 w-full my-1 mx-2 lg:mx-0 bg-white flex justify-between">
-                        {`Tổng: ${data.price}VND`}
+                        {`Đơn giá ${data.price}VND`}
                     </div>
                     <button className="w-1/4 mt-1 float-right rounded-md btn-secondary"
                     onClick={() => {handleAbort()}}>
@@ -142,7 +142,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
                             </button>
                         </div>
                         <div className="h-1/6 w-full pt-3 flex items-center">
-                            <span className="text-gray-500 mr-7">Tổng:</span>
+                            <span className="text-gray-500 mr-7">Đơn giá:</span>
                             <span className="text-gray-500 text-xl">
                                 {`${data.price}VND`}
                             </span>
