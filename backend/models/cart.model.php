@@ -25,11 +25,11 @@ class Cart
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (count($result) > 0) {
-                $query = "UPDATE Cart SET number = number +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE' AND color = '$COLOR'";
+                $query = "UPDATE Cart SET `number` = `number` +'$QUANTITY' WHERE customer_id ='$CUS' AND product_id ='$PRODUCT' AND size = '$SIZE' AND color = '$COLOR'";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             } else {
-                $query = "INSERT INTO Cart (product_id, size, color, customer_id, number) VALUES ('$PRODUCT','$SIZE','$COLOR','$CUS','$QUANTITY')";
+                $query = "INSERT INTO Cart (product_id, size, color, customer_id, `number`) VALUES ('$PRODUCT','$SIZE','$COLOR','$CUS','$QUANTITY')";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
             }
