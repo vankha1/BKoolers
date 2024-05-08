@@ -6,17 +6,17 @@ import { IoClose } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
 
-const RestockProduct = ({ func, proid }) => {
+const RestockProduct = ({ func, proid, toast }) => {
   const [quantity, setQuantity] = useState("");
   const [size, setSize] = useState("");
 
   const handleRestock = async () => {
     await axios.post("http://localhost/web-assignment/backend/products/restock", {
-        data: {
             quantity: quantity,
             id: proid,
             size: size
-        }
+    }).then(() => {
+      toast.success('Cập nhật thành công')
     })
 
     func()
@@ -53,6 +53,7 @@ const RestockProduct = ({ func, proid }) => {
   };
 
   return (
+    <>
     <Popup
       trigger={
         <button>
@@ -149,6 +150,7 @@ const RestockProduct = ({ func, proid }) => {
         </div>
       )}
     </Popup>
+    </>
   );
 };
 

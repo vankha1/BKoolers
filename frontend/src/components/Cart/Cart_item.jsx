@@ -83,7 +83,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
                         </button>
                     </div>
                     <div className="h-1/5 w-full my-1 mx-2 lg:mx-0 bg-white flex justify-between">
-                        {`Tổng: ${data.price}VND`}
+                        {`Giá: ${data.price * data.discount}VND`}
                     </div>
                     <button className="w-1/4 mt-1 float-right rounded-md btn-secondary"
                     onClick={() => {handleAbort()}}>
@@ -103,7 +103,7 @@ const Cart_Item = ({isMobile, data, trigger}) => {
                             <div className="h-full w-4/5 truncate">
                                 {data.name}
                             </div>
-                            <button className="px-3 rounded btn-secondary" onClick={() => {handleAbort()}}>
+                            <button className="px-3 rounded btn-secondary" onClick={() => {handleAbort(); setTimeout(() => {window.location.reload()}, 500)}}>
                                 <FaX/>
                             </button>
                         </div>

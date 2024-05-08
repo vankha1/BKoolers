@@ -70,14 +70,11 @@ const CreateProduct = ({ func, toast }) => {
       discount: discount,
       image: image,
     }).then(() => {
-      toast.success("Thêm sản phẩm thành công", {
-        autoClose: 3000,
-      });
+      toast.success("Thêm sản phẩm thành công");
+      setTimeout(() => window.location.reload(), 2000)
     })
     } else {
-      toast.error("Đã xảy ra lỗi", {
-        autoClose: 3000,
-      });
+      toast.error("Thông tin không hợp lệ/bỏ trống");
     }
     setId('')
     setName('')

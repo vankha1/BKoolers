@@ -23,11 +23,14 @@ const Login = () => {
     await axios.put("http://localhost/web-assignment/backend/users/login", {username, password}).then((res) => { 
       document.cookie = `userID=${res.data.data.id}`
       document.cookie = `type=${res.data.data.type}`
-      if(res.data.data.type == 'user') {
-        navigate('/')
-      } else {
-        navigate('/admin')
-      }
+      toast.success("Đăng nhập thành công")
+      setTimeout(() => {
+        if(res.data.data.type == 'user') {
+          navigate('/')
+        } else {
+          navigate('/admin')
+        }
+      }, 1500)
     }).catch(err => {
       if (err.response.data.msg.includes('Incorrect')) {
         setPassErr(true)

@@ -73,6 +73,7 @@ const EditProduct = ({func, proid, toast}) => {
     }
     
     const handleSubmit = async () => {
+      if (!isNaN(Number(quantity)) && !isNaN(Number(price)) && id != '' && name != '' && price != '' && color != '' && category != '' && size != '' && quantity != '' && discount != '' && image != '') {
         await axios.put(`http://localhost/web-assignment/backend/products/update`, {
                 id: id,
                 cat: category,
@@ -88,11 +89,12 @@ const EditProduct = ({func, proid, toast}) => {
           toast.success("Cập nhật thành công", {
             autoClose: 3000,
           });
-        }).catch(() => {
-          toast.error("Đã xảy ra lỗi", {
+        })
+      } else {
+          toast.error("Thông tin không hợp lệ/bỏ trống", {
             autoClose: 3000,
           });
-        });
+        };
         func()
       };
   return (

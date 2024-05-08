@@ -44,7 +44,7 @@ const Header = (props) => {
                         </div>
                     </Link>
                 </div>
-                <div className="flex basis-1/3 justify-end">
+                <div className="flex basis-1/3 justify-end mr-3">
                     <div className="mr-1 hidden lg:block">
                         <SearchBar mobile={false} />
                     </div>
@@ -60,7 +60,7 @@ const Header = (props) => {
                         </Link>
                         :
                         <Link to={"/signin"} className="h-[95%] w-20 py-3 px-1">
-                            <div className="h-full w-full flex items-center justify-center rounded-lg border-2 border-gray-300 text-sm hover:border-gray-700">
+                            <div className="h-full w-full flex items-center justify-center rounded-lg bg-black text-white py-1 text-sm hover:scale-105">
                                 Sign in
                             </div>
                         </Link>

@@ -13,8 +13,7 @@ const CartMobile = () => {
     const {data, trigger} = useFetchCart(userID);
 
     const handleShipping = useCallback(() => {
-        if(userID) navigate("/shipping");
-        else return;
+        navigate("/shipping");
     }, [])
     
  return (
@@ -24,7 +23,9 @@ const CartMobile = () => {
     </div>
     <div className="h-fit w-screen overflow-auto">
             {
-                Array.isArray(data) ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : null
+                Array.isArray(data) && data.length != 0 ? data.map((i, index) => <Cart_Item isMobile={true} data={data[index]} key={index} trigger={trigger}></Cart_Item>) : <div>
+                <img src="https://www.adasglobal.com/img/empty-cart.png" alt="" />
+            </div>
             }
         <div className="h-15 w-screen p-2">
             <button className="h-full w-full btn-primary"

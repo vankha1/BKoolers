@@ -30,7 +30,7 @@ function Footer() {
         <div className='lg:w-1/2 mb-5 lg:mb-0'>
           <div className='m-auto mb-3 lg:m-0 lg:mb-3 w-40 h-10 flex justify-center items-center font-bold bg-black text-white'>BKooler</div>
           <button className='w-full lg:w-32 btn-secondary px-5'>
-            <Link to='/about'>Xem ngay</Link>
+            <a href='/about'>Xem ngay</a>
           </button>
         </div>
         <div className='lg:w-1/2 lg:flex'>

@@ -71,7 +71,10 @@ const Shipping = () => {
           total_price: Math.round(total.total_cost),
       })
       .then(() => {
-        navigate('/')
+        toast.success("Đặt hàng thành công")
+        setTimeout(() => {
+          navigate('/')
+        }, 2000)
       });
     } else {
       toast.error('Vui lòng điền đầy đủ thông tin')
@@ -101,7 +104,7 @@ const Shipping = () => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={1500}/>
       <div className="flex justify-center py-3 border-b border-gray-200">
           <Link
             to="/"

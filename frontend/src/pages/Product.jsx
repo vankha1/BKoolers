@@ -162,6 +162,7 @@ const Product = () => {
             navigate("/shipping");
           });
       } else {
+        toast.error("Vui lòng chọn size và màu sắc");
         setError(true);
       }
     }
@@ -305,12 +306,6 @@ const Product = () => {
                   {stock > 0 ? "Còn hàng" : "Hết hàng"}
                 </div>
               </div>
-
-              {error && (
-                <div className="text-red-600 float-right">
-                  Vui lòng chọn size và màu
-                </div>
-              )}
 
               <div className="mt-12 mb-4">
                 <button

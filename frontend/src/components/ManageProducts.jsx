@@ -29,13 +29,10 @@ const ManageProducts = () => {
         },
       }
     ).then(() => {
-      toast.success("Xóa sản phẩm thành công", {
-        autoClose: 3000,
-      });
+      toast.success("Xóa sản phẩm thành công");
+      setTimeout(() => window.location.reload(), 2000)
     }).catch(() => {
-      toast.error("Xóa sản phẩm không thành công", {
-        autoClose: 3000,
-      });
+      toast.error("Xóa sản phẩm không thành công");
     });
     setChange(!change);
   };
@@ -46,7 +43,7 @@ const ManageProducts = () => {
  
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer autoClose={1500}/>
       <CreateProduct func={reloadPage} toast={toast}/>
       <div className="relative h-[480px] overflow-x-auto">
         <table className="w-full text-base text-left rtl:text-right text-slate-800 dark:text-gray-400">
@@ -87,7 +84,7 @@ const ManageProducts = () => {
                       className="mr-4 inline-block cursor-pointer hover:text-red-500"
                     />
                     <EditProduct func={reloadPage} proid={product.id} toast={toast}/>
-                    <RestockProduct func={reloadPage} proid={product.id}/>
+                    <RestockProduct func={reloadPage} proid={product.id} toast={toast}/>
                   </td>
                 </tr>
               );
