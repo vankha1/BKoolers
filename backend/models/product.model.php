@@ -116,7 +116,7 @@ class Product {
     public function filterCategories($cat)
     {
         try {
-            $query = "SELECT distinct(id), name, price, discount, image, size FROM Product
+            $query = "SELECT distinct(id), name, price, discount, image, size, color FROM Product
             WHERE cat_id = '$cat';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
